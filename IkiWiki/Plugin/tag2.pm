@@ -1,6 +1,6 @@
 #!/usr/bin/perl
-# Ikiwiki tag plugin.
-package IkiWiki::Plugin::tag;
+# Ikiwiki tag2 plugin.
+package IkiWiki::Plugin::tag2;
 
 use warnings;
 use strict;
@@ -9,18 +9,18 @@ use IkiWiki 3.00;
 my %tags;
 
 sub import {
-	hook(type => "getopt", id => "tag", call => \&getopt);
-	hook(type => "getsetup", id => "tag", call => \&getsetup);
-	hook(type => "preprocess", id => "tag", call => \&preprocess_tag, scan => 1);
-	hook(type => "preprocess", id => "taglink", call => \&preprocess_taglink, scan => 1);
-	hook(type => "pagetemplate", id => "tag", call => \&pagetemplate);
+	hook(type => "getopt", id => "tag2", call => \&getopt);
+	hook(type => "getsetup", id => "tag2", call => \&getsetup);
+	hook(type => "preprocess", id => "tag2", call => \&preprocess_tag2, scan => 1);
+	hook(type => "preprocess", id => "tag2link", call => \&preprocess_tag2link, scan => 1);
+	hook(type => "pagetemplate", id => "tag2", call => \&pagetemplate);
 }
 
 sub getopt () {
 	eval q{use Getopt::Long};
 	error($@) if $@;
 	Getopt::Long::Configure('pass_through');
-	GetOptions("tagbase=s" => \$config{tagbase});
+	GetOptions("tag2base=s" => \$config{tag2base});
 }
 
 sub getsetup () {
@@ -29,37 +29,37 @@ sub getsetup () {
 			safe => 1,
 			rebuild => undef,
 		},
-		tagbase => {
+		tag2base => {
 			type => "string",
-			example => "tag",
+			example => "tag2",
 			description => "parent page tags are located under",
 			safe => 1,
 			rebuild => 1,
 		},
 }
 
-sub tagpage ($) {
-	my $tag=shift;
+sub tag2page ($) {
+	my $tag2=shift;
 			
-	if ($tag !~ m{^\.?/} &&
-	    defined $config{tagbase}) {
-		$tag="/".$config{tagbase}."/".$tag;
-		$tag=~y#/#/#s; # squash dups
+	if ($tag2 !~ m{^\.?/} &&
+	    defined $config{tag2base}) {
+		$tag2="/".$config{tag2base}."/".$tag2;
+		$tag2=~y#/#/#s; # squash dups
 	}
 
-	return $tag;
+	return $tag2;
 }
 
-sub taglink ($$$;@) {
+sub tag2link ($$$;@) {
 	my $page=shift;
 	my $destpage=shift;
-	my $tag=shift;
+	my $tag2=shift;
 	my %opts=@_;
 
-	return htmllink($page, $destpage, tagpage($tag), %opts);
+	return htmllink($page, $destpage, tag2page($tag2), %opts);
 }
 
-sub preprocess_tag (@) {
+sub preprocess_tag2 (@) {
 	if (! @_) {
 		return "";
 	}
@@ -69,34 +69,34 @@ sub preprocess_tag (@) {
 	delete $params{destpage};
 	delete $params{preview};
 
-	foreach my $tag (keys %params) {
-		$tag=linkpage($tag);
-		$tags{$page}{$tag}=1;
+	foreach my $tag2 (keys %params) {
+		$tag2=linkpage($tag2);
+		$tags{$page}{$tag2}=1;
 		# hidden WikiLink
-		add_link($page, tagpage($tag));
+		add_link($page, tag2page($tag2));
 	}
 		
 	return "";
 }
 
-sub preprocess_taglink (@) {
+sub preprocess_tag2link (@) {
 	if (! @_) {
 		return "";
 	}
 	my %params=@_;
 	return join(" ", map {
 		if (/(.*)\|(.*)/) {
-			my $tag=linkpage($2);
-			$tags{$params{page}}{$tag}=1;
-			add_link($params{page}, tagpage($tag));
-			return taglink($params{page}, $params{destpage}, $tag,
+			my $tag2=linkpage($2);
+			$tags{$params{page}}{$tag2}=1;
+			add_link($params{page}, tag2page($tag2));
+			return tag2link($params{page}, $params{destpage}, $tag2,
 				linktext => pagetitle($1));
 		}
 		else {
-			my $tag=linkpage($_);
-			$tags{$params{page}}{$tag}=1;
-			add_link($params{page}, tagpage($tag));
-			return taglink($params{page}, $params{destpage}, $tag);
+			my $tag2=linkpage($_);
+			$tags{$params{page}}{$tag2}=1;
+			add_link($params{page}, tag2page($tag2));
+			return tag2link($params{page}, $params{destpage}, $tag2);
 		}
 	}
 	grep {
@@ -112,7 +112,7 @@ sub pagetemplate (@) {
 
 	$template->param(tags => [
 		map { 
-			link => taglink($page, $destpage, $_, rel => "tag")
+			link => tag2link($page, $destpage, $_, rel => "tag2")
 		}, sort keys %{$tags{$page}}
 	]) if exists $tags{$page} && %{$tags{$page}} && $template->query(name => "tags");
 
@@ -127,10 +127,10 @@ sub pagetemplate (@) {
 
 package IkiWiki::PageSpec;
 
-sub match_tagged ($$;@) {
+sub match_tagged2 ($$;@) {
 	my $page = shift;
 	my $glob = shift;
-	return match_link($page, IkiWiki::Plugin::tag::tagpage($glob));
+	return match_link($page, IkiWiki::Plugin::tag2::tag2page($glob));
 }
 
 1
