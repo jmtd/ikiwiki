@@ -163,33 +163,36 @@ sub preprocess (@) {
 		$params{class}="img";
 	}
 
-	my $attrs='';
+	my $imgtemplate=template_depends(
+		$params{template} ? $params{template} : "img.tmpl",
+		$params{page}, blind_cache => 1);
+
+	$imgtemplate->param(src => $imgurl);
+	$imgtemplate->param(width => $dwidth);
+	$imgtemplate->param(height => $dheight);
+
 	foreach my $attr (qw{alt title class id hspace vspace}) {
 		if (exists $params{$attr}) {
-			$attrs.=" $attr=\"$params{$attr}\"";
+			$imgtemplate->param($attr => $params{$attr});
 		}
 	}
-	
-	my $imgtag='<img src="'.$imgurl.
-		'" width="'.$dwidth.
-		'" height="'.$dheight.'"'.
-		$attrs.
-		(exists $params{align} && ! exists $params{caption} ? ' align="'.$params{align}.'"' : '').
-		' />';
 
-	my $link;
+	$imgtemplate->param(align => $params{align})
+		if exists $params{align} && ! exists $params{caption};
+
+	my $imgtag;# = $imgtemplate->output;
+
 	if (! defined $params{link}) {
-		$link=$fileurl;
+		$imgtemplate->param(link => $fileurl);
+		$imgtag = $imgtemplate->output;
 	}
 	elsif ($params{link} =~ /^\w+:\/\//) {
-		$link=$params{link};
-	}
-
-	if (defined $link) {
-		$imgtag='<a href="'.$link.'">'.$imgtag.'</a>';
+		$imgtemplate->param(link => $params{link});
+		$imgtag = $imgtemplate->output;
 	}
 	else {
 		my $b = bestlink($params{page}, $params{link});
+		$imgtag = $imgtemplate->output;
 	
 		if (length $b) {
 			add_depends($params{page}, $b, deptype("presence"));
