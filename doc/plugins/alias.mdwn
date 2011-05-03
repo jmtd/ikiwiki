@@ -1,0 +1,28 @@
+[[!template id=plugin name=alias author="[[Jon]]"]]
+[[!tag type/link]]
+
+This plugin implements [[ikiwiki/PageSpec]] aliases. You may define aliases in
+your setup file and reference the aliases in PageSpecs within your wiki.
+
+## Example
+
+With the following configuration:
+
+    pagespec_aliases:
+      blogposts: "blog/* and !blog/all and !tagged(ignore) and !image()"
+      draft: "blogposts() and tagged(draft)"
+
+The PageSpecs `blogpost()` and `draft()` have been defined. Notice that `draft()`
+is defined in terms of `blogpost()`. Further examples of how these could be used
+in wiki pages:
+
+    \[[!inline pages="blogposts()"]]
+    \[[!map pages="draft()"]]
+
+## Caveats
+
+IkiWiki currently does not track what pages use which PageSpecs, so you must
+make sure to refresh the necessary pages (or rebuild the whole wiki) when you
+make changes to their definitions.
+
+It's currently not possible to configure PageSpec aliases via [[websetup]].
