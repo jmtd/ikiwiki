@@ -398,7 +398,7 @@ sub match {
 sub scan() {
 	my %params = @_;
 	my $page = $params{page};
-    foreach my $type (map { s/^meta_//; $_ } grep /^meta_/, keys %config) {
+	foreach my $type (map { s/^meta_//; $_ } grep /^meta_/, keys %config) {
 		$pagestate{$page}{meta}{$type} = $config{"meta_$type"}
 			unless defined $pagestate{$page}{meta}{$type};
 	}
