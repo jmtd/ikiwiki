@@ -398,10 +398,22 @@ sub match {
 sub scan() {
 	my %params = @_;
 	my $page = $params{page};
-	foreach my $type (map { s/^meta_//; $_ } grep /^meta_/, keys %config) {
-		$pagestate{$page}{meta}{$type} = $config{"meta_$type"}
-			unless defined $pagestate{$page}{meta}{$type};
-	}
+
+	# these meta fields can be defined in the wiki's setup file
+	foreach my $type (qw/title license copyright author authorurl robots/) {
+		next unless $config{"meta_$type"} or defined $pagestate{$page}{meta}{$type};
+		my @preprocess_params;
+		if($type eq "title" && $config{"meta_title_sortas"}) {
+			push @preprocess_params, "sortas";
+			push @preprocess_params, $config{"meta_title_sortas"}
+		}
+		if($type eq "author" && $config{"meta_author_sortas"}) {
+			push @preprocess_params, "sortas";
+			push @preprocess_params, $config{"meta_author_sortas"}
+		}
+		preprocess("$type" , $config{"meta_$type"}, "page" , $page,
+			"destpage" , $params{"destpage"}, @preprocess_params); 
+        }
 }
 
 package IkiWiki::PageSpec;
