@@ -13,6 +13,12 @@ per `meta` directive, use more directives if you want to specify more fields.
 The field values are treated as HTML entity-escaped text, so you can include
 a quote in the text by writing `&quot;` and so on.
 
+You can also define site-wide defaults for meta values by including them
+in your setup file, e.g.
+
+	meta_copyright => "Copyright 2007 by Joey Hess",
+	meta_license   => "GPL v2+",
+
 Supported fields:
 
 * title

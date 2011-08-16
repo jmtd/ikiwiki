@@ -13,6 +13,7 @@ sub import {
 	hook(type => "needsbuild", id => "meta", call => \&needsbuild);
 	hook(type => "preprocess", id => "meta", call => \&preprocess, scan => 1);
 	hook(type => "pagetemplate", id => "meta", call => \&pagetemplate);
+	hook(type => "scan", id => "meta", call => \&scan);
 }
 
 sub getsetup () {
@@ -391,6 +392,15 @@ sub match {
 	}
 	else {
 		return IkiWiki::FailReason->new("$page does not have a $field", $page => $IkiWiki::DEPEND_CONTENT);
+	}
+}
+
+sub scan() {
+	my %params = @_;
+	my $page = $params{page};
+    foreach my $type (map { s/^meta_//; $_ } grep /^meta_/, keys %config) {
+		$pagestate{$page}{meta}{$type} = $config{"meta_$type"}
+			unless defined $pagestate{$page}{meta}{$type};
 	}
 }
 
