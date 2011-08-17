@@ -17,12 +17,25 @@ sub import {
 }
 
 sub getsetup () {
-	return
+	my %r = (
 		plugin => {
 			safe => 1,
 			rebuild => undef,
 			section => "core",
-		},
+		});
+	foreach my $type (qw/title license copyright author authorurl robots/) {
+		$r{"meta_$type"} = {
+			type => "string",
+			description => "the default meta $type for pages",
+			link => "ikiwiki/directives/meta",
+			safe => 1,
+			rebuild => 1,
+			section => "meta",
+		};
+	};
+	$r{"meta_copyright"}{"example"} = "Copyright © 2011 Joe Bloggs";
+	$r{"meta_license"}{"example"} = "GNU [[GPL]], version 2 or later";
+	%r;
 }
 
 sub needsbuild (@) {
