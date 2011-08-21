@@ -13,11 +13,9 @@ per `meta` directive, use more directives if you want to specify more fields.
 The field values are treated as HTML entity-escaped text, so you can include
 a quote in the text by writing `&quot;` and so on.
 
-You can also define site-wide defaults for meta values by including them
-in your setup file, e.g.
-
-	meta_copyright => "Copyright 2007 by Joey Hess",
-	meta_license   => "GPL v2+",
+You can also define site-wide defaults for some meta values in your setup file.
+Defining a value on a page via directive overrides any default supplied in the
+setup file.
 
 Supported fields:
 
@@ -37,15 +35,25 @@ Supported fields:
 
 	\[[!meta title="David Bowie" sortas="Bowie, David"]]
 
+  You can set a default title for all pages by defining `meta_title` in the
+  setup file.  You can define the optional `sortas` parameter via the key
+  `meta_title_sortas`.
+
 * license
 
   Specifies a license for the page, for example, "GPL". Can contain
   WikiLinks and arbitrary markup.
 
+  You can set a default license for all pages by defining `meta_license` in the
+  setup file.
+
 * copyright
 
   Specifies the copyright of the page, for example, "Copyright 2007 by
   Joey Hess". Can contain WikiLinks and arbitrary markup.
+
+  You can set a default copyright for all pages by defining `meta_copyright` in
+  the setup file.
 
 * author
 
@@ -56,9 +64,16 @@ Supported fields:
 
 	\[[!meta author="Joey Hess" sortas="Hess, Joey"]]
 
+  You can set a default author for all pages by defining `meta_author` in the
+  setup file.  You can define the optional `sortas` parameter via the key
+  `meta_author_sortas`.
+
 * authorurl
 
   Specifies an url for the author of a page.
+
+  You can set a default authorurl for all pages by defining `meta_authorurl` in
+  the setup file.
 
 * description
 
@@ -165,6 +180,9 @@ Supported fields:
   follow" is used as the default.
 
   The value is escaped, but its contents are not otherwise checked.
+
+  You can set a default robots value for all pages by defining `meta_robots` in
+  the setup file.
 
 * guid
 
