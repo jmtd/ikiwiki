@@ -8,3 +8,14 @@ copyright_alist=>[ "*/Discussion" => "Comments copyright individual authors",
 And yes, I know about [[plugins/contrib/default_content_for___42__copyright__42___and___42__license__42__]]
 
 [[DavidBremner]]
+
+> With the addition of default meta-values, you could achieve what you want in
+> the example above by defining a site-wide default copyright in the setup
+> file (`meta_copyright: "Copyright 2008 Widget Co"`) and using 
+> [[plugins/edittemplate]] to register a default content for each pagespec,
+> e.g.
+>    \[[!edittemplate template="discussiontemplate" match="*/Discussion"]]
+> combined with a template such as
+>> \[[!meta copyright="Commens copyright individual authors"]]
+> Tentatively, I think that this can be considered[[done]], please un-tag it
+> if you disagree. — [[Jon]]
