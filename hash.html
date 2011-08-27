@@ -19,16 +19,12 @@
   }
   function loadme() {
     var keys = document.getElementById("keys");
-    var values = document.getElementById("values");
     clearSelect(keys);
-    clearSelect(values);
     for(var key in mydata) {
       var k = document.createElement("option");
-      var v = document.createElement("option");
-      k.text = key;
-      v.text = mydata[key];
+      k.text = key + ": " + mydata[key];
+      k.value = key;
       addToSelect(k,keys);
-      addToSelect(v,values);
     }
   }
   function getActive() {
@@ -46,7 +42,11 @@
   function selectHandler() {
     var i = getActive();
     if(i) {
+      var keybox   = document.getElementById("addkeybox");
+      var valuebox = document.getElementById("addvaluebox");
       document.getElementById("delete").disabled = false;
+      keybox.value = i.value;
+      valuebox.value = mydata[i.value];
     }
   }
   function addHandler() {
@@ -54,39 +54,50 @@
     var value = document.getElementById("addvaluebox").value;
     mydata[key] = value;
     loadme();
+    typeyTypey();
   }
   function deleteHandler() {
     var i = getActive();
     if(i) {
-      delete mydata[i.text];
+      delete mydata[i.value];
       document.getElementById("delete").disabled = "disabled";
       loadme();
+      typeyTypey();
     }
+  }
+  function typeyTypey() {
+    var newkey = document.getElementById("addkeybox").value;
+    for(var key in mydata) {
+      if(key == newkey) {
+        document.getElementById("add").value = "Change";
+	return;
+      }
+    }
+    document.getElementById("add").value = "Add";
   }
 </script>
 <style type="text/css">
 #theform input,
 #theform select {
-width: 8em;
+/*width: 8em;*/
+}
+#theform select {
+width: 16em;
 }
 </style>
 
 <body onload="loadme();"><h1>hello</h1>
 
 <form id="theform">
-    <select multiple=multiple id="keys" onclick="selectHandler();" >
+    <select multiple=multiple id="keys" onchange="selectHandler();" >
       <option>foo</option>
       <option>bar</option>
     </select>
-    <select multiple=multiple id="values" >
-      <option>bar</option>
-      <option>bar</option>
-    </select>
-    <input type=button id=delete value=delete disabled=disabled onclick="deleteHandler();"/>
+    <input type=button id=delete value=Delete disabled=disabled onclick="deleteHandler();"/>
     <br />
-    <input type=text id=addkeybox value="new key" />
+    <input type=text id=addkeybox value="new key" onchange="typeyTypey();" onkeypress="typeyTypey();">
     <input type=text id=addvaluebox value="new value" />
-    <input type=button id=add value="add" onclick="addHandler()"; />
+    <input type=button id=add value="Add" onclick="addHandler()"; />
 </form>
 
 </body>
