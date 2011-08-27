@@ -1,0 +1,93 @@
+<html><head></head>
+
+<script lang="text/javascript">
+  var mydata = {
+    foo: 'bar',
+    baz: 'omg',
+  };
+  function clearSelect(s) {
+    while(s.length > 0) {
+      s.remove(0);
+    }
+  }
+  function addToSelect(i,s) {
+      try {
+        s.add(i, null);
+      } catch(ex) {
+        s.add(i); // IE
+      }
+  }
+  function loadme() {
+    var keys = document.getElementById("keys");
+    var values = document.getElementById("values");
+    clearSelect(keys);
+    clearSelect(values);
+    for(var key in mydata) {
+      var k = document.createElement("option");
+      var v = document.createElement("option");
+      k.text = key;
+      v.text = mydata[key];
+      addToSelect(k,keys);
+      addToSelect(v,values);
+    }
+  }
+  function getActive() {
+    var s = document.getElementById("keys");
+    var it;
+    var i = false;
+    for(it = 0; it < s.length; ++it) {
+      if(s.options[it].selected) {
+        i = s.options[it];
+	break;
+      }
+    }
+    return i;
+  }
+  function selectHandler() {
+    var i = getActive();
+    if(i) {
+      document.getElementById("delete").disabled = false;
+    }
+  }
+  function addHandler() {
+    var key   = document.getElementById("addkeybox").value;
+    var value = document.getElementById("addvaluebox").value;
+    mydata[key] = value;
+    loadme();
+  }
+  function deleteHandler() {
+    var i = getActive();
+    if(i) {
+      delete mydata[i.text];
+      document.getElementById("delete").disabled = "disabled";
+      loadme();
+    }
+  }
+</script>
+<style type="text/css">
+#theform input,
+#theform select {
+width: 8em;
+}
+</style>
+
+<body onload="loadme();"><h1>hello</h1>
+
+<form id="theform">
+    <select multiple=multiple id="keys" onclick="selectHandler();" >
+      <option>foo</option>
+      <option>bar</option>
+    </select>
+    <select multiple=multiple id="values" >
+      <option>bar</option>
+      <option>bar</option>
+    </select>
+    <input type=button id=delete value=delete disabled=disabled onclick="deleteHandler();"/>
+    <br />
+    <input type=text id=addkeybox value="new key" />
+    <input type=text id=addvaluebox value="new value" />
+    <input type=button id=add value="add" onclick="addHandler()"; />
+</form>
+
+</body>
+</html>
