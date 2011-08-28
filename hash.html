@@ -69,11 +69,21 @@
     var newkey = document.getElementById("addkeybox").value;
     for(var key in mydata) {
       if(key == newkey) {
+        var it;
+        var s = document.getElementById("keys");
         document.getElementById("add").value = "Change";
+        document.getElementById("delete").disabled = false;
+        for(it = 0; it < s.length; ++it) {
+          if(s.options[it].key == key) {
+            s.options[it].selected = true;
+	    break;
+          }
+        }
 	return;
       }
     }
     document.getElementById("add").value = "Add";
+    document.getElementById("delete").disabled = "disabled";
   }
 </script>
 <style type="text/css">
@@ -82,7 +92,7 @@
 /*width: 8em;*/
 }
 #theform select {
-width: 16em;
+width: 100%;
 }
 </style>
 
@@ -93,11 +103,11 @@ width: 16em;
       <option>foo</option>
       <option>bar</option>
     </select>
-    <input type=button id=delete value=Delete disabled=disabled onclick="deleteHandler();"/>
     <br />
-    <input type=text id=addkeybox value="new key" onchange="typeyTypey();" onkeypress="typeyTypey();">
+    <input type=text id=addkeybox value="new key" onchange="typeyTypey();" onkeypress="typeyTypey();" onkeyup="typeyTypey();">:
     <input type=text id=addvaluebox value="new value" />
     <input type=button id=add value="Add" onclick="addHandler()"; />
+    <input type=button id=delete value=Delete disabled=disabled onclick="deleteHandler();"/>
 </form>
 
 </body>
