@@ -1,89 +1,57 @@
 <html><head></head>
 
+<script type="text/javascript" src="./underlays/jquery/ikiwiki/jquery.full.js"></script> 
+
 <script lang="text/javascript">
   var mydata = {
     foo: 'bar',
     baz: 'omg',
   };
-  function clearSelect(s) {
-    while(s.length > 0) {
-      s.remove(0);
-    }
-  }
-  function addToSelect(i,s) {
-      try {
-        s.add(i, null);
-      } catch(ex) {
-        s.add(i); // IE
-      }
-  }
-  function loadme() {
-    var keys = document.getElementById("keys");
-    clearSelect(keys);
+  function refreshSelect() {
+    $('#keys option').remove();
     for(var key in mydata) {
-      var k = document.createElement("option");
-      k.text = key + ": " + mydata[key];
-      k.value = key;
-      addToSelect(k,keys);
+      var v = $('<option>'+key + ": " + mydata[key]+'</option>').attr({
+	value: key,
+      }).appendTo('#keys');
     }
-  }
-  function getActive() {
-    var s = document.getElementById("keys");
-    var it;
-    var i = false;
-    for(it = 0; it < s.length; ++it) {
-      if(s.options[it].selected) {
-        i = s.options[it];
-	break;
-      }
-    }
-    return i;
   }
   function selectHandler() {
-    var i = getActive();
-    if(i) {
-      var keybox   = document.getElementById("addkeybox");
-      var valuebox = document.getElementById("addvaluebox");
-      document.getElementById("delete").disabled = false;
-      keybox.value = i.value;
-      valuebox.value = mydata[i.value];
+    var selected = $('#keys option:selected');
+    /* collapse multi-selection down to the last one. Note last one
+       is sequence order, not selected order, unfortunately. */
+    for(i = 0; i < selected.length - 1; ++i) {
+      selected.eq(i).attr('selected', false);
+    }
+    if(selected) {
+      $("#keybox").val(selected.val());
+      $("#valuebox").val(mydata[selected.val()]);
+      checkAddBox();
     }
   }
   function addHandler() {
-    var key   = document.getElementById("addkeybox").value;
-    var value = document.getElementById("addvaluebox").value;
+    var key   = $("#keybox").attr('value');
+    var value = $("#valuebox").attr('value');
     mydata[key] = value;
-    loadme();
-    typeyTypey();
+    refreshSelect();
+    checkAddBox();
   }
   function deleteHandler() {
-    var i = getActive();
-    if(i) {
-      delete mydata[i.value];
-      document.getElementById("delete").disabled = "disabled";
-      loadme();
-      typeyTypey();
-    }
+    delete mydata[$('#keybox').attr('value')];
+    $("#delete").attr('disabled', 'disabled');
+    refreshSelect();
+    checkAddBox();
   }
-  function typeyTypey() {
-    var newkey = document.getElementById("addkeybox").value;
+  function checkAddBox() {
+    var newkey = $("#keybox").attr('value');
     for(var key in mydata) {
       if(key == newkey) {
-        var it;
-        var s = document.getElementById("keys");
-        document.getElementById("add").value = "Change";
-        document.getElementById("delete").disabled = false;
-        for(it = 0; it < s.length; ++it) {
-          if(s.options[it].key == key) {
-            s.options[it].selected = true;
-	    break;
-          }
-        }
+        $("#add").attr('value', "Change");
+        $("#delete").attr('disabled', false);
 	return;
       }
     }
-    document.getElementById("add").value = "Add";
-    document.getElementById("delete").disabled = "disabled";
+    $("#add").attr('value', "Add");
+    $("#delete").attr('disabled', 'disabled');
   }
 </script>
 <style type="text/css">
@@ -96,16 +64,14 @@ width: 100%;
 }
 </style>
 
-<body onload="loadme();"><h1>hello</h1>
+<body onload="refreshSelect();"><h1>hello</h1>
 
 <form id="theform">
     <select multiple=multiple id="keys" onchange="selectHandler();" >
-      <option>foo</option>
-      <option>bar</option>
     </select>
     <br />
-    <input type=text id=addkeybox value="new key" onchange="typeyTypey();" onkeypress="typeyTypey();" onkeyup="typeyTypey();">:
-    <input type=text id=addvaluebox value="new value" />
+    <input type=text id=keybox value="new key" onchange="checkAddBox();" onkeypress="checkAddBox();" onkeyup="checkAddBox();">:
+    <input type=text id=valuebox value="new value" />
     <input type=button id=add value="Add" onclick="addHandler()"; />
     <input type=button id=delete value=Delete disabled=disabled onclick="deleteHandler();"/>
 </form>
