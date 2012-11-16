@@ -615,3 +615,15 @@ a.login_large_btn:focus {
 #content div.caution { background-image: url("smileys/admon-caution.png"); }
 #content div.warning { background-image: url("smileys/admon-warning.png"); }
 /* admonition end */
+
+/* table plugin: full-width table */
+.fullwidth_table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.fullwidth_table th {
+  border-bottom: 3px double black;
+}
+.fullwidth_table tr:hover td {
+  background: #ffc;
+}
