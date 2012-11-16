@@ -548,3 +548,15 @@ a.openid_large_btn:focus {
 .trailsep {
 	display: none;
 }
+
+/* table plugin: full-width table */
+.fullwidth_table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.fullwidth_table th {
+  border-bottom: 3px double black;
+}
+.fullwidth_table tr:hover td {
+  background: #ffc;
+}
