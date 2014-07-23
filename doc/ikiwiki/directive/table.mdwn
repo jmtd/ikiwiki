@@ -29,6 +29,16 @@ cells. For example:
 	this cell spans **4** columns|||
 	"""]]
 
+To have a multi-row header, supply the header data in in the "header"
+parameter, and omit it from the "data" parameter:
+
+        \[[!table header="""
+        Name | Platform ||
+        | Windows | Mac | Linux
+        """ data="""
+        ikiwiki | ‧ | ✓ | ✓
+        """]]
+
 ## usage
 
 * `data` - Values for the table.
@@ -39,8 +49,10 @@ cells. For example:
    DSV format uses a pipe (`|`), and CSV uses a comma (`,`).
 * `class` - A CSS class for the table html element.
 * `header` - By default, or if set to "row", the first data line is used
-  as the table header. Set it to "no" to make a table without a header, or
-  "column" to make the first column be the header.
+  as the table header. Set it to "no" to make a table without a header; to
+  "column" to make the first column be the header; Otherwise, set it to the
+  values for the table header. This allows you to have multi-row table
+  headers.
 
 For tab-delimited tables (often obtained by copying and pasting from HTML
 or a spreadsheet), `delimiter` must be set to a literal tab character. These
