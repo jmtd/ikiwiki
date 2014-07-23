@@ -66,9 +66,9 @@ sub preprocess (@) {
 	my @data;
 	@data = string_to_data(\%params, $params{data});
 
-	my $header;
+	my @header;
 	if (lc($params{header}) eq "row" || IkiWiki::yesno($params{header})) {
-		$header=shift @data;
+		push @header, shift @data;
 	}
 	if (! @data) {
 		error gettext("empty data");
@@ -78,12 +78,15 @@ sub preprocess (@) {
 	push @lines, defined $params{class}
 			? "<table class=\"".$params{class}.'">'
 			: '<table>';
-	push @lines, "\t<thead>",
-		genrow(\%params, "th", @$header),
-	        "\t</thead>" if defined $header;
-	push @lines, "\t<tbody>" if defined $header;
+	if(@header) {
+		push @lines, "\t<thead>";
+		foreach (@header) {
+			push @lines, genrow(\%params, "th", @$_);
+		}
+		push @lines, "\t</thead>", "\t<tbody>";
+	}
 	push @lines, genrow(\%params, "td", @$_) foreach @data;
-	push @lines, "\t</tbody>" if defined $header;
+	push @lines, "\t</tbody>" if @header;
 	push @lines, '</table>';
 	my $html = join("\n", @lines);
 
