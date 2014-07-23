@@ -64,29 +64,7 @@ sub preprocess (@) {
 	}
 
 	my @data;
-	if (lc $params{format} eq 'csv') {
-		@data=split_csv($params{data},
-			defined $params{delimiter} ? $params{delimiter} : ",",);
-		# linkify after parsing since html link quoting can
-		# confuse CSV parsing
-		@data=map {
-			[ map {
-				IkiWiki::linkify($params{page},
-					$params{destpage}, $_);
-			} @$_ ]
-		} @data;
-	}
-	elsif (lc $params{format} eq 'dsv') {
-		# linkify before parsing since wikilinks can contain the
-		# delimiter
-		$params{data} = IkiWiki::linkify($params{page},
-			$params{destpage}, $params{data});
-		@data=split_dsv($params{data},
-			defined $params{delimiter} ? $params{delimiter} : "|",);
-	}
-	else {
-		error gettext("unknown data format");
-	}
+	@data = string_to_data(\%params, $params{data});
 
 	my $header;
 	if (lc($params{header}) eq "row" || IkiWiki::yesno($params{header})) {
@@ -205,6 +183,36 @@ sub genrow ($@) {
 	push @ret, "\t\t</tr>";
 
 	return @ret;
+}
+
+sub string_to_data(@) {
+	my %params=%{shift()};
+	my $data_in = shift;
+	my @data;
+	if (lc $params{format} eq 'csv') {
+		@data=split_csv($data_in,
+			defined $params{delimiter} ? $params{delimiter} : ",",);
+		# linkify after parsing since html link quoting can
+		# confuse CSV parsing
+		@data=map {
+			[ map {
+				IkiWiki::linkify($data_in,
+					$params{destpage}, $_);
+			} @$_ ]
+		} @data;
+	}
+	elsif (lc $params{format} eq 'dsv') {
+		# linkify before parsing since wikilinks can contain the
+		# delimiter
+		$data_in = IkiWiki::linkify($params{page},
+			$params{destpage}, $data_in);
+		@data=split_dsv($data_in,
+			defined $params{delimiter} ? $params{delimiter} : "|",);
+	}
+	else {
+		error gettext("unknown data format");
+	}
+	return @data;
 }
 
 1
