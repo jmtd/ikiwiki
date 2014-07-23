@@ -69,6 +69,8 @@ sub preprocess (@) {
 	my @header;
 	if (lc($params{header}) eq "row" || IkiWiki::yesno($params{header})) {
 		push @header, shift @data;
+	} elsif (lc($params{header}) ne "column" && lc($params{header}) ne "no"){
+		@header = string_to_data(\%params, $params{header});
 	}
 	if (! @data) {
 		error gettext("empty data");
