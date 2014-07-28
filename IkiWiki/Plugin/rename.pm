@@ -11,17 +11,29 @@ sub import {
 	hook(type => "formbuilder", id => "rename", call => \&formbuilder);
 	hook(type => "sessioncgi", id => "rename", call => \&sessioncgi);
 	hook(type => "rename", id => "rename", call => \&rename_subpages);
+	hook(type => "pageactions", id => "rename", call => \&pageactions);
+}
+
+sub pageactions (@) {
+  my %params=@_;
+  my $page = $params{page};
+  if (check_canrename($page)) {
+    return ("<a href=\"".IkiWiki::cgiurl(do => "rename", page => $page)."\">".
+	gettext("Rename")."</a>");
+  }
+  return ();
 }
 
 sub getsetup () {
 	return 
 		plugin => {
 			safe => 1,
-			rebuild => 0,
+			rebuild => undef,
 			section => "web",
 		},
 }
 
+my $errmsg;
 sub check_canrename ($$$$$$) {
 	my $src=shift;
 	my $srcfile=shift;
@@ -32,18 +44,23 @@ sub check_canrename ($$$$$$) {
 
 	my $attachment=! defined pagetype($pagesources{$src});
 
+	$errmsg = '';
+
 	# Must be a known source file.
 	if (! exists $pagesources{$src}) {
-		error(sprintf(gettext("%s does not exist"),
-			htmllink("", "", $src, noimageinline => 1)));
+		$errmsg = sprintf(gettext("%s does not exist"),
+			htmllink("", "", $src, noimageinline => 1));
+		return 0;
 	}
 	
 	# Must exist on disk, and be a regular file.
 	if (! -e "$config{srcdir}/$srcfile") {
-		error(sprintf(gettext("%s is not in the srcdir, so it cannot be renamed"), $srcfile));
+		$errmsg = sprintf(gettext("%s is not in the srcdir, so it cannot be renamed"), $srcfile);
+		return 0;
 	}
 	elsif (-l "$config{srcdir}/$srcfile" && ! -f _) {
-		error(sprintf(gettext("%s is not a file"), $srcfile));
+		$errmsg = sprintf(gettext("%s is not a file"), $srcfile);
+		return 0;
 	}
 
 	# Must be editable.
@@ -53,30 +70,35 @@ sub check_canrename ($$$$$$) {
 			IkiWiki::Plugin::attachment::check_canattach($session, $src, "$config{srcdir}/$srcfile");
 		}
 		else {
-			error("renaming of attachments is not allowed");
+			$errmsg = "renaming of attachments is not allowed";
+			return 0;
 		}
 	}
 	
 	# Dest checks can be omitted by passing undef.
 	if (defined $dest) {
 		if ($srcfile eq $destfile) {
-			error(gettext("no change to the file name was specified"));
+			$errmsg = gettext("no change to the file name was specified");
+			return 0;
 		}
 
 		# Must be a legal filename.
 		if (IkiWiki::file_pruned($destfile)) {
-			error(sprintf(gettext("illegal name")));
+			$errmsg = sprintf(gettext("illegal name"));
+			return 0;
 		}
 
 		# Must not be a known source file.
 		if ($src ne $dest && exists $pagesources{$dest}) {
-			error(sprintf(gettext("%s already exists"),
-				htmllink("", "", $dest, noimageinline => 1)));
+			$errmsg = sprintf(gettext("%s already exists"),
+				htmllink("", "", $dest, noimageinline => 1));
+			return 0;
 		}
 	
 		# Must not exist on disk already.
 		if (-l "$config{srcdir}/$destfile" || -e _) {
-			error(sprintf(gettext("%s already exists on disk"), $destfile));
+			$errmsg = sprintf(gettext("%s already exists on disk"), $destfile);
+			return 0;
 		}
 	
 		# Must be editable.
@@ -185,8 +207,10 @@ sub rename_start ($$$$) {
 		IkiWiki::Plugin::attachment->can("is_held_attachment") &&
 		IkiWiki::Plugin::attachment::is_held_attachment($page);
 	if (! $held) {
-		check_canrename($page, $pagesources{$page}, undef, undef,
-			$q, $session);
+		unless(check_canrename($page, $pagesources{$page}, undef, undef,
+			$q, $session)) {
+			error($errmsg);
+		}
 	}
 
    	# Save current form state to allow returning to it later
@@ -555,11 +579,13 @@ sub do_rename ($$$) {
 	my $session=shift;
 
 	# First, check if this rename is allowed.
-	check_canrename($rename->{src},
+	unless(check_canrename($rename->{src},
 		$rename->{srcfile},
 		$rename->{dest},
 		$rename->{destfile},
-		$q, $session);
+		$q, $session)) {
+		error($errmsg);
+	}
 
 	# Ensure that the dest directory exists and is ok.
 	IkiWiki::prep_writefile($rename->{destfile}, $config{srcdir});
