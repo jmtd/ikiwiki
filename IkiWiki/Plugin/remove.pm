@@ -29,15 +29,20 @@ sub allowed_dirs {
 	);
 }
 
+my $errmsg;
+
 sub check_canremove ($$$) {
 	my $page=shift;
 	my $q=shift;
 	my $session=shift;
 
+	$errmsg = "";
+
 	# Must be a known source file.
 	if (! exists $pagesources{$page}) {
-		error(sprintf(gettext("%s does not exist"),
-			htmllink("", "", $page, noimageinline => 1)));
+		$errmsg = sprintf(gettext("%s does not exist"),
+			htmllink("", "", $page, noimageinline => 1));
+		return 0;
 	}
 
 	# Must exist in either the srcdir or a suitable underlay (e.g.
@@ -53,10 +58,12 @@ sub check_canremove ($$$) {
 	}
 
 	if (! defined $dir) {
-		error(sprintf(gettext("%s is not in the srcdir, so it cannot be deleted"), $file));
+		$errmsg = sprintf(gettext("%s is not in the srcdir, so it cannot be deleted"), $file);
+		return 0;
 	}
 	elsif (-l "$dir/$file" && ! -f _) {
-		error(sprintf(gettext("%s is not a file"), $file));
+		$errmsg = sprintf(gettext("%s is not a file"), $file);
+		return 0;
 	}
 	
 	# If a user can't upload an attachment, don't let them delete it.
@@ -66,7 +73,8 @@ sub check_canremove ($$$) {
 			IkiWiki::Plugin::attachment::check_canattach($session, $page, "$dir/$file");
 		}
 		else {
-			error("removal of attachments is not allowed");
+			$errmsg = "removal of attachments is not allowed";
+			return 0;
 		}
 	}
 
@@ -150,7 +158,9 @@ sub removal_confirm ($$@) {
 
 	foreach my $page (@pages) {
 		IkiWiki::check_canedit($page, $q, $session);
-		check_canremove($page, $q, $session);
+		unless(check_canremove($page, $q, $session)) {
+			error($errmsg);
+		}
 	}
 
 	# Save current form state to allow returning to it later
@@ -228,7 +238,9 @@ sub sessioncgi ($$) {
 			my @files;
 			foreach my $page (@pages) {
 				IkiWiki::check_canedit($page, $q, $session);
-				check_canremove($page, $q, $session);
+				unless(check_canremove($page, $q, $session)) {
+					error($errmsg);
+				}
 				
 				# This untaint is safe because of the
 				# checks performed above, which verify the
