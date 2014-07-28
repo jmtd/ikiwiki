@@ -10,7 +10,17 @@ sub import {
 	hook(type => "formbuilder_setup", id => "remove", call => \&formbuilder_setup);
 	hook(type => "formbuilder", id => "remove", call => \&formbuilder);
 	hook(type => "sessioncgi", id => "remove", call => \&sessioncgi);
+	hook(type => "pageactions", id => "remove", call => \&pageactions);
+}
 
+sub pageactions (@) {
+  my %params=@_;
+  my $page = $params{page};
+  if (check_canremove($page)) {
+    return ("<a href=\"".IkiWiki::cgiurl(do => "remove", page => $page)."\">".
+	gettext("Remove")."</a>");
+  }
+  return ();
 }
 
 sub getsetup () {
