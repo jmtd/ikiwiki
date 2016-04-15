@@ -1,0 +1,17 @@
+The `warning` directive is provided by the
+[[!iki plugins/admonition desc=admonition]] plugin.
+
+The following markup:
+
+    \[[!warning "Lorem ipsum dolor sit amet, consectetuer adipiscing elit."]]
+
+Will show:
+
+<div class="warning">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</div>
+
+It generates the following HTML, which is the equivalent:
+
+    <div class="warning">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</div>
+
+Other admonitions are available, see
+[[!iki plugins/admonition desc=admonition]] for more and rationale.
