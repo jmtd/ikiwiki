@@ -594,3 +594,24 @@ a.login_large_btn:focus {
 		padding: 4px 4px;
 	}
 }
+
+/* admonition start */
+#content div.caution,
+#content div.important,
+#content div.note,
+#content div.tip,
+#content div.warning {
+    border: 1px solid #aaa;
+    margin: 1em 3em 1em 3em;
+    background-repeat: no-repeat;
+    background-position: 8px 8px; /* small gap around icon */
+    /* 32 is the expected size of the icons */
+    min-height: 48px; /*48=32+8+8 but doesn't work with IE*/
+    padding: 1em 1em 1em 48px;
+}
+#content div.tip { background-image: url("smileys/admon-tip.png"); }
+#content div.note { background-image: url("smileys/admon-note.png"); }
+#content div.important { background-image: url("smileys/admon-important.png"); }
+#content div.caution { background-image: url("smileys/admon-caution.png"); }
+#content div.warning { background-image: url("smileys/admon-warning.png"); }
+/* admonition end */
