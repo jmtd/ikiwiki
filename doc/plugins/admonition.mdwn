@@ -15,30 +15,46 @@ sections of text using a custom style sheet and bright icons.
 * [[ikiwiki/directive/caution]]
 * [[ikiwiki/directive/warning]]
 
-Or, in Ikiwiki markup:
+For example:
 
-    \[[!tip "Lorem ipsum dolor sit amet, consectetuer adipiscing elit."]]
-    \[[!note "Vivamus id enim."]]
-    \[[!important "In id erat non orci commodo lobortis."]]
-    \[[!caution "In id erat non orci commodo lobortis."]]
-    \[[!warning "Phasellus neque orci, porta a, aliquet quis, semper a, massa."]]
+    \[[!tip "Admonitions should be used with care. A page riddled with admonitions will look restless and will be harder to follow than a page where admonitions are used sparingly."]]
 
-Those directives simply create a `<div>` elements in the right
-style. So the above can also be simply written as:
+This will render as:
 
-    <div class="tip">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</div>
-    <div class="note">Vivamus id enim.</div>
-    <div class="important">In id erat non orci commodo lobortis.</div>
-    <div class="caution">In id erat non orci commodo lobortis.</div>
-    <div class="warning">Phasellus neque orci, porta a, aliquet quis, semper a, massa.</div>
+<div class="tip">Admonitions should be used with care. A page riddled
+with admonitions will look restless and will be harder to follow than
+a page where admonitions are used sparingly.</div>
 
-Which will render as:
+Here's other examples:
 
-<div class="tip">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</div>
-<div class="note">Vivamus id enim.</div>
-<div class="important">In id erat non orci commodo lobortis.</div>
-<div class="caution">In id erat non orci commodo lobortis.</div>
-<div class="warning">Phasellus neque orci, porta a, aliquet quis, semper a, massa.</div>
+<div class="note">
+The directive only creates a `<div>` with the appropriate style. You
+can of course create a `<div>` yourself. For example, the following
+will create an important section:
+
+    <div class="important">You can't put admonitions inside
+    admonitions. First, the CSS does not support that, and second,
+    that would be silly.!</div>
+
+... like this:
+</div>
+
+... well, like this really:
+
+<div class="important">You can't put admonitions inside
+admonitions. First, the CSS does not support that, and second, that
+would be silly.</div>
+
+
+Also:
+
+<div class="caution">Note that markup does not work inside
+directives. For that, use the DIV tag directly.</div>
+
+And finally:
+
+<div class="warning">Use warnings where there is a risk of bodily harm
+or data loss.</div>
 
 The admonition plugin does not need to be enabled for the `<div>` to
 render properly. The plugin only enables the directive shortcuts, the
