@@ -25,10 +25,16 @@ ok(checkconfig(), 'check config');
 # simplest possible processing pipeline
 sub render_quick {
     my $content = shift;
-    $content = preprocess('inliner.mdwn', 'inlinee.mdwn', $content);
-    $content = htmlize('inliner.mdwn', 'inlinee.mdwn', 'mdwn', $content);
+    my $page = shift || 'inliner.mdwn';
+    my $destpage = shift || 'inlinee.mdwn';
+    my $format = shift || 'mdwn';
+    $content = preprocess($page, $destpage, $content);
+    $content = htmlize($page, $destpage, $format, $content);
     return $content;
 }
+
+like(render_quick("[[!tip foo]]", 'NA.mdwn', 'NA.mdwn'), qr!<div class="tip">foo</div>\s+!, 'non-existent pages');
+like(render_quick("[[!tip foo]]", 'NA', 'NA.mdwn'), qr!<div class="tip">foo</div>\s+!, 'non-existent formats');
 
 # check all known admonition types
 foreach my $type (qw/tip note important caution warning/) {
