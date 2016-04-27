@@ -45,11 +45,13 @@ will create an important section:
 admonitions. First, the CSS does not support that, and second, that
 would be silly.</div>
 
-
 Also:
 
-<div class="caution">Note that markup does not work inside
-directives. For that, use the DIV tag directly.</div>
+<span/><div class="caution">Note that markup does not work inside
+directives. For that, use the DIV tag directly. Keep in mind that
+Markdown has some quirks as to parsing markup inside HTML blocks: it
+needs to think that it is a "span" element, so you can prefix your
+`<div>` with a `<span/>` element to force it to be parsed.</div>
 
 And finally:
 
