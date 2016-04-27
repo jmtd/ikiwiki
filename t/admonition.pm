@@ -4,7 +4,7 @@ package IkiWiki;
 
 use warnings;
 use strict;
-use Test::More tests => 13;
+use Test::More tests => 17;
 use Encode;
 
 BEGIN { use_ok("IkiWiki"); }
@@ -25,8 +25,8 @@ ok(checkconfig(), 'check config');
 # simplest possible processing pipeline
 sub render_quick {
     my $content = shift;
-    $content = IkiWiki::preprocess('inliner.mdwn', 'inlinee.mdwn', $content);
-    $content = IkiWiki::htmlize('inliner.mdwn', 'inlinee.mdwn', 'mdwn', $content);
+    $content = preprocess('inliner.mdwn', 'inlinee.mdwn', $content);
+    $content = htmlize('inliner.mdwn', 'inlinee.mdwn', 'mdwn', $content);
     return $content;
 }
 
