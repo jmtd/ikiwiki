@@ -1,0 +1,88 @@
+Table directive can not deal with Chinese, when format csv
+
+    \[[!table format=csv data="""
+    a,b,c
+    1,2,你好
+    """
+    ]]
+
+But the below example works well.
+
+    \[[!table format=csv data="""
+    a,b,c
+    1,2,3
+    """
+    ]]
+
+
+The below example works well too
+
+    \[[!table format=dsv delimiter=, data="""
+    a,b,c
+    1,2,你好
+    """
+    ]]
+
+----
+
+> You don't say what actually happens when you try this, but I hit something similar trying unicode symbols in a CSV-based table. (I wasn't aware of the DSV work-around. Thanks!) The specific error  I get trying is
+
+    [\[!table Error: Cannot decode string with wide characters at /usr/lib/x86_64-linux-gnu/perl/5.24/Encode.pm line 243.]]
+
+> That file is owned by the `libperl5` package, but I think I've seen an error mentioning `Text::CSV` i.e. `libtext-csv-perl` when I've encountered this before. -- [[Jon]]
+
+>> A related problem, also fixed by using DSV, is messing up the encoding of non-ASCII, non-wide characters, e.g. £ (workaround was to use &amp;pound; instead) -- [[Jon]]
+
+>>> Sorry, I have faced the same error: \[[!table Error: Cannot decode string with wide characters at /usr/lib/x86_64-linux-gnu/perl/5.24/Encode.pm line 243.]] -- [[tumashu1]]
+
+---
+
+The below patch seem to deal with this problem:
+
+    From d6ed90331b31e4669222c6831f7a0f40f0677fe1 Mon Sep 17 00:00:00 2001
+    From: Feng Shu <tumashu@163.com>
+    Date: Sun, 2 Dec 2018 08:41:39 +0800
+    Subject: [PATCH 2/2] Fix table plugin can handle UTF-8 csv format
+    
+    ---
+     IkiWiki/Plugin/table.pm | 3 ++-
+     1 file changed, 2 insertions(+), 1 deletion(-)
+    
+    From ad1a92c796d907ad293e572a168b6e9a8219623f Mon Sep 17 00:00:00 2001
+    From: Feng Shu <tumashu@163.com>
+    Date: Sun, 2 Dec 2018 08:41:39 +0800
+    Subject: [PATCH 2/2] Fix table plugin can handle UTF-8 csv format
+    
+    ---
+     IkiWiki/Plugin/table.pm | 3 ++-
+     1 file changed, 2 insertions(+), 1 deletion(-)
+    
+    diff --git a/IkiWiki/Plugin/table.pm b/IkiWiki/Plugin/table.pm
+    index f3c425a37..7fea8ab1c 100644
+    --- a/IkiWiki/Plugin/table.pm
+    +++ b/IkiWiki/Plugin/table.pm
+    @@ -135,6 +135,7 @@ sub split_csv ($$) {
+     	my $csv = Text::CSV->new({ 
+     		sep_char	=> $delimiter,
+     		binary		=> 1,
+    +		decode_utf8 => 1,
+     		allow_loose_quotes => 1,
+     	}) || error("could not create a Text::CSV object");
+     	
+    @@ -143,7 +144,7 @@ sub split_csv ($$) {
+     	foreach my $line (@text_lines) {
+     		$l++;
+     		if ($csv->parse($line)) {
+    -			push(@data, [ map { decode_utf8 $_ } $csv->fields() ]);
+    +			push(@data, [ $csv->fields() ]);
+     		}
+     		else {
+     			debug(sprintf(gettext('parse fail at line %d: %s'), 
+    -- 
+    2.19.0
+
+> Thanks, I've applied that patch and added test coverage. [[done]] --[[smcv]]
+
+----
+
+I can confirm that the above patch fixes the issue for me. Thanks! I'm not an ikiwiki committer, but I would encourage them to consider the above. Whilst I'm at it, I would be *really* grateful for some input on [[todo/support_multi-row_table_headers]] which relates to the same plugin. [[Jon]]

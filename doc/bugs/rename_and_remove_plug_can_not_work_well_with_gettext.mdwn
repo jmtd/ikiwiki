@@ -1,0 +1,3 @@
+I have found that the gettext string can not be translated to Chinese
+when I set LC_ALL to zh_CN.UTF-8
+

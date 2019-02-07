@@ -1,3 +1,4 @@
+[[!tag reviewed]]
 [[!template id=gitbranch branch=jon/pagespec_alias author="[[Jon]]"]]
 [[!tag patch wishlist]]I quite often find myself repeating a boiler-plate
 [[ikiwiki/pagespec]] chunk, e.g.
@@ -167,3 +168,46 @@ Unfortunately I haven't figured out how to do the dependencies - I'd really appr
 >>>>> Do you mean that you want them to work in any pagespec, or that you *don't* want them to work in any pagespec? -- [[KathrynAndersen]]
 
 >>>>>> I mean I would want them to work in any pagespec. — [[Jon]]
+
+----
+
+Hi, it's been 7 years since I last looked at this, and I'm surprised to find
+that I'd got it up to a merge-request state; I've dusted it off and done some
+clean up and testing, but it's working (albeit not via websetup). I've revamped
+the docs and rebased the branch. Can someone please consider merging ([[joey]]
+or [[smcv]]?) or otherwise feed back on this? Thanks! — [[Jon]] (2018-09-25)
+
+> To hide it from `websetup`, the `example` needs to be a hash reference
+> like `example => { images => "*.png or *.jpg or *.gif" }`, I think?
+> (Please try it on a websetup-enabled wiki, possibly by copying
+> `t/manual/git_revert` to `t/manual/websetup` and adapting it as required.)
+>
+> For a less magical variant, you could consider using `alias(images)`
+> instead of `images()` for the pagespec syntax that is enabled by the
+> example above. I'm not sure which way is better.
+>
+> If `safe_key` fails, you probably want to log a warning, or even fail
+> `checkconfig` with a fatal `error`?
+>
+> If `checkconfig` detects that the given pagespec function already
+> exists, for example `title` after loading the meta plugin, you probably
+> want to log a warning or fail? It seems you can detect this with
+> `defined ref *$subname{CODE}`.
+>
+> If you define a loop of mutually recursive aliases (or even an alias
+> that refers to itself), I think you'll get infinite recursion.
+> You can probably bypass that with a construct like:
+>
+>     my $entered;
+>     *{ $subname } = sub {
+>         return IkiWiki::ErrorReason->new("Alias $key is defined recursively") if $entered;
+>         $entered = 1;
+>         my $result = IkiWiki::pagespec_match($path, $value);
+>         $entered = 0;
+>         return $result;
+>     }
+>
+> (but don't take my word for it, a regression test would tell you whether
+> this works.)
+>
+> --[[smcv]]

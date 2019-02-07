@@ -18,3 +18,5 @@ Javascript on the *closing* `</body>` tag instead of the *opening* tag.
 
 It also improves the regex to tolerate spaces before the `</body>` tag,
 as some templates have (proper) indentation for the tag.
+
+> [[Applied|done]], thanks --[[smcv]]

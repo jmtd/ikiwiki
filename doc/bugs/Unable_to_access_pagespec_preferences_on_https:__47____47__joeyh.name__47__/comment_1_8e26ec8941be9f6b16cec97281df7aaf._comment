@@ -1,0 +1,17 @@
+[[!comment format=mdwn
+ username="joey"
+ subject="""comment 1"""
+ date="2018-12-12T14:40:46Z"
+ content="""
+Sending an auth token with every notification email would
+not be good from a security POV.
+
+But, the ikiwiki username that has subscribed could be included in the
+emails; the url to the prefs could possibly even have it prefilled
+(unless CSRF protection or something prevents that).
+
+> I think now when I login via either method I'm accessing the account with a username
+
+No, ikiwiki accounts are not connected like this. If you log in with the
+old account it will have separate subscription prefs than the new account.
+"""]]

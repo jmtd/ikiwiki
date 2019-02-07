@@ -69,6 +69,12 @@ sub preprocess (@) {
 			$ret.="<input type=\"hidden\" name=\"num\" value=\"$num\" />\n";
 			$ret.="<input type=\"hidden\" name=\"page\" value=\"$params{page}\" />\n";
 			$ret.="<input type=\"hidden\" name=\"choice\" value=\"$choice\" />\n";
+			if (defined $params{postlink}) {
+				$ret.="<input type=\"hidden\" name=\"postlink\" value=\"".linkpage($params{postlink})."\" />\n";
+			}
+			if (defined $params{posttrail}) {
+				$ret.="<input type=\"hidden\" name=\"posttrail\" value=\"".linkpage($params{posttrail})."\" />\n";
+			}
 			$ret.="<input type=\"submit\" value=\"".gettext("vote")."\" />\n";
 		}
 		$ret.="</p>\n<hr class=poll align=left width=\"$percent%\"/>\n";
@@ -112,13 +118,25 @@ sub sessioncgi ($$) {
 			error("bad page name");
 		}
 
+		my $postvote=urlto($page);
+		if (defined $cgi->param('postlink') && length $cgi->param('postlink')) {
+			$postvote=urlto(bestlink($page, $cgi->param('postlink')));
+		}
+		elsif (defined $cgi->param('posttrail') && length $cgi->param('posttrail')) {
+			my $trailname=bestlink($page, $cgi->param('posttrail'));
+			my $trailnext=$pagestate{$page}{trail}{item}{$trailname}[1];
+			if (defined $trailnext) {
+				$postvote=urlto($trailnext);
+			}
+		}
+
 		# Did they vote before? If so, let them change their vote,
 		# and check for dups.
 		my $choice_param="poll_choice_${page}_$num";
 		my $oldchoice=$session->param($choice_param);
 		if (defined $oldchoice && $oldchoice eq $choice) {
 			# Same vote; no-op.
-			IkiWiki::redirect($cgi, urlto($page));
+			IkiWiki::redirect($cgi, $postvote);
 			exit;
 		}
 
@@ -149,7 +167,7 @@ sub sessioncgi ($$) {
 		};
 		$content =~ s{(\\?)\[\[\Q$prefix\E\s+([^]]+)\s*\]\]}{$edit->($1, $2)}seg;
 
-		# Store their vote, update the page, and redirect to it.
+		# Store their vote, update the page, and redirect.
 		writefile($pagesources{$page}, $config{srcdir}, $content);
 		$session->param($choice_param, $choice);
 		IkiWiki::cgi_savesession($session);
@@ -174,8 +192,7 @@ sub sessioncgi ($$) {
 		eval q{use CGI::Cookie};
 		error($@) if $@;
 		my $cookie = CGI::Cookie->new(-name=> $session->name, -value=> $session->id);
-		print $cgi->redirect(-cookie => $cookie,
-			-url => urlto($page));
+		print $cgi->redirect(-cookie => $cookie, -url => $postvote);
 		exit;
 	}
 }

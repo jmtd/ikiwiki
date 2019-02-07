@@ -1,0 +1,14 @@
+When we edit a table with many many columns, use csv or dsv format is
+not comfortable to work, what about let table plugin support a format
+like [oddmuse longtable plug](https://oddmuse.org/download/oddmuse-2.3.13/tables-long.pl) 
+
+Instead of oddmuse style longtable, we can use YAML as table format:
+
+    -
+      a: 1
+      b: 2
+    -
+      a: 3
+      b: 4
+
+> I think this is a great idea. It could be handled in the existing [[plugins/table]] plugin, with a new format= parameter. YAML sounds more attractive to me than oddmuse. -- [[Jon]]

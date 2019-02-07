@@ -60,9 +60,9 @@ sub pagetemplate (@) {
 sub format (@) {
         my %params=@_;
 
-	if (! ($params{content}=~s!^(<body[^>]*>)!$1.include_javascript($params{page})!em)) {
+	if (! ($params{content}=~s!^(\s*</body[^>]*>)!include_javascript($params{page}).$1!em)) {
 		# no <body> tag, probably in preview mode
-		$params{content}=include_javascript(undef).$params{content};
+		$params{content}=$params{content}.include_javascript(undef);
 	}
 	return $params{content};
 }

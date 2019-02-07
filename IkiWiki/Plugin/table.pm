@@ -135,6 +135,7 @@ sub split_csv ($$) {
 	my $csv = Text::CSV->new({ 
 		sep_char	=> $delimiter,
 		binary		=> 1,
+		decode_utf8 => 1,
 		allow_loose_quotes => 1,
 	}) || error("could not create a Text::CSV object");
 	
@@ -143,7 +144,7 @@ sub split_csv ($$) {
 	foreach my $line (@text_lines) {
 		$l++;
 		if ($csv->parse($line)) {
-			push(@data, [ map { decode_utf8 $_ } $csv->fields() ]);
+			push(@data, [ $csv->fields() ]);
 		}
 		else {
 			debug(sprintf(gettext('parse fail at line %d: %s'), 

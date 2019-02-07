@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki 3.14159\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-28 10:39+0000\n"
+"POT-Creation-Date: 2019-02-07 11:08+0000\n"
 "PO-Revision-Date: 2010-03-14 16:09+0530\n"
 "Last-Translator: Sebastian Kuhnert <mail@sebastian-kuhnert.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
@@ -55,7 +55,7 @@ msgstr "Einstellungen gespeichert."
 msgid "You are banned."
 msgstr "Sie sind ausgeschlossen worden."
 
-#: ../IkiWiki/CGI.pm:491 ../IkiWiki/CGI.pm:492 ../IkiWiki.pm:1676
+#: ../IkiWiki/CGI.pm:491 ../IkiWiki/CGI.pm:492 ../IkiWiki.pm:1675
 msgid "Error"
 msgstr "Fehler"
 
@@ -388,8 +388,9 @@ msgstr "edittemplate %s für %s registriert"
 msgid "Invalid email address."
 msgstr ""
 
-#: ../IkiWiki/Plugin/emailauth.pm:98 ../IkiWiki/Plugin/passwordauth.pm:380
-msgid "Failed to send mail"
+#: ../IkiWiki/Plugin/emailauth.pm:98
+#, fuzzy, perl-format
+msgid "Failed to send mail: %s"
 msgstr "Es konnte keine E-Mail versandt werden"
 
 #: ../IkiWiki/Plugin/emailauth.pm:100
@@ -430,7 +431,7 @@ msgstr "Keine Seite"
 msgid "%s is an attachment, not a page."
 msgstr "Seite %s ist ein Anhang und keine Seite."
 
-#: ../IkiWiki/Plugin/git.pm:933 ../IkiWiki/Plugin/git.pm:997 ../IkiWiki.pm:1896
+#: ../IkiWiki/Plugin/git.pm:933 ../IkiWiki/Plugin/git.pm:997 ../IkiWiki.pm:1895
 #, perl-format
 msgid "you are not allowed to change %s"
 msgstr "Sie dürfen %s nicht verändern"
@@ -463,7 +464,11 @@ msgstr "%s muss angegeben werden, wenn die %s Erweiterung verwandt wird"
 msgid "failed to run graphviz"
 msgstr "graphviz konnte nicht ausgeführt werden"
 
-#: ../IkiWiki/Plugin/graphviz.pm:144
+#: ../IkiWiki/Plugin/graphviz.pm:100 ../IkiWiki/Plugin/table.pm:32
+msgid "cannot find file"
+msgstr "konnte Datei nicht finden"
+
+#: ../IkiWiki/Plugin/graphviz.pm:152
 msgid "prog not a valid graphviz program"
 msgstr "prog ist kein gültiges graphviz-Programm"
 
@@ -612,7 +617,7 @@ msgstr ""
 "multimarkdown ist eingeschaltet, aber Text::MultiMarkdown ist nicht "
 "installiert"
 
-#: ../IkiWiki/Plugin/mdwn.pm:175
+#: ../IkiWiki/Plugin/mdwn.pm:180
 #, perl-format
 msgid "failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"
 msgstr ""
@@ -624,24 +629,29 @@ msgstr ""
 msgid "enclosure not found"
 msgstr "Vorlage (feed) nicht gefunden"
 
-#: ../IkiWiki/Plugin/meta.pm:187
+#: ../IkiWiki/Plugin/meta.pm:162 ../IkiWiki/Plugin/meta.pm:177
+#, fuzzy, perl-format
+msgid "cannot parse date/time: %s"
+msgstr "kann %s nicht lesen: %s"
+
+#: ../IkiWiki/Plugin/meta.pm:203
 msgid "stylesheet not found"
 msgstr "Stylesheet nicht gefunden"
 
-#: ../IkiWiki/Plugin/meta.pm:199
+#: ../IkiWiki/Plugin/meta.pm:215
 #, fuzzy
 msgid "script not found"
 msgstr "Vorlage (feed) nicht gefunden"
 
-#: ../IkiWiki/Plugin/meta.pm:247
+#: ../IkiWiki/Plugin/meta.pm:263
 msgid "redir page not found"
 msgstr "Umleitungsseite nicht gefunden"
 
-#: ../IkiWiki/Plugin/meta.pm:261
+#: ../IkiWiki/Plugin/meta.pm:277
 msgid "redir cycle is not allowed"
 msgstr "Zyklische Umleitungen sind nicht erlaubt"
 
-#: ../IkiWiki/Plugin/meta.pm:451
+#: ../IkiWiki/Plugin/meta.pm:467
 #, fuzzy
 msgid "sort=meta requires a parameter"
 msgstr "erfordert die Parameter 'from' und 'to'"
@@ -704,6 +714,10 @@ msgid "No email address, so cannot email password reset instructions."
 msgstr ""
 "es gibt keine E-Mail Adresse, deshalb kann keine Anweisung zum Zurücksetzen "
 "des Passwortes zugeschickt werden."
+
+#: ../IkiWiki/Plugin/passwordauth.pm:380
+msgid "Failed to send mail"
+msgstr "Es konnte keine E-Mail versandt werden"
 
 #: ../IkiWiki/Plugin/passwordauth.pm:382
 msgid "You have been mailed password reset instructions."
@@ -847,15 +861,15 @@ msgstr ""
 msgid "%s has invalid syntax: must use CODE|NAME"
 msgstr ""
 
-#: ../IkiWiki/Plugin/poll.pm:72 ../IkiWiki/Plugin/poll.pm:87
+#: ../IkiWiki/Plugin/poll.pm:78 ../IkiWiki/Plugin/poll.pm:93
 msgid "vote"
 msgstr "abstimmen"
 
-#: ../IkiWiki/Plugin/poll.pm:86
+#: ../IkiWiki/Plugin/poll.pm:92
 msgid "Write in"
 msgstr ""
 
-#: ../IkiWiki/Plugin/poll.pm:93
+#: ../IkiWiki/Plugin/poll.pm:99
 msgid "Total votes:"
 msgstr "Alle Stimmen:"
 
@@ -1120,10 +1134,6 @@ msgstr "ungültige Wert für width"
 msgid "failed to run php"
 msgstr "konnte PHP nicht ausführen"
 
-#: ../IkiWiki/Plugin/table.pm:32
-msgid "cannot find file"
-msgstr "konnte Datei nicht finden"
-
 #: ../IkiWiki/Plugin/table.pm:88
 msgid "unknown data format"
 msgstr "unbekanntes Datenformat"
@@ -1136,7 +1146,7 @@ msgstr "keine Daten"
 msgid "Direct data download"
 msgstr "Direkter Daten-Download"
 
-#: ../IkiWiki/Plugin/table.pm:149
+#: ../IkiWiki/Plugin/table.pm:150
 #, perl-format
 msgid "parse fail at line %d: %s"
 msgstr "Auswertungsfehler in Zeile %d: %s"
@@ -1361,13 +1371,13 @@ msgid "Please wait"
 msgstr ""
 
 #. translators: The parameter is a C filename.
-#: ../IkiWiki/Wrapper.pm:303
+#: ../IkiWiki/Wrapper.pm:304
 #, perl-format
 msgid "failed to compile %s"
 msgstr "erzeugen von %s fehlgeschlagen"
 
 #. translators: The parameter is a filename.
-#: ../IkiWiki/Wrapper.pm:323
+#: ../IkiWiki/Wrapper.pm:324
 #, perl-format
 msgid "successfully generated %s"
 msgstr "%s wurde erfolgreich erstellt"
@@ -1428,31 +1438,31 @@ msgstr "Laden der für %s benötigten externen Erweiterung fehlgeschlagen: %s"
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr "Präprozessorschleife auf %s in Tiefe %i erkannt"
 
-#: ../IkiWiki.pm:1852
+#: ../IkiWiki.pm:1851
 #, perl-format
 msgid "bad file name %s"
 msgstr "fehlerhafter Dateiname %s"
 
-#: ../IkiWiki.pm:2165
+#: ../IkiWiki.pm:2164
 #, perl-format
 msgid "template %s not found"
 msgstr "Vorlage %s nicht gefunden"
 
-#: ../IkiWiki.pm:2423
+#: ../IkiWiki.pm:2422
 msgid "yes"
 msgstr "ja"
 
-#: ../IkiWiki.pm:2508
+#: ../IkiWiki.pm:2507
 #, fuzzy, perl-format
 msgid "invalid sort type %s"
 msgstr "Unbekannter Sortierungstyp %s"
 
-#: ../IkiWiki.pm:2529
+#: ../IkiWiki.pm:2528
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "Unbekannter Sortierungstyp %s"
 
-#: ../IkiWiki.pm:2678
+#: ../IkiWiki.pm:2677
 #, perl-format
 msgid "cannot match pages: %s"
 msgstr "Kann die Seiten nicht zuordnen: %s"

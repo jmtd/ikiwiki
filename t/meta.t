@@ -28,11 +28,11 @@ push @command, $srcdir, $destdir;
 
 sub write_build_read_compare {
 	my ($pagename, $input, $expected_output) = @_;
+	ok(! system("rm -rf $tmp"), q{setup});
 	ok(! system("mkdir -p $srcdir"), q{setup});
 	writefile("$pagename.mdwn", $srcdir, $input);
 	ok(! system(@command), q{build});
 	like(readfile("$destdir/$pagename/index.html"), $expected_output);
-	ok(! system("rm -rf $tmp"), q{teardown});
 }
 
 write_build_read_compare(
@@ -85,14 +85,14 @@ write_build_read_compare(
 
 write_build_read_compare(
 	'date',
-	q{[[!meta date="12345"]]},
-	qr{<meta name="date" content="12345" />},
+	q{[[!meta date="2000-01-23"]]},
+	qr{<meta name="date" content="2000-01-23" />},
 );
 
 write_build_read_compare(
 	'updated',
-	q{[[!meta updated="12345"]]},
-	qr{<meta name="updated" content="12345" />},
+	q{[[!meta updated="2018-03-21"]]},
+	qr{<meta name="updated" content="2018-03-21" />},
 );
 
 #write_build_read_compare(
@@ -159,6 +159,18 @@ write_build_read_compare(
 	'twittercard2',
 	'[[!meta name="twitter:card" content="player"]]',
 	qr{<meta name="twitter:card" content="player" />},
+);
+
+write_build_read_compare(
+	'malformed_ISO-8601',
+	'[[!meta date="2018-02-281T12:00:00-0500"]]',
+	qr{Error: cannot parse date/time: 2018-02-281T12:00:00-0500},
+);
+
+write_build_read_compare(
+	'nonsense_month',
+	'[[!meta date="2018-14-22T14:22:45-0500"]]',
+	qr{Error: cannot parse date/time: 2018-14-22T14:22:45-0500},
 );
 
 done_testing();

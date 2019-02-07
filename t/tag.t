@@ -3,7 +3,7 @@ package IkiWiki;
 
 use warnings;
 use strict;
-use Test::More tests => 24;
+use Test::More;
 
 BEGIN { use_ok("IkiWiki"); }
 BEGIN { use_ok("IkiWiki::Render"); }
@@ -81,8 +81,4 @@ IkiWiki::gen_autofile("tags/primes.mdwn", \%pages, \@del);
 is_deeply(\%pages, {});
 is_deeply(\@del, ['tags/primes.mdwn']);
 
-
-# cleanup
-ok(! system("rm -rf t/tmp"));
-
-1;
+done_testing;

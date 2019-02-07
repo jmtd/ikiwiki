@@ -50,3 +50,98 @@ command...
 > Any thoughts?
 >
 > -- [[Louis|spalax]]
+
+---
+
+<span id="status">
+# This plugin is unmaintained
+</span>
+
+Unfortunately, since [[I am no longer using Ikiwiki|forum/Some_thoughts_about_Ikiwiki/]], this plugin is unmaintained. I had great ideas for a new version of this plugin (and [started some work](https://atelier.gresille.org/projects/gresille-ikiwiki/repository?utf8=%E2%9C%93&rev=compile2)), but I will not finish this work. I am dumping my TODO list for this plugin (in French) for those who might be interested.
+
+[[!toggle id="TODO" text="See the TODO list."]]
+
+[[!toggleable id="TODO" text="""
+  - [ ] Ajouter un test slideshow avec un minimum de code utilisateur
+    - http://slidesjs.com/
+    - https://stackoverflow.com/questions/12912048/how-to-maintain-aspect-ratio-using-html-img-tag
+  - [x] Faire aussi des tests qui utilisent le YAML du setup
+  - [ ] Se déparrasser des ``DEST_XXX_URL``.
+  - [ ] Se débarrasser des listes de ``config[destname]``.
+  - [x] supprimer source, nosource.
+  - [x] Voir si on supprime `make`
+  - [ ] Voir si la configuration ne peut pas se faire en YAML
+    - [x] Non
+    - [ ] Utiliser du YAML.
+  - [ ] Renommer
+    - [ ] type = rule
+    - [ ] destname = dest
+    - [ ] filenames = src
+    - [ ] ??
+  - [ ] Parser correctement la configuration (fichier de setup + arguments de la directive)
+  - [ ] Traiter src comme un pagespec? Au moins comme un glob?
+  - [ ] Variables :
+    - Génériques :
+      - pagedir: sub/page
+      - tmpdir: /home/user/wiki/.ikiwiki/3840938038409
+      - wikidir: /home/user/wiki
+      - destdir: $config{destdir}
+      - id: un identifiant unique ?
+    - Fichiers :
+      - Variables
+        - PAS DE `SRC*`: TOUT DANS DEST
+        - destname: foo.pdf ($destbasename.$destextension)
+        - destbasename: foo
+        - destextension: pdf
+        - desturl: http://...foo.pdf
+        - destwikiname: sub/page/foo/foo.pdf ($dirname/$destname)
+        - destfullname: /var/www/wiki/sub/page/foo/foo.pdf ($destdir/$destwikiname)
+        - destcontent: contenu de foo.pdf
+      - Variations
+        - destname0, destname1: premier, deuxième fichier source
+        - idem pour les autres variables
+        - destnamelist: liste des fichiers sources, tels qu'accessibles depuis le répertoire temporaire (shell, pour la commande seulement)
+        - destlist: liste des fichiers sources (en utilisant HTML::Template, pour les templates seulement)
+  - [ ] Traiter ``destname`` comme un glob.
+    - [ ] Accéder au premier destname avec DESTNAME.
+    - [ ] Accéder à tous les destname avec DESTNAME0, DESTNAME1, etc.
+    - [ ] Accéder à une liste de destname utilisable dans un `<TMPL_LOOP>`
+  - [ ] Supprimer les fichiers temporaires au début.
+  - [ ] Créer des dossiers temporaires en fonction du hash de ``SOURCEPAGE/FILES/COMMAND``.
+  - [ ] Ne pas re-compiler si le répertoire existe déjà.
+  - [ ] destname ne renomme pas le fichier : il sélectionne quel fichier publier.
+  - [ ] Mais fournir des templates par défaut :
+    - [ ] `compile_source`
+    - [ ] `compile_link` (avec des `var_text` et `var_srctext`)
+    - [ ] `compile_album` (avec un `var_width` et `var_height` et un `slideshow.js` seulement en exemple)
+    - [ ] `compile_raw`
+  - [ ] Doc: Fournir des exemples de règles
+    - [ ] gimp, libreoffice, latex, album, etc.
+  - [ ] Le fichier source n'est pas copié par défaut: si on en a besoin, il faut le mentionner dans les destnames.
+  - [ ] Documentation
+    - [ ] Slideshow (sans compilation)
+    - [ ] Tous les moyens d'accéder aux fichiers (destname, destname0, destnamelist, destlist[destname], etc.)
+  - [ ] Ne pas charger compile2 si compile est activé
+    - [ ] Mettre une option pour forcer
+  - [ ] wikistate: stocker compilé/erreur (rien du tout = pas encore compilé)
+  - [ ] Ajouter un argument `page` pour faire comme si la commande était appelée depuis ladite page?
+  - [ ] Marquer compile comme obsolète
+    - [ ] Source
+    - [ ] Documentation sur ikiwiki
+    - [ ] Warning dans le code
+    - [ ] git tag compile/v0.2
+  - [ ] Prévenir que bibtex2html est obsolète
+"""]]
+
+---
+
+# Quick and dirty replacement
+
+For those how might be interested: I switched from Ikiwiki to [another static site generator](http://getlektor.com), which does not have a `compile` plugin. Before writing it, I used a quick and dirty solution: using a custom `Makefile`, I use `make build` to build my website, which :
+
+- compile the files (e.g. latex documents);
+- build the website.
+
+It started as a quick and dirty fix, but I think I am keeping it.
+
+It should work with Ikiwiki too.

@@ -23,3 +23,102 @@ For usability it would be great if it was possible to display the active waypoin
 *PS. The osm plugin is amazing!*
 
 > Thanks! --[[anarcat]]
+
+-----
+
+## Updated plugin needs review and merge
+
+[[!template id=gitbranch branch=tincho-osm author="[[users/Tincho]]"]]
+
+[[schmonz]] here. I recently tried to use this plugin, had some trouble, and discovered on IRC that [[users/Tincho]] has a largely [rewritten version](https://blog.tincho.org/posts/OSM_in_IkiWiki/) that looks good [on his site](https://blog.tincho.org/Mingle/), but hadn't gotten around to submitting for merge. So we remote-paired on it today, improved a few things, and wrote down what we noticed:
+
+### Features removed
+
+- Google Maps API
+- Multiple layers
+- Customized waypoint icons
+- Full-screen map (via the CGI)
+- Whatever "editable" did (maybe something interactive?)
+- OpenLayers -> Leaflet (if anyone was somehow depending on OpenLayers)
+
+### Features added
+
+- Maps actually work again
+- Maps work when embedded in HTTPS sites
+- Multiple maps and multiple waypoints in a page work properly
+- Maps _do_ appear in inlines
+- Pagestate hash gets cleaned up better after edit/preview/delete
+- Unigue icon for "active waypoint" works, also possible to select manually any waypoint to highlight
+- Good test coverage, including inlines and multiple maps/waypoints per page
+
+### Wishlist
+
+- Optionally do something (render a static image?) for RSS
+- When drawing lines between waypoints that are linked, optionally draw an arrow
+- Performance/ikiwiki-idiomaticness: generate one GeoJSON file per waypoint, then rely on getting changed waypoints from the `changes()` hook
+- Treat optional waypoint description as Markdown (or whatever input format you're using)
+- Simplify scrubbing (maybe avoid needing HTML::Scrubber)
+
+### Questions for reviewers
+
+- Given this is backward-incompatible, dhould we call it something other than "osm"?
+- What needs scrubbing? Have we covered all the bases? Too many bases?
+- Should we vendor Leaflet into an underlay, instead of needing a URL to load it from a CDN? [[schmonz]] somewhat prefers this, so we avoid needing external resources by default, avoid breaking when the Leaflet CDN is down, etc.
+- Should we write some tests before merging? `osm.pm` hadn't had any, FWIW -- [[users/Tincho]] Done
+
+Bump! Tincho would like to see us merge his effort, and FWIW I'd also
+rather not have to carry around a local copy of his work to get a map
+with waypoints on my HTTPS site. [[smcv]], can you spare some round
+tuits to give us your thoughts? --[[schmonz]]
+
+> I've never used the osm plugin, so I don't know how well it works at the moment.
+> I think the lack of test coverage has been a significant factor in it not actually
+> working. Even if we don't have test-driven development, the next best thing is
+> bug-driven testing: every time something regresses, we should have a test that
+> asserts it doesn't fail like that again.
+>
+> If the current osm plugin is at all usable, then we'd need to look at the specific
+> ways in which the new one is incompatible, but if the current osm plugin doesn't
+> actually work anyway, then the new one can't break working sites...
+>
+> Determining whether there's HTML injection is certainly an important thing to
+> review. We need to be able to say what's trusted, what's attacker-controlled, and
+> what was originally attacker-controlled but has been sanitized or escaped and
+> hence has reached a trusted state.
+>
+> As an upstream developer, I would say that my preferred approach to Leaflet would
+> be to vendor it and use the vendored copy by default, but have a configuration
+> parameter to load it from a CDN instead. In the Debian package, to avoid the
+> situation we've got into with jQuery where we have a vendored copy that we
+> don't dare to update to a new version because we don't know what it will break,
+> I think there should be a dependency on libjs-leaflet and a dpkg trigger to
+> copy its files into our underlay (ideally we'd symlink it, but ikiwiki doesn't
+> follow symlinks, and I don't think an approach to symlinks in underlays that
+> isn't a security flaw is going to happen any time soon). --[[smcv]]
+
+----
+
+Just stumbled onto this. 
+
+With regards to features lost my only concern would be customizable waypoint icons. It would be really great to be able to at least change colour from the config. The wishlist point of generating one file per waypoint might solve an issue I have with osm only showing the most recently added waypoints unless I rebuild. I have however a huge number of waypoints.
+
+Looks like good changes to me!
+
+> did a grep `Placemark pois.kml|wc -l` which returned 3468. Which perhaps isn't that much? I'm thinking about how individual poi files might affect performance. My performance troubles are more likely to be with my tweaked album and img plugins though.
+
+--[[kjs]]
+
+> The issue about not getting all the waipoints until you rebuild has been solved, the current plugin had issues with keeping track of updated and deleted waypoints which is now fixed in my branch. --[[users/Tincho]]
+
+----
+
+I've done some initial testing now and I'm wondering if behaviour has changed with regards to the waypoint link. With the old plugin I get a map marker and link to the main map from each waypoint. See <http://img.kalleswork.net/Peter_Celsing-Filmhuset/IMGP7104/> for example, the marker is below the image. My initial tests with your plugin doesn't create this link as far as I can tell. Have I misconfigured something or is it indeed missing? --[[users/kjs]]
+
+> It is not there any more (I should document this, thanks for pointing it out). I thought that it was not good to have that marker inserted unconditionally; also, there is no full-page map any more with this plugin (which required a cgi mode). The alternative will be to have a page with the map, and adding a link to it. --[[users/Tincho]]
+
+>> That's unfortunate for me as embedding a map on each page with a waypoint is a bit to expensive bandwidth wise. It will slow down the browsing to much. Are there any means of creating maps with subsets of waypoints. Perhaps tags somehow? Can a waypoint appear on multiple maps? I'm thinking having the waypoint appear on a central mega-map and on a sub map, In my case a per building map. Currently all my map info is automatically generated from the exif data. So I just upload the images to an underlay dir and git push my 'building' page which then generates an image gallery and a map of all my photos. I'm trying to avoid typing to much! ;) --[[users/kjs]]
+
+>>> What I meant was that you could add a wiki link (to a page with a map) next to each waypoint to simulate the old behaviour. 
+>>> Maps with subsets of waypoints, waypoint in multiple maps: no, because a single GeoJSON file is created for each "map". But something that could be added is the ability to merge multiple maps into one view, as separate layers. --[[users/tincho]]
+
+>>>> A wiki link to a map page will show the whole map zoomed out I presume so that won't be helful when I have pois across the globe and you want to know which side of a building the photo is taken from :( Merging maps would be a very good feature! If it could be done with a pagespec type thing it would be awesome. For my use case I could then have a map at each building page showing the locations of all the photos under that page. The map file would be reasonably small. If these maps could then be merged via a directive with globbing of some sort into a mega-map that would be a very flexibly solution that automatically updates when I add new maps (buildings). I just need to use my non-existent programming skills to force my hack plugins into automatically creating per album maps.  -[[users/kjs]]

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ikiwiki 3.141\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-28 10:39+0000\n"
+"POT-Creation-Date: 2019-02-07 11:08+0000\n"
 "PO-Revision-Date: 2010-10-03 10:42+0200\n"
 "Last-Translator: Philippe Batailler <philippe.batailler@free.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -57,7 +57,7 @@ msgstr "Les préférences ont été enregistrées."
 msgid "You are banned."
 msgstr "Vous avez été banni."
 
-#: ../IkiWiki/CGI.pm:491 ../IkiWiki/CGI.pm:492 ../IkiWiki.pm:1676
+#: ../IkiWiki/CGI.pm:491 ../IkiWiki/CGI.pm:492 ../IkiWiki.pm:1675
 msgid "Error"
 msgstr "Erreur"
 
@@ -385,8 +385,9 @@ msgstr "edittemplate %s enregistré pour %s"
 msgid "Invalid email address."
 msgstr ""
 
-#: ../IkiWiki/Plugin/emailauth.pm:98 ../IkiWiki/Plugin/passwordauth.pm:380
-msgid "Failed to send mail"
+#: ../IkiWiki/Plugin/emailauth.pm:98
+#, fuzzy, perl-format
+msgid "Failed to send mail: %s"
 msgstr "Impossible d'envoyer un courriel"
 
 #: ../IkiWiki/Plugin/emailauth.pm:100
@@ -427,7 +428,7 @@ msgstr "Ce n'est pas une page."
 msgid "%s is an attachment, not a page."
 msgstr "%s est une pièce jointe, pas une page."
 
-#: ../IkiWiki/Plugin/git.pm:933 ../IkiWiki/Plugin/git.pm:997 ../IkiWiki.pm:1896
+#: ../IkiWiki/Plugin/git.pm:933 ../IkiWiki/Plugin/git.pm:997 ../IkiWiki.pm:1895
 #, perl-format
 msgid "you are not allowed to change %s"
 msgstr "Vous n'êtes pas autorisé à modifier %s"
@@ -460,7 +461,11 @@ msgstr "Vous devez indiquer %s lors de l'utilisation du greffon %s."
 msgid "failed to run graphviz"
 msgstr "Échec du lancement de graphviz"
 
-#: ../IkiWiki/Plugin/graphviz.pm:144
+#: ../IkiWiki/Plugin/graphviz.pm:100 ../IkiWiki/Plugin/table.pm:32
+msgid "cannot find file"
+msgstr "Fichier introuvable"
+
+#: ../IkiWiki/Plugin/graphviz.pm:152
 msgid "prog not a valid graphviz program"
 msgstr "Ce programme n'est pas un programme graphviz valable"
 
@@ -607,7 +612,7 @@ msgstr ""
 msgid "multimarkdown is enabled, but Text::MultiMarkdown is not installed"
 msgstr "mulitmarkdown est activé mais Text::Multimarkdown n'est pas installé"
 
-#: ../IkiWiki/Plugin/mdwn.pm:175
+#: ../IkiWiki/Plugin/mdwn.pm:180
 #, perl-format
 msgid "failed to load Markdown.pm perl module (%s) or /usr/bin/markdown (%s)"
 msgstr ""
@@ -619,24 +624,29 @@ msgstr ""
 msgid "enclosure not found"
 msgstr "Flux introuvable "
 
-#: ../IkiWiki/Plugin/meta.pm:187
+#: ../IkiWiki/Plugin/meta.pm:162 ../IkiWiki/Plugin/meta.pm:177
+#, fuzzy, perl-format
+msgid "cannot parse date/time: %s"
+msgstr "Lecture impossible de %s : %s"
+
+#: ../IkiWiki/Plugin/meta.pm:203
 msgid "stylesheet not found"
 msgstr "Feuille de style introuvable "
 
-#: ../IkiWiki/Plugin/meta.pm:199
+#: ../IkiWiki/Plugin/meta.pm:215
 #, fuzzy
 msgid "script not found"
 msgstr "%s introuvable"
 
-#: ../IkiWiki/Plugin/meta.pm:247
+#: ../IkiWiki/Plugin/meta.pm:263
 msgid "redir page not found"
 msgstr "Page de redirection introuvable"
 
-#: ../IkiWiki/Plugin/meta.pm:261
+#: ../IkiWiki/Plugin/meta.pm:277
 msgid "redir cycle is not allowed"
 msgstr "Redirection cyclique non autorisée"
 
-#: ../IkiWiki/Plugin/meta.pm:451
+#: ../IkiWiki/Plugin/meta.pm:467
 msgid "sort=meta requires a parameter"
 msgstr "sort=meta demande un paramètre."
 
@@ -698,6 +708,10 @@ msgid "No email address, so cannot email password reset instructions."
 msgstr ""
 "Aucune adresse indiquée. Impossible d'envoyer les instructions pour "
 "réinitialiser le mot de passe."
+
+#: ../IkiWiki/Plugin/passwordauth.pm:380
+msgid "Failed to send mail"
+msgstr "Impossible d'envoyer un courriel"
 
 #: ../IkiWiki/Plugin/passwordauth.pm:382
 msgid "You have been mailed password reset instructions."
@@ -845,15 +859,15 @@ msgstr ""
 msgid "%s has invalid syntax: must use CODE|NAME"
 msgstr "La syntaxe de %s n'est pas correcte : il faut utiliser CODE|NOM"
 
-#: ../IkiWiki/Plugin/poll.pm:72 ../IkiWiki/Plugin/poll.pm:87
+#: ../IkiWiki/Plugin/poll.pm:78 ../IkiWiki/Plugin/poll.pm:93
 msgid "vote"
 msgstr "Voter"
 
-#: ../IkiWiki/Plugin/poll.pm:86
+#: ../IkiWiki/Plugin/poll.pm:92
 msgid "Write in"
 msgstr ""
 
-#: ../IkiWiki/Plugin/poll.pm:93
+#: ../IkiWiki/Plugin/poll.pm:99
 msgid "Total votes:"
 msgstr "Total des suffrages :"
 
@@ -1118,10 +1132,6 @@ msgstr "Largeur incorrecte"
 msgid "failed to run php"
 msgstr "Échec du lancement de php"
 
-#: ../IkiWiki/Plugin/table.pm:32
-msgid "cannot find file"
-msgstr "Fichier introuvable"
-
 #: ../IkiWiki/Plugin/table.pm:88
 msgid "unknown data format"
 msgstr "Format de données inconnu"
@@ -1134,7 +1144,7 @@ msgstr "Pas de données"
 msgid "Direct data download"
 msgstr "Téléchargement direct des données"
 
-#: ../IkiWiki/Plugin/table.pm:149
+#: ../IkiWiki/Plugin/table.pm:150
 #, perl-format
 msgid "parse fail at line %d: %s"
 msgstr "Erreur d'analyse à la ligne %d : %s"
@@ -1360,13 +1370,13 @@ msgid "Please wait"
 msgstr ""
 
 #. translators: The parameter is a C filename.
-#: ../IkiWiki/Wrapper.pm:303
+#: ../IkiWiki/Wrapper.pm:304
 #, perl-format
 msgid "failed to compile %s"
 msgstr "Échec de la compilation de %s"
 
 #. translators: The parameter is a filename.
-#: ../IkiWiki/Wrapper.pm:323
+#: ../IkiWiki/Wrapper.pm:324
 #, perl-format
 msgid "successfully generated %s"
 msgstr "%s a été créé avec succès"
@@ -1424,31 +1434,31 @@ msgstr "Impossible de charger le greffon externe nécessaire au greffon %s : %s
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr "Une boucle de prétraitement a été détectée sur %s à hauteur de %i"
 
-#: ../IkiWiki.pm:1852
+#: ../IkiWiki.pm:1851
 #, perl-format
 msgid "bad file name %s"
 msgstr "Nom de fichier incorrect %s"
 
-#: ../IkiWiki.pm:2165
+#: ../IkiWiki.pm:2164
 #, perl-format
 msgid "template %s not found"
 msgstr "Modèle de page %s introuvable"
 
-#: ../IkiWiki.pm:2423
+#: ../IkiWiki.pm:2422
 msgid "yes"
 msgstr "oui"
 
-#: ../IkiWiki.pm:2508
+#: ../IkiWiki.pm:2507
 #, perl-format
 msgid "invalid sort type %s"
 msgstr "Type de tri %s inconnu"
 
-#: ../IkiWiki.pm:2529
+#: ../IkiWiki.pm:2528
 #, perl-format
 msgid "unknown sort type %s"
 msgstr "Type de tri %s inconnu"
 
-#: ../IkiWiki.pm:2678
+#: ../IkiWiki.pm:2677
 #, perl-format
 msgid "cannot match pages: %s"
 msgstr "Impossible de trouver les pages : %s"

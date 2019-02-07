@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-11 15:54+0000\n"
+"POT-Creation-Date: 2019-02-07 11:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -55,7 +55,7 @@ msgstr ""
 msgid "You are banned."
 msgstr ""
 
-#: ../IkiWiki/CGI.pm:491 ../IkiWiki/CGI.pm:492 ../IkiWiki.pm:1676
+#: ../IkiWiki/CGI.pm:491 ../IkiWiki/CGI.pm:492 ../IkiWiki.pm:1675
 msgid "Error"
 msgstr ""
 
@@ -379,8 +379,9 @@ msgstr ""
 msgid "Invalid email address."
 msgstr ""
 
-#: ../IkiWiki/Plugin/emailauth.pm:98 ../IkiWiki/Plugin/passwordauth.pm:380
-msgid "Failed to send mail"
+#: ../IkiWiki/Plugin/emailauth.pm:98
+#, perl-format
+msgid "Failed to send mail: %s"
 msgstr ""
 
 #: ../IkiWiki/Plugin/emailauth.pm:100
@@ -421,7 +422,7 @@ msgstr ""
 msgid "%s is an attachment, not a page."
 msgstr ""
 
-#: ../IkiWiki/Plugin/git.pm:933 ../IkiWiki/Plugin/git.pm:997 ../IkiWiki.pm:1896
+#: ../IkiWiki/Plugin/git.pm:933 ../IkiWiki/Plugin/git.pm:997 ../IkiWiki.pm:1895
 #, perl-format
 msgid "you are not allowed to change %s"
 msgstr ""
@@ -453,7 +454,11 @@ msgstr ""
 msgid "failed to run graphviz"
 msgstr ""
 
-#: ../IkiWiki/Plugin/graphviz.pm:144
+#: ../IkiWiki/Plugin/graphviz.pm:100 ../IkiWiki/Plugin/table.pm:32
+msgid "cannot find file"
+msgstr ""
+
+#: ../IkiWiki/Plugin/graphviz.pm:152
 msgid "prog not a valid graphviz program"
 msgstr ""
 
@@ -604,23 +609,28 @@ msgstr ""
 msgid "enclosure not found"
 msgstr ""
 
-#: ../IkiWiki/Plugin/meta.pm:187
+#: ../IkiWiki/Plugin/meta.pm:162 ../IkiWiki/Plugin/meta.pm:177
+#, perl-format
+msgid "cannot parse date/time: %s"
+msgstr ""
+
+#: ../IkiWiki/Plugin/meta.pm:203
 msgid "stylesheet not found"
 msgstr ""
 
-#: ../IkiWiki/Plugin/meta.pm:199
+#: ../IkiWiki/Plugin/meta.pm:215
 msgid "script not found"
 msgstr ""
 
-#: ../IkiWiki/Plugin/meta.pm:247
+#: ../IkiWiki/Plugin/meta.pm:263
 msgid "redir page not found"
 msgstr ""
 
-#: ../IkiWiki/Plugin/meta.pm:261
+#: ../IkiWiki/Plugin/meta.pm:277
 msgid "redir cycle is not allowed"
 msgstr ""
 
-#: ../IkiWiki/Plugin/meta.pm:451
+#: ../IkiWiki/Plugin/meta.pm:467
 msgid "sort=meta requires a parameter"
 msgstr ""
 
@@ -678,6 +688,10 @@ msgstr ""
 
 #: ../IkiWiki/Plugin/passwordauth.pm:353
 msgid "No email address, so cannot email password reset instructions."
+msgstr ""
+
+#: ../IkiWiki/Plugin/passwordauth.pm:380
+msgid "Failed to send mail"
 msgstr ""
 
 #: ../IkiWiki/Plugin/passwordauth.pm:382
@@ -811,15 +825,15 @@ msgstr ""
 msgid "%s has invalid syntax: must use CODE|NAME"
 msgstr ""
 
-#: ../IkiWiki/Plugin/poll.pm:72 ../IkiWiki/Plugin/poll.pm:87
+#: ../IkiWiki/Plugin/poll.pm:78 ../IkiWiki/Plugin/poll.pm:93
 msgid "vote"
 msgstr ""
 
-#: ../IkiWiki/Plugin/poll.pm:86
+#: ../IkiWiki/Plugin/poll.pm:92
 msgid "Write in"
 msgstr ""
 
-#: ../IkiWiki/Plugin/poll.pm:93
+#: ../IkiWiki/Plugin/poll.pm:99
 msgid "Total votes:"
 msgstr ""
 
@@ -1082,10 +1096,6 @@ msgstr ""
 msgid "failed to run php"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:32
-msgid "cannot find file"
-msgstr ""
-
 #: ../IkiWiki/Plugin/table.pm:88
 msgid "unknown data format"
 msgstr ""
@@ -1098,7 +1108,7 @@ msgstr ""
 msgid "Direct data download"
 msgstr ""
 
-#: ../IkiWiki/Plugin/table.pm:149
+#: ../IkiWiki/Plugin/table.pm:150
 #, perl-format
 msgid "parse fail at line %d: %s"
 msgstr ""
@@ -1309,13 +1319,13 @@ msgid "Please wait"
 msgstr ""
 
 #. translators: The parameter is a C filename.
-#: ../IkiWiki/Wrapper.pm:303
+#: ../IkiWiki/Wrapper.pm:304
 #, perl-format
 msgid "failed to compile %s"
 msgstr ""
 
 #. translators: The parameter is a filename.
-#: ../IkiWiki/Wrapper.pm:323
+#: ../IkiWiki/Wrapper.pm:324
 #, perl-format
 msgid "successfully generated %s"
 msgstr ""
@@ -1371,31 +1381,31 @@ msgstr ""
 msgid "preprocessing loop detected on %s at depth %i"
 msgstr ""
 
-#: ../IkiWiki.pm:1852
+#: ../IkiWiki.pm:1851
 #, perl-format
 msgid "bad file name %s"
 msgstr ""
 
-#: ../IkiWiki.pm:2165
+#: ../IkiWiki.pm:2164
 #, perl-format
 msgid "template %s not found"
 msgstr ""
 
-#: ../IkiWiki.pm:2423
+#: ../IkiWiki.pm:2422
 msgid "yes"
 msgstr ""
 
-#: ../IkiWiki.pm:2508
+#: ../IkiWiki.pm:2507
 #, perl-format
 msgid "invalid sort type %s"
 msgstr ""
 
-#: ../IkiWiki.pm:2529
+#: ../IkiWiki.pm:2528
 #, perl-format
 msgid "unknown sort type %s"
 msgstr ""
 
-#: ../IkiWiki.pm:2678
+#: ../IkiWiki.pm:2677
 #, perl-format
 msgid "cannot match pages: %s"
 msgstr ""

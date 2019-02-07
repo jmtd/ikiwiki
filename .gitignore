@@ -27,3 +27,5 @@ underlays/locale
 /t/tmp/
 /t/manual/*/git/
 /t/manual/*/html/
+/t/tinyblog/.ikiwiki/
+/t/tinypodcast/.ikiwiki/

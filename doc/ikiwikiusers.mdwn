@@ -194,7 +194,7 @@ Personal sites and blogs
 * [Salient Dream](http://www.salientdream.com/) - All Things Strange. 
 * [Anton Berezin's blog](http://blog.tobez.org/)
 * [Waldgarten]( http://waldgarten.greenonion.org/ ) News and documentation of a permaculture inspired neighbourhood-garden located in Hamburg, Germany.
-* [Frohdo](https://frohdo.de) - With raw food against back pain and other diseases
+* [Waldfarm](https://waldfarm.de) - Natural Life by Natural Farming, Natürliches Leben mit natürlicher Landwirtschaft
 * [[OscarMorante]]'s [personal site](http://oscar.morante.eu).
 * [Puckspage]( http://www.puckspage.org/ ) Political and personal blog in German. The name comes from the elf out of midsummer nights dream.  
 * [[LucaCapello]]'s [homepage](http://luca.pca.it)
@@ -209,7 +209,6 @@ Personal sites and blogs
 * Kalle Söderman: [Seen Architecture](http://img.kalleswork.net), [Stockholm Project](http://stockholm.kalleswork.net) - Mainly -image galleries using the album and osm plugins with a customized html5 theme.
 * James Richardson's [wiki](https://jamestechnotes.com), [blog](https://jamesrichardson.name), and online [resume](https://resume.jamesrichardson.name).
 * [Amitai Schleier's site](https://schmonz.com/)
-* [[spalax]]'s [professional website](http://paternault.fr)
 * [Aloodo Blog](http://blog.aloodo.org/)
 * Ninguém tem blog! - Restricted ikiwiki hosting
   * [Dissertos radicais](http://dissertosradicais.tem.blog.br)
@@ -221,3 +220,4 @@ Personal sites and blogs
 * [Matto's personal website](https://box.matto.nl)
 * [Rob Sayers' personal website](http://www.robsayers.com)
 * [Svetlana Tkachenko's personal website](http://svetlana.nfshost.com/index.en.html) - personal site, no blog
+* [re:fi.64's personal wiki](https://wiki.refi64.com/)

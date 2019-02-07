@@ -18,7 +18,7 @@ else {
 		--templatedir=templates));
 }
 
-ok(! system("rm -rf t/tmp"));
+ok(! system("rm -rf t/tmp t/tinyblog/.ikiwiki"));
 ok(! system("mkdir t/tmp"));
 ok(! system(@command, qw(--plugin inline --url=http://example.com
 		--cgiurl=http://example.com/ikiwiki.cgi --rss --atom
@@ -27,6 +27,5 @@ ok(! system(@command, qw(--plugin inline --url=http://example.com
 my $guid="http://example.com/post/";
 ok(length `egrep '<guid.*>$guid</guid>' t/tmp/out/index.rss`);
 ok(length `egrep '<id>$guid</id>' t/tmp/out/index.atom`);
-ok(! system("rm -rf t/tmp t/tinyblog/.ikiwiki"));
 
 done_testing();

@@ -29,6 +29,8 @@ else {
 		--templatedir=templates));
 }
 
+ok(! system("rm -rf t/tmp"));
+
 writefile("test.setup", "t/tmp", <<EOF
 # IkiWiki::Setup::Yaml - YAML formatted setup file
 wikiname: this is the name of my wiki

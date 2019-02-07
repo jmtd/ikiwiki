@@ -6,6 +6,7 @@ use File::Path qw(make_path remove_tree);
 
 BEGIN { use_ok("IkiWiki"); }
 
+remove_tree("t/tmp");
 make_path("t/tmp/libdir");
 make_path("t/tmp/libdirs");
 make_path("t/tmp/libdirs/1");
@@ -35,8 +36,5 @@ ok(grep { m/^test_plugin_in_libdir_2$/ } @plugins);
 ok(grep { m/^ext_plugin_in_libdir$/ } @plugins);
 ok(grep { m/^ext_plugin_in_libdir_1$/ } @plugins);
 ok(grep { m/^ext_plugin_in_libdir_2$/ } @plugins);
-
-remove_tree("t/tmp/libdir");
-remove_tree("t/tmp/libdirs");
 
 done_testing;

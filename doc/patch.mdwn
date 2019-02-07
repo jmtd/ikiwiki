@@ -8,5 +8,8 @@ If your patch is non-trivial and might need several iterations to get
 right, or you'd just like to make it easy for [[Joey]] to apply it,
 please consider publishing a [[git]] [[branch|branches]].
 
+Patches that have been reviewed and need changes before they are merged
+are listed separately, on the [[reviewed]] list.
+
 [[!inline pages="(todo/* or bugs/*) and link(patch) and !link(bugs/done) and
-!link(todo/done) and !*/Discussion" rootpage="todo" archive="yes"]]
+!link(todo/done) and !link(reviewed) and !*/Discussion" rootpage="todo" archive="yes"]]

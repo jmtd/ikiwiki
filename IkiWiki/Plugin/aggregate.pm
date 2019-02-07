@@ -621,11 +621,11 @@ sub add_page (@) {
 		# escape slashes and periods in title so it doesn't specify
 		# directory name or trigger ".." disallowing code.
 		$page=~s!([/.])!"__".ord($1)."__"!eg;
-		$page=$feed->{dir}."/".$page;
-		($page)=$page=~/$config{wiki_file_regexp}/;
 		if (! defined $page || ! length $page) {
 			$page=$feed->{dir}."/item";
 		}
+		$page=$feed->{dir}."/".$page;
+		($page)=$page=~/$config{wiki_file_regexp}/;
 		my $c="";
 		while (exists $IkiWiki::pagecase{lc $page.$c} ||
 		       -e $IkiWiki::Plugin::transient::transientdir."/".htmlfn($page.$c) ||

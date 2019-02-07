@@ -23,5 +23,12 @@ Parameters:
   another choice to the poll.
 * `total` - Show total number of votes at bottom of poll. Default is "yes".
 * `percent` - Whether to display percents. Default is "yes".
+* `postlink` - By default after voting the updated page containing the poll
+  is displayed. This parameter allows advancing onward to another page.
+  This is useful for multi-page polls.
+* `posttrail` - Similar to postvote, but allows advancing to the next page
+  on a trail after a vote. The value of the parameter is the name of the
+  page that defines the trail to follow. The trail plugin must be
+  enabled for this to work.
 
 [[!meta robots="noindex, follow"]]
