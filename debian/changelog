@@ -1,4 +1,8 @@
-ikiwiki (3.20180311-2) UNRELEASED; urgency=medium
+ikiwiki (3.20190207-1) UNRELEASED; urgency=medium
+
+  [ Simon McVittie ]
+  * New upstream release
+    - Hide popup template content from documentation (Closes: #898836)
 
   [ Ondřej Nový ]
   * d/changelog: Remove trailing whitespaces
