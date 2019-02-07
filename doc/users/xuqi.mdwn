@@ -1,0 +1,1 @@
+Hi there, I'm XU Qi (he/him). I am an editor (who process and critique literature works, I don't compete with Vim or Emacs). I have been using [[ikiwiki]] on and off for 4 years. Comments welcome.

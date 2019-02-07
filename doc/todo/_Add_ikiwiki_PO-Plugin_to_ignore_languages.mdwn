@@ -1,0 +1,22 @@
+[[!template  id=gitbranch branch=feature/15355-po-plugin-disable-languages author="[[hefee]]"]]
+
+`po_disabled_languages` is used to disable languages on the website. It
+can be used to prepare new translations, while it will hide those from
+the end-user. More precisely, PO files for these languages are updated
+normally, however, HTML creation will be disabled and no reference to
+these translations will be visible on the website.
+
+See also downstream bug report in tails: <https://labs.riseup.net/code/issues/15355>
+
+> From the downstream bug report it appears this branch is not yet
+> considered ready (as of February 2019), so I haven't attempted to
+> review it.
+>
+> As with everything else in the `po` plugin: I would really want to see
+> some regression test coverage before merging this, because as far as I'm
+> aware none of the ikiwiki maintainers use the `po` plugin, so we are
+> not able to detect regressions other than via the automated tests. That
+> isn't a good situation to be in for a plugin that uses `IkiWiki::inject`
+> to monkey-patch ikiwiki internals. If this plugin is important to you,
+> more test coverage would be very much appreciated.
+> --[[smcv]]

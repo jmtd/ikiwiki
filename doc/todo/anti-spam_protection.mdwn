@@ -34,3 +34,57 @@ to check for common spam signatures. --[[Joey]]
 I am sorry to say that neither those solutions are sufficient for a site that allows anonymous comments. blogspam lets thousands of commits through here, as i described in [[todo/commandline_comment_moderation]]. Now, maybe I didn't configure blogspam correctly, I am not sure. I just enabled the plugin and set `blogspam_pagespec: postcomment(blog/*) or */discussion`. I have also imported the blocklist from this wiki's ikiwiki.setup, generated from [[spam_fighting]]. I have had to add around 10 IPs to that list already.
 
 It seems to me a list of blocked URLs or blocked IPs as mentionned above would be an interesting solution. blogspam is great, but the API doesn't seem to support reporting IPs or bad content back, which seems to be a major problem in working around false negatives. I'm tempted to just remove the `done` tag above, because this is clearly not fixed for me here... --[[anarcat]]
+
+----
+
+Update, ~3 years later... Situation hasn't improved much. If anything, things are worse now as [blogspam](https://blogspam.net/) was [almost shutdown](https://blog.steve.fi/possibly_retiring_blogspam_net.html). It's still up, but it's unclear if it's doing anything. I just went through comment moderation for about 3000 comments, all of which were spam, except *one*. And the only reason I went there is because I *asked* someone to comment on a blog post instead of writing me privately so I *knew* there was something for me there. That was more than 5 months of comments backlog, and it was obviously too much to review by hand, so I removed things according to some patterns. For example, anything with phpBB-like markup is probably spam, so I cleared those up:
+
+    find .  -name '*._comment_pending' -a -print0  | xargs -0 grep -l -Z '\[url=' | xargs -0 rm
+
+That removed 2265 comments. I reviewed the remaining 643 by hand and deleted them all. I used [ikiwiki-comment-moderate](https://gitlab.com/anarcat/scripts/blob/master/ikiwiki-comment-moderate) to generate a list of IPs to block. The top 5 /16 blocks were:
+
+    18 112.5 China Mobile communications corporation
+    31 110.89 Chinanet
+    36 36.250 China Unicom
+    44 112.111 China Unicom
+    45 36.248 China Unicom
+    74 175.44 China Unicom
+
+(Left column is the number of IPs affected in the /16. Middle is the /16. Right is an assertion of the owner.) Attacks came from 104 distinct /24 blocks and 66 distinct /16.
+
+Now, I don't want to point fingers, but there sure seems to be some problems with china there and i'm tempted to just block those entire networks. :/
+
+Anyways... Someone mentioned Spamassassin in the original request, and I just [read](https://lwn.net/SubscriberLink/769917/130e156925fc690e/) that some people *are* using spamassassin for website spam control. Has anyone gave that a try? --[[anarcat]]
+
+----
+
+Another note that might be of interest here... One of the things that script was doing was to generate a list of IPs to be inserted into `ikiwiki.setup`. Unfortunately, that doesn't seem to work:
+
+    $ ~anarcat/bin/ikiwiki-comment-moderate 
+    found 165 pending comments
+    IP distribution:
+          1  ip="110.86.179.146"
+    [...]
+         10  ip="175.44.35.10"
+         11  ip="175.44.35.236"
+    banlist would look like:
+    - ip(110.86.179.146)
+    # 112.111.162.159 already present
+    # 112.111.163.216 already present
+    [...]
+    # 36.250.185.52 already present
+    # 36.250.185.55 already present
+    # 36.250.186.113 already present
+    - ip(59.60.123.211)
+    to remove comments from a specific IP, use this, for example:
+    find . -name '*._comment_pending' | xargs grep -l 'ip="$ip"'| xargs rm
+    to flush all pending comments, use:
+    find . -name '*._comment_pending' -delete
+
+In other words, many of the comments in moderation are actually
+supposed to be blocked, as their IPs are in the `banned_users`
+list. Now I know my way around a UNIX system well enough to deal with
+this another way - I'm thinking of fail2ban or a simple Apache rewrite
+table (and it might easier and faster too) - but I wonder why those
+IPs can still post comments when they are listed in
+`banned_users`... -- [[anarcat]]

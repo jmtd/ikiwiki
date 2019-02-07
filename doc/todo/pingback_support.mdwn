@@ -39,3 +39,26 @@ case I will consider this done with an entry in [[tips]]; otherwise a
 > all urls found. --[[Joey]] 
 
 >> Is there any update on this? This would be highly useful and is the main reason why I am not using my blog more regularly, yet. (And yes, now that git-annex is doing everything I need and more, I thought I should revisit this one, as well). -- RichiH
+
+----
+
+Happy 9th anniversary, bug!
+
+For whatever reason I was compelled to look at this situation afresh. I've
+added some instrumentation to my own site to see whether there's any external
+attempts to issue pingbacks to my own site, to gauge whether it's worthwhile
+spending any more time on this. But it looks like pingback in the wider world
+might be dead or dying.
+
+[I started a conversation on Twitter with the inventor of Pingback to see what
+he thought](https://twitter.com/jmtd/status/1042730998839107585). He suggested
+taking a look at "webmentions". here's some preliminary reading on those:
+
+ * <https://indieweb.org/Webmention>
+ * <https://kryogenix.org/days/2014/11/29/enabling-webmentions/>
+ * <https://www.kryogenix.org/days/2014/11/30/vouching-for-webmentions-hashing-for-vouches/>
+
+At this point I don't know if webmentions actually has more traction than pingback,
+but the key issue I guess is whether it's growing. I'm going to (but am yet to) add
+corresponding instrumentation to my site to try and track that, too.
+-- [[Jon]] (2018-09-24)

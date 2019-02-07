@@ -95,6 +95,14 @@ sub render_graph (\%) {
 sub graph (@) {
 	my %params=@_;
 
+	if (exists $params{file}) {
+		if (! exists $pagesources{$params{file}}) {
+			error gettext("cannot find file");
+		}
+		$params{src} = readfile(srcfile($params{file}));
+		add_depends($params{page}, $params{file});
+	}
+
 	# Support wikilinks in the graph source.
 	my $src=$params{src};
 	$src="" unless defined $src;

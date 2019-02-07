@@ -1,0 +1,3 @@
+[Martín Ferrari](https://blog.tincho.org/)
+
+Long time user of ikiwiki. Made a [rewrite](https://blog.tincho.org/posts/OSM_in_IkiWiki/) of the OSM plugin, still pending merge.

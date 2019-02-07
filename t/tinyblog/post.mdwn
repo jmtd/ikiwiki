@@ -1,1 +1,3 @@
 only post
+
+[[!inline pages="internal(post/comment_*)" atom="yes" rss="no" feedonly="yes"]]

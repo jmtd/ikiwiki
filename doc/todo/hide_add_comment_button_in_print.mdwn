@@ -1,0 +1,50 @@
+[[!template  id=gitbranch branch=anarcat/print-no-comment author="[[anarcat]]"]]
+
+Print versions are often a neglected part of a style sheet, but it's
+great when people can actually print your webpage and get a satisfying
+result.
+
+This often means removing a bunch of stuff that are irrelevant for
+print. Ikiwiki already does a bunch of those things in the
+base stylesheet:
+
+    /* things to hide in printouts */
+    @media print {
+    	.actions { display: none; }
+    	.tags { display: none; }
+    	.trails { display: none; }
+    	.feedbutton { display: none; }
+    	#searchform { display: none; }
+    	.blogform, #blogform { display: none; }
+    	#backlinks { display: none; }
+    }
+
+But I think we should remove more. In particular, the `addcomment`
+button is not relevant at all for print versions. There might be more:
+in my [bootstrap theme][], I also had to [remove][] the whole footer,
+because it was overlapping with the page content. It's unfortunate
+because it removes the copyright notice, but I don't know how else to
+fix this.
+
+Anyways, how about [this patch][]?
+
+    --- a/doc/style.css
+    +++ b/doc/style.css
+    @@ -286,6 +286,7 @@ div.progress-done {
+     	#searchform { display: none; }
+     	.blogform, #blogform { display: none; }
+     	#backlinks { display: none; }
+    +	.addcomment { display: none; }
+     }
+     
+     /* infobox template */
+
+Thanks! -- [[anarcat]]
+
+[bootstrap theme]: https://gitlab.com/anarcat/ikiwiki-bootstrap-anarcat
+[remove]: https://gitlab.com/anarcat/ikiwiki-bootstrap-anarcat/commit/94521766f4206882c44764253452ec666d90d5c1
+[this patch]: https://gitlab.com/anarcat/ikiwiki/commit/33630b561623b8dca946916b733807e9b8c97849.patch
+
+> [[Applied|done]] --[[smcv]]
+
+[[!tag patch]]

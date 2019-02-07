@@ -1,0 +1,95 @@
+I use inline to create a blog like the below:
+
+    \[[!inline pages="./bugs/* and !./bugs/done and !./bugs/discussion and 
+    !link(patch) and !link(./bugs/done) and !./bugs/*/*"
+    actions=yes rootpage="./bugs" postform="yes" postformtext="请用一句话简述问题，然后点击 Edit 按钮添加具体细节" show=0]]
+
+
+When I use posform to add a new page, it show:
+
+> Error: bad page name 
+
+Its url include a %2F, like below:
+
+> http://172.16.0.109/ikiwiki.cgi?do=blog&from=.%2Fbugs&subpage=1&title=aaa
+
+I use ikiwiki 3.20180311
+
+----
+
+I have found that it is not "%2F"'s problem, it just that inline directive can
+not deal with Chinese char, the below link can work
+
+    http://172.16.0.109/ikiwiki.cgi?do=blog&from=aaa%2Fbugs&subpage=1&title=aaa
+
+---
+
+> I don't think this is actually caused by the Chinese text. The problem is that
+> you used `rootpage="./bugs"`, which leads to the `blog` request handler
+> generating an invalid page name. If you change it to `rootpage="bugs"` does
+> that fix the error?
+>
+> Ideally either the `inline` directive or the `blog` request handler would
+> understand and remove `./`, if it's something that makes sense in this context.
+> --[[smcv]]
+
+---
+
+> I have found the problem, it is inline plugin can not decode_utf8 "from", the below is patch:
+
+    From f79dde20b275707f70df2d481919a079abec6c19 Mon Sep 17 00:00:00 2001
+    From: Feng Shu <tumashu@163.com>
+    Date: Sun, 2 Dec 2018 08:38:34 +0800
+    Subject: [PATCH 1/2] Fix inline plugin can no set rootpage to a UTF-8 page
+    
+    ---
+     IkiWiki/Plugin/inline.pm | 2 +-
+     1 file changed, 1 insertion(+), 1 deletion(-)
+    
+    diff --git a/IkiWiki/Plugin/inline.pm b/IkiWiki/Plugin/inline.pm
+    index a85cd5d2f..f40956821 100644
+    --- a/IkiWiki/Plugin/inline.pm
+    +++ b/IkiWiki/Plugin/inline.pm
+    @@ -125,7 +125,7 @@ sub sessioncgi ($$) {
+     			error(gettext("please enter a page title"));
+     		}
+     		# if the page already exists, munge it to be unique
+    -		my $from=$q->param('from');
+    +		my $from=decode_utf8($q->param('from'));
+     		my $add="";
+     		while (exists $IkiWiki::pagecase{lc($from."/".$page.$add)}) {
+     			$add=1 unless length $add;
+    -- 
+    2.19.0
+    
+---
+
+> [Request for clarification removed]
+>
+> I've now been able to reproduce this bug, and confirmed that your patch
+> fixes it. [[Patch now applied|done]].
+>
+> (For other maintainers' reference: when testing Unicode bugs that
+> relate to page titles, using Unicode that is considered to be
+> punctuation, like ¬ or emoji, will probably not work; page titles
+> treat `[:alnum:]` and `^[:alnum:]` differently.)
+>
+> In future bug reports it would be useful if you could provide a minimal
+> example or test, perhaps on the [[sandbox]] on this wiki or as a unit
+> test in `t/*.t` in the ikiwiki source code, that demonstrates this bug
+> and would be fixed by the patch. If you've found multiple bugs, a
+> separate example or test for each one would be easiest to deal with.
+>
+> You can run all the tests with:
+>
+>     ./Makefile.PL
+>     make
+>     make test
+>
+> or a single test with something like:
+>
+>     ./Makefile.PL
+>     make
+>     PERL5LIB=. ./t/git-cgi.t
+>
+> --[[smcv]]

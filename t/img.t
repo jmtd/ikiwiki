@@ -257,9 +257,6 @@ if (1) { # for easier testing
 	ok(! -e "$outpath/x8-hello:world.png");
 	ok(! -e "$outpath/x4-a:b:c.png");
 	ok(! -e "$outpath/x6-a:b:c:d:e:f:g:h:i:j.png");
-
-	# cleanup
-	ok(! system("rm -rf t/tmp"));
 }
 done_testing;
 

@@ -64,5 +64,10 @@ seems to be broken for edit/preview workflow. I might investigate/file about tha
                                                                                                                        
 I wonder if someone feels the same, since you defaulted to actiontabs on branchable.                                   
                                                                                                                        
-Thanks, [[users/Jon]].  (PS: Every log in method failed for me with Firefox Quantum
-trying to post this. Untrusted git push also failed.)
+Thanks, [[users/Jon]]. (2017-12-28)
+
+----
+
+9 month ping, does [[Joey]] or [[smcv]] have any kind of opinion on this matter,
+subsequent to my last comment? I ask because both of your takes on the issue are from
+way back in 2011. — [[Jon]] (2018-09-24)

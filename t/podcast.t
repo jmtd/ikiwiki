@@ -9,7 +9,7 @@ BEGIN {
 			"XML::Feed and/or HTML::Parser or File::MimeInfo not available"};
 	}
 	else {
-		eval q{use Test::More tests => 137};
+		eval q{use Test::More};
 	}
 }
 
@@ -40,6 +40,8 @@ sub podcast {
 	my $baseurl = 'http://example.com';
 	my @command = (@base_command, qw(--plugin inline --rss --atom));
 	push @command, "--url=$baseurl", qw(t/tinypodcast), "$tmp/out";
+
+	ok(! system("rm -rf $tmp $statedir"), q{setup});
 
 	ok(! system("mkdir $tmp"),
 		q{setup});
@@ -121,13 +123,13 @@ sub podcast {
 			}
 		}
 	}
-
-	ok(! system("rm -rf $tmp $statedir"), q{teardown});
 }
 
 sub single_page_html {
 	my @command = @base_command;
 	push @command, qw(t/tinypodcast), "$tmp/out";
+
+	ok(! system("rm -rf $tmp $statedir"), q{setup});
 
 	ok(! system("mkdir $tmp"),
 		q{setup});
@@ -171,6 +173,8 @@ sub single_page_html {
 sub inlined_pages_html {
 	my @command = (@base_command, qw(--plugin inline));
 	push @command, qw(t/tinypodcast), "$tmp/out";
+
+	ok(! system("rm -rf $tmp $statedir"), q{setup});
 
 	ok(! system("mkdir $tmp"),
 		q{setup});
@@ -240,3 +244,5 @@ podcast('simple');
 single_page_html();
 inlined_pages_html();
 podcast('fancy');
+
+done_testing;

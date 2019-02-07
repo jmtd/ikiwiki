@@ -1,0 +1,14 @@
+[[!comment format=mdwn
+ username="spalax"
+ avatar="http://cdn.libravatar.org/avatar/3f1353e4135221fc25bfecd1b812bcc8"
+ subject="More thoughts about Ikiwiki"
+ date="2018-10-10T14:43:32Z"
+ content="""
+I eventually switched my [website](http://ababsurdo.fr) to [lektor](http://getlektor.com). It is more modern than ikiwiki (and written in Python, so its easier for me to dig into the code). Here are more thoughts about Ikiwiki, compared to Lektor.
+
+- Ikiwiki community is great! Even these days, when there is very few activity, when people ask for help (either on this website, or on IRC), they get quick answers (as opposed to Lektor, where I had to wait up to six weeks to get an answer (not blaming lektor contributors: I know they have a life too, and owe me nothing: just congratulating Ikiwiki contributors)).
+- Ikiwiki does not hide errors! Several times, with Lektor, I scratched my head, not understanding why some stuff silently didn't work.
+- I think this has been mentionned elsewhere, but Ikiwiki hard-coded templates make it hard/impossible to change some simple things.
+
+I am a bit sad no longer using Ikiwiki. I like the project and the people behind it. Thanks a lot!
+"""]]

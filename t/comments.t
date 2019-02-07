@@ -39,7 +39,7 @@ $comment = <<EOF;
   date="1969-02-12T07:00:00Z"
   content="I explored"]]
 EOF
-writefile("post/comment_2._comment", "t/tmp/in", $comment);
+writefile("post/comment_2_10a49d69282155c5c3e66dc58f64f956._comment", "t/tmp/in", $comment);
 
 $comment = <<EOF;
 [[!comment username="william"
@@ -50,7 +50,7 @@ writefile("post/comment_1._comment", "t/tmp/in", $comment);
 
 # Give the files mtimes in the wrong order
 ok(utime(111111111, 111111111, "t/tmp/in/post/comment_3._comment"));
-ok(utime(222222222, 222222222, "t/tmp/in/post/comment_2._comment"));
+ok(utime(222222222, 222222222, "t/tmp/in/post/comment_2_10a49d69282155c5c3e66dc58f64f956._comment"));
 ok(utime(333333333, 333333333, "t/tmp/in/post/comment_1._comment"));
 
 # Build the wiki
@@ -68,6 +68,18 @@ sub slurp {
 
 my $content = slurp("t/tmp/out/post/index.html");
 ok(defined $content);
-ok($content =~ m/I conquered.*I explored.*I landed/s);
+like($content, qr/I conquered.*I explored.*I landed/s);
+
+$content = slurp("t/tmp/out/post/index.atom");
+ok(defined $content);
+like($content, qr{
+	<link\s*href="http://example\.com/post/[#]comment-[[:xdigit:]]+"
+	.*
+	<link\s*href="http://example\.com/post/[#]comment-[[:xdigit:]]+"
+	.*
+	<link\s*href="http://example\.com/post/[#]comment-[[:xdigit:]]+"
+}sx, 'Each comment gets an appropriate permalink in <link>');
+unlike($content, qr{<link\s*href=.*/post/comment_[123]/});
+unlike($content, qr{<link\s*href=.*/post/comment_[123]_[[:xdigit:]]+/});
 
 done_testing();

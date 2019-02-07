@@ -33,12 +33,8 @@ think about merging them. This is recommended. :-)
 * [[gmcmanus]] `git://github.com/gmcmanus/ikiwiki.git`
 * [[jelmer]] `git://git.samba.org/jelmer/ikiwiki.git`
 * [[jon]] `git://github.com/jmtd/ikiwiki.git`
-* [[ikipostal|DavidBremner]] `git://pivot.cs.unb.ca/git/ikipostal.git`
-* [[ikimailbox|DavidBremner]] `git://pivot.cs.unb.ca/git/ikimailbox.git`
-* [[ikiplugins|DavidBremner]] `git://pivot.cs.unb.ca/git/ikiplugins.git`
 * [[jonas|JonasSmedegaard]] `git://source.jones.dk/ikiwiki-upstream`
 * [[arpitjain]] `git://github.com/arpitjain11/ikiwiki.git`
-* [[chrysn]] `git://prometheus.amsuess.com/ikiwiki`
 * [[schmonz]] `git://github.com/schmonz/ikiwiki.git`
 * [[KathrynAndersen]] `git://github.com/rubykat/ikiplugins.git`
 * [[ktf]] `git://github.com/ktf/ikiwiki.git`
@@ -48,18 +44,14 @@ think about merging them. This is recommended. :-)
 * [[privat]] `git://github.com/privat/ikiwiki.git`
 * [[blipvert]] `git://github.com/blipvert/ikiwiki.git`
 * [[wtk]] `git://github.com/wking/ikiwiki.git`
-* [[sunny256]] `git://github.com/sunny256/ikiwiki.git`
 * [[levitte]] `git://github.com/levitte/ikiwiki.git`
-* jo `git://git.debian.org/users/jo-guest/ikiwiki.git`
-  ([browse](http://git.debian.org/?p=users/jo-guest/ikiwiki.git;a=summary))
-* [[sajolida]] `http://un.poivron.org/~sajolida/ikiwiki.git/`
+* [[sajolida]] `https://un.poivron.org/~sajolida/ikiwiki.git/`
 * [[yds]] `git://github.com/yds/ikiwiki.git`
 * [[pelle]] `git://github.com/hemmop/ikiwiki.git`
 * [[chrismgray]] `git://github.com/chrismgray/ikiwiki.git`
 * [[ttw]] `git://github.com/ttw/ikiwiki.git`
 * [[anarcat]] `https://gitlab.com/anarcat/ikiwiki.git`
 * anderbubble `git://civilfritz.net/ikiwiki.git`
-* frioux `git://github.com/frioux/ikiwiki`
 * llipavsky `git://github.com/llipavsky/ikiwiki`
 * [[mhameed]] `git://github.com/mhameed/ikiwiki.git`
 * [[spalax]] `git://github.com/paternal/ikiwiki.git` ([[browse|https://github.com/paternal/ikiwiki]])
@@ -69,7 +61,8 @@ think about merging them. This is recommended. :-)
 * bfree `git://github.com/bfree/ikiwiki.git`
 * [[users/leg]] `git://at.magma-soft.at/ikiwiki.info`
 * [[thcipriani]] `https://github.com/thcipriani/ikiwiki.git` ([[browse|https://github.com/thcipriani/ikiwiki]])
-
+* [[tincho]] `git@github.com:TheTincho/ikiwiki.git` ([[browse|https://github.com/TheTincho/ikiwiki]])
+* [[hefee]] `https://salsa.debian.org/hefee/ikiwiki.git/` ([[browse|https://salsa.debian.org/hefee/ikiwiki]])
 ## branches
 
 Current branches of ikiwiki are listed on [[branches]].

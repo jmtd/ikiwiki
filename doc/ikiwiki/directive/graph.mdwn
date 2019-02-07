@@ -21,6 +21,7 @@ ikiwiki, [[WikiLinks|ikiwiki/wikilink]] can also be used. For example:
 The `graph` directive supports the following parameters:
 
 - `src` - The graphviz source to render.
+* `file` - A file in the wiki containing the graphviz source.
 - `type` - The type of graph to render: `graph` or `digraph`.  Defaults to
   `digraph`.
 - `prog` - The graphviz program to render with: `dot`, `neato`, `fdp`, `twopi`,

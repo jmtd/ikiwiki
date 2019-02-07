@@ -5,7 +5,15 @@ This plugin provides the [[ikiwiki/directive/map]] [[ikiwiki/directive]],
 which generates a hierarchical page map for the wiki.
 
 [[!if test="enabled(map)" then="""
-Here's an example map, for the plugins section of this wiki:
+This will create an a map, for the plugins section of this wiki:
+
+    \[[!map pages="(plugins or plugins/*) and !*/*/*"]]
+
+Example:
 
 [[!map pages="(plugins or plugins/*) and !*/*/*"]]
+
+It's also possible to search for specific tags or links:
+
+    \[[!map pages="todo/* and !todo/done and !link(todo/done)"]]
 """]]

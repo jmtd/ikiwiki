@@ -38,6 +38,5 @@ foreach my $plugin ("", "listdirectives") {
 	ok(-e "t/tmp/out/style.css"); # linked to..
 	ok(! system("rm -rf t/tmp/out t/basewiki_brokenlinks/.ikiwiki"));
 }
-ok(! system("rm -rf t/tmp"));
 
 done_testing();

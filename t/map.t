@@ -236,7 +236,6 @@ check('alpha/1/i*',
 		node('iv', []),
 	]);
 
-ok(! system("rm -rf t/tmp"));
 done_testing;
 
 1;

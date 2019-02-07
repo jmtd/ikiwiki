@@ -265,7 +265,7 @@ sub preprocess {
 		$pagestate{$page}{meta}{title} = decode_entities($params{subject});
 	}
 
-	if ($params{page} =~ m/\/\Q$config{comments_pagename}\E\d+_/) {
+	if ($params{page} =~ m/\/\Q$config{comments_pagename}\E\d+/) {
 		$pagestate{$page}{meta}{permalink} = urlto(IkiWiki::dirname($params{page})).
 			"#".page_to_id($params{page});
 	}

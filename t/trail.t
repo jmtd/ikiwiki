@@ -102,6 +102,12 @@ write_old_file("sorting/end.mdwn", "end");
 write_old_file("sorting/new.mdwn", "new");
 write_old_file("sorting/old.mdwn", "old");
 write_old_file("sorting/ancient.mdwn", "ancient");
+write_old_file("unicode.mdwn", "[[!trailitems pagenames=\"unicode/\xAC unicode/\x{04D2} unicode/\x{2260} unicode/\x{0001F4A9}\"]]");
+write_old_file("unicode2.mdwn", "[[!trailitems pagenames=\"unicode/__172__ unicode/\x{04D2} unicode/__8800__ unicode/__128169__\"]]");
+write_old_file("unicode/__172__.mdwn", "trail item '\xAC'");
+write_old_file("unicode/\x{04D2}.mdwn", "trail item '\x{04D2}'");
+write_old_file("unicode/__8800__.mdwn", "trail item '\x{2260}'");
+write_old_file("unicode/__128169__.mdwn", "trail item '\x{0001F4A9}'");
 # These three need to be in the appropriate age order
 ok(utime(333333333, 333333333, "t/tmp/in/sorting/new.mdwn"));
 ok(utime(222222222, 222222222, "t/tmp/in/sorting/old.mdwn"));
@@ -179,6 +185,16 @@ check_trail("snake.html", "n= p=mushroom", "meme");
 check_no_trail("snake.html", "wind_in_the_willows");
 
 check_trail("self_referential.html", "n= p=", "self_referential");
+
+check_trail("unicode/__172__.html", "n=unicode/\x{04D2} p=", "unicode");
+check_trail("unicode/\x{04D2}.html", "n=unicode/__8800__ p=unicode/__172__", "unicode");
+check_trail("unicode/__8800__.html", "n=unicode/__128169__ p=unicode/\x{04D2}", "unicode");
+check_trail("unicode/__128169__.html", "n= p=unicode/__8800__", "unicode");
+
+check_trail("unicode/__172__.html", "n=unicode/\x{04D2} p=", "unicode2");
+check_trail("unicode/\x{04D2}.html", "n=unicode/__8800__ p=unicode/__172__", "unicode2");
+check_trail("unicode/__8800__.html", "n=unicode/__128169__ p=unicode/\x{04D2}", "unicode2");
+check_trail("unicode/__128169__.html", "n= p=unicode/__8800__", "unicode2");
 
 check_trail("add/b.html", "n=add/d p=", "add");
 check_trail("add/d.html", "n= p=add/b", "add");
@@ -302,7 +318,5 @@ ok($blob =~ /\^ the new title \^/m);
 # untrail is no longer a trail, so these are no longer in it.
 check_no_trail("untrail/a.html");
 check_no_trail("untrail/b.html");
-
-ok(! system("rm -rf t/tmp"));
 
 done_testing();

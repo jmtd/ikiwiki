@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 use Cwd qw(getcwd);
-use Test::More tests => 106;
+use Test::More;
 
 my $installed = $ENV{INSTALLED_TESTS};
 
@@ -143,5 +143,4 @@ ok(! system("mkdir -p $srcdir/foo"));
 ok(! system("touch $srcdir/foo/index.html"));
 setupiki("rawhtml file rendered same as existing page in setup");
 
-# cleanup
-ok(! system("rm -rf t/tmp"));
+done_testing;

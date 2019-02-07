@@ -1,0 +1,43 @@
+Changes to comments result in notifyemail sending emails with broken urls like 
+"http://whatever/foo/comment_1_10a49d69282155c5c3e66dc58f64f956/"
+
+notifyemail uses meta permalink if set, so it must not be set for comment
+pages.
+
+In the comments plugin, there's this code, which is supposed to set
+permalink:
+
+        if ($params{page} =~ m/\/\Q$config{comments_pagename}\E\d+_/) {
+                $pagestate{$page}{meta}{permalink} = urlto(IkiWiki::dirname($params{page})).
+                        "#".page_to_id($params{page});
+        }
+
+`comments_pagename` is `comment_` so the above code needs a comment page to contain
+two underscores. I think that is the root of the bug. --[[Joey]]
+
+> Removed the trailing underscore in the regexp, so it should be fixed,
+> though I have not tested the fix. Leaving this bug open until it's
+> confirmed fixed. (I deployed it to branchable.)
+> 
+> This will only fix the stored permalink metadata for a comment when its get
+> preprocessed again, not immediately. That's ok for notifyemail,
+> but other uses of permalink might need a wiki rebuild to get the bug fix.
+> --[[Joey]]
+>
+>> I'm not sure that I see how the regexp was wrong? It's looking for,
+>> for example,
+>>
+>>     foo/comment_1_eaab671848ee6129f6fe9399474eeac0._comment
+>>        sccccccccdu
+>>
+>> where
+>>
+>> * *s* marks the literal `/`
+>> * *cccc* marks `comments_pagename`
+>> * *d* marks `\d+` (one or more digits)
+>> * *u* marks the literal `_`
+>>
+>> The old regexp would have failed for the older format
+>> `foo/comment_1._comment`, though.
+>>
+>> --[[smcv]]

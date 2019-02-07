@@ -3,6 +3,7 @@
 use warnings;
 use strict;
 use File::Temp qw{tempdir};
+use utf8;
 
 BEGIN {
 	unless (eval { require Locale::Po4a::Chooser }) {
@@ -17,7 +18,7 @@ BEGIN {
 	}
 }
 
-use Test::More tests => 114;
+use Test::More;
 
 BEGIN { use_ok("IkiWiki"); }
 
@@ -44,7 +45,7 @@ $config{po_slave_languages} = {
 			       es => 'Castellano',
 			       fr => "Français"
 			      };
-$config{po_translatable_pages}='index or test1 or test2 or translatable';
+$config{po_translatable_pages}='index or test1 or test2 or translatable or debian*';
 $config{po_link_to}='negotiated';
 IkiWiki::loadplugins();
 ok(IkiWiki::loadplugin('meta'), "meta plugin loaded");
@@ -67,8 +68,19 @@ $pagesources{'translatable'}='translatable.mdwn';
 $pagesources{'translatable.fr'}='translatable.fr.po';
 $pagesources{'translatable.es'}='translatable.es.po';
 $pagesources{'nontranslatable'}='nontranslatable.mdwn';
+$pagesources{'debian911356'}='debian911356.mdwn';
+$pagesources{'debian911356ish'}='debian911356ish.mdwn';
+$pagesources{'debian911356.fr'}='debian911356.fr.po';
+$pagesources{'debian911356ish.fr'}='debian911356ish.fr.po';
+$pagesources{'debian911356-inlined'}='debian911356-inlined.mdwn';
+$pagesources{'debian911356-inlined.fr'}='debian911356-inlined.fr.po';
+$pagesources{'templates/feedlink.tmpl'}='templates/feedlink.tmpl';
+$pagesources{'templates/inlinepage.tmpl'}='templates/inlinepage.tmpl';
+my $now=time;
 foreach my $page (keys %pagesources) {
 	$IkiWiki::pagecase{lc $page}=$page;
+	$IkiWiki::pagectime{$page}=$now;
+	$IkiWiki::pagemtime{$page}=$now;
 }
 
 ### populate srcdir
@@ -80,6 +92,82 @@ writefile('test2.mdwn', $config{srcdir}, 'test2 content');
 writefile('test3.mdwn', $config{srcdir}, 'test3 content');
 writefile('translatable.mdwn', $config{srcdir}, '[[nontranslatable]]');
 writefile('nontranslatable.mdwn', $config{srcdir}, '[[/]] [[translatable]]');
+writefile('debian911356.mdwn', $config{srcdir}, <<EOF);
+Before first inline
+
+[[!inline pages="debian911356-inlined" raw="yes"]]
+
+Between inlines
+
+[[!inline pages="debian911356-inlined" raw="yes"]]
+
+After inlines
+EOF
+writefile('debian911356-inlined.mdwn', $config{srcdir}, <<EOF);
+English content
+EOF
+writefile('debian911356.fr.po', $config{srcdir}, <<EOF);
+msgid "" msgstr ""
+"MIME-Version: 1.0\\n"
+"Content-Type: text/plain; charset=UTF-8\\n"
+"Content-Transfer-Encoding: 8bit\\n"
+
+msgid "Before first inline"
+msgstr "Avant la première inline"
+
+msgid "[[!inline pages=\\"debian911356-inlined\\" raw=\\"yes\\"]]\\n"
+msgstr "[[!inline pages=\\"debian911356-inlined.fr\\" raw=\\"yes\\"]]\\n"
+
+msgid "Between inlines"
+msgstr "Entre les inlines"
+
+msgid "After inlines"
+msgstr "Après les inlines"
+EOF
+writefile('debian911356-inlined.fr.po', $config{srcdir}, <<EOF);
+msgid "English content"
+msgstr "Contenu français"
+EOF
+writefile('debian911356ish.mdwn', $config{srcdir}, <<EOF);
+Before first inline
+
+[[!inline pages="debian911356-inlined"]]
+
+Between inlines
+
+[[!inline pages="debian911356-inlined"]]
+
+After inlines
+EOF
+writefile('debian911356ish.fr.po', $config{srcdir}, <<EOF);
+msgid "" msgstr ""
+"MIME-Version: 1.0\\n"
+"Content-Type: text/plain; charset=UTF-8\\n"
+"Content-Transfer-Encoding: 8bit\\n"
+
+msgid "Before first inline"
+msgstr "Avant la première inline"
+
+msgid "[[!inline pages=\\"debian911356-inlined\\"]]\\n"
+msgstr "[[!inline pages=\\"debian911356-inlined.fr\\"]]\\n"
+
+msgid "Between inlines"
+msgstr "Entre les inlines"
+
+msgid "After inlines"
+msgstr "Après les inlines"
+EOF
+# We don't actually care what the feed links look like, so skip them
+writefile('templates/feedlink.tmpl', $config{srcdir}, <<EOF);
+<!--feedlinks-->
+EOF
+# Make inlines' appearance predictable so we can screen-scrape them
+writefile('templates/inlinepage.tmpl', $config{srcdir}, <<EOF);
+<div class="inlinecontent">
+<h6><TMPL_VAR TITLE></h6>
+<TMPL_VAR CONTENT>
+</div><!--inlinecontent-->
+EOF
 
 ### istranslatable/istranslation
 # we run these tests twice because memoization attempts made them
@@ -248,3 +336,215 @@ ok(IkiWiki::Plugin::po::islanguagecode('es'));
 ok(IkiWiki::Plugin::po::islanguagecode('arn'));
 ok(! IkiWiki::Plugin::po::islanguagecode('es_'));
 ok(! IkiWiki::Plugin::po::islanguagecode('_en'));
+
+# Actually render translated pages
+use IkiWiki::Render;
+
+my %output;
+foreach my $page (sort keys %pagesources) {
+	my $source = "$config{srcdir}/$pagesources{$page}";
+	if (-e $source) {
+		IkiWiki::scan($pagesources{$page});
+	}
+}
+
+# This is the most complicated case, so use this while we test rendering
+$config{po_link_to}='current';
+
+foreach my $page (sort keys %pagesources) {
+	my $source = "$config{srcdir}/$pagesources{$page}";
+	if (-e $source && defined IkiWiki::pagetype($pagesources{$page})) {
+		IkiWiki::scan($pagesources{$page});
+		my $content = readfile($source);
+		#print STDERR "-------------------------------------\n";
+		#print STDERR "SOURCE: $page: $content\n";
+		$content = IkiWiki::filter($page, $page, $content);
+		#print STDERR "FILTERED: $page: $content\n";
+		$content = IkiWiki::preprocess($page, $page, $content);
+		#print STDERR "PREPROCESSED: $page: $content\n";
+		$content = IkiWiki::linkify($page, $page, $content);
+		#print STDERR "LINKIFIED: $page: $content\n";
+		$content = IkiWiki::htmlize($page, $page, IkiWiki::pagetype($pagesources{$page}), $content);
+		#print STDERR "HTMLIZED: $page: $content\n";
+		IkiWiki::run_hooks(format => sub {
+			$content=shift->(
+				page => $page,
+				content => $content,
+			);
+		});
+		#print STDERR "FORMATTED: $page: $content\n";
+		$output{$page} = $content;
+	}
+}
+
+like($output{index}, qr{
+	<p>
+	<a\s+href="\./translatable/index\.en\.html">
+	translatable
+	</a>\s*
+	<a\s+href="\./nontranslatable/">
+	nontranslatable
+	</a>
+	</p>
+}sx);
+
+like($output{'index.es'}, qr{
+	<p>
+	<a\s+href="\./translatable/index\.es\.html">
+	translatable
+	</a>\s*
+	<a\s+href="\./nontranslatable/">
+	nontranslatable
+	</a>
+	</p>
+}sx);
+
+like($output{'index.fr'}, qr{
+	<p>
+	<a\s+href="\./translatable/index\.fr\.html">
+	translatable
+	</a>\s*
+	<a\s+href="\./nontranslatable/">
+	nontranslatable
+	</a>
+	</p>
+}sx);
+
+like($output{'translatable'}, qr{
+	<a\s+href="\.\./nontranslatable/">
+	nontranslatable
+	</a>
+}sx);
+
+TODO: {
+local $TODO = 'was [[/]] meant to be a link to the index?';
+unlike($output{'nontranslatable'}, qr{
+	class=.createlink.
+}sx);
+};
+like($output{'nontranslatable'}, qr{
+	<a\s+href="\.\./translatable/index\.en\.html">
+	translatable
+	</a>
+}sx);
+
+like($output{debian911356}, qr{
+	<p>Before\sfirst\sinline</p>
+	\s*
+	<p>English\scontent</p>
+	\s*
+	<p>Between\sinlines</p>
+	\s*
+	<p>English\scontent</p>
+	\s*
+	<p>After\sinlines</p>
+}sx);
+
+like($output{'debian911356.fr'}, qr{
+	<p>Avant\sla\spremière\sinline</p>
+	\s*
+	<p>Contenu\sfrançais</p>
+	\s*
+	<p>Entre\sles\sinlines</p>
+	\s*
+	.*	# TODO: This paragraph gets mangled (Debian #911356)
+	\s*
+	<p>Après\sles\sinlines</p>
+}sx);
+
+TODO: {
+local $TODO = "Debian bug #911356";
+like($output{'debian911356.fr'}, qr{
+	<p>Avant\sla\spremière\sinline</p>
+	\s*
+	<p>Contenu\sfrançais</p>
+	\s*
+	<p>Entre\sles\sinlines</p>
+	\s*
+	<p>Contenu\sfrançais</p>
+	\s*
+	<p>Après\sles\sinlines</p>
+}sx);
+};
+
+# Variation of Debian #911356 without using raw inlines.
+like($output{debian911356ish}, qr{
+	<p>Before\sfirst\sinline</p>
+	\s*
+	<!--feedlinks-->
+	\s*
+	<div\sclass="inlinecontent">
+	\s*
+	<h6>debian911356-inlined</h6>
+	\s*
+	<p>English\scontent</p>
+	\s*
+	</div><!--inlinecontent-->
+	\s*
+	<p>Between\sinlines</p>
+	\s*
+	<!--feedlinks-->
+	\s*
+	<div\sclass="inlinecontent">
+	\s*
+	<h6>debian911356-inlined</h6>
+	\s*
+	<p>English\scontent</p>
+	\s*
+	</div><!--inlinecontent-->
+	\s*
+	<p>After\sinlines</p>
+}sx);
+
+like($output{'debian911356ish.fr'}, qr{
+	<p>Avant\sla\spremière\sinline</p>
+	\s*
+	<!--feedlinks-->
+	\s*
+	<div\sclass="inlinecontent">
+	\s*
+	<h6>debian911356-inlined\.fr</h6>
+	\s*
+	<p>Contenu\sfrançais</p>
+	\s*
+	</div><!--inlinecontent-->
+	\s*
+	<p>Entre\sles\sinlines</p>
+	\s*
+	.*	# TODO: This paragraph gets mangled (Debian #911356)
+	\s*
+	<p>Après\sles\sinlines</p>
+}sx);
+
+TODO: {
+local $TODO = "Debian bug #911356";
+like($output{'debian911356ish.fr'}, qr{
+	<p>Avant\sla\spremière\sinline</p>
+	\s*
+	<!--feedlinks-->
+	\s*
+	<div\sclass="inlinecontent">
+	\s*
+	<h6>debian911356-inlined\.fr</h6>
+	\s*
+	<p>Contenu\sfrançais</p>
+	\s*
+	</div><!--inlinecontent-->
+	\s*
+	<p>Entre\sles\sinlines</p>
+	\s*
+	<!--feedlinks-->
+	\s*
+	<div\sclass="inlinecontent">
+	\s*
+	<h6>debian911356-inlined\.fr</h6>
+	\s*
+	<p>Contenu\sfrançais</p>
+	\s*
+	</div><!--inlinecontent-->
+	\s*
+	<p>Après\sles\sinlines</p>
+}sx);
+};
+
+done_testing;

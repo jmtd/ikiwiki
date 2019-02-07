@@ -1,4 +1,6 @@
 [[!template id=gitbranch branch=jon/table_headerblock author="[[Jon]]"]]
+[[!tag reviewed]]
+
 It would be great if it were possible to support multi-row table headers in the [[plugins/table]] plugin, so you could do e.g.
 
         \[[!table header="""
@@ -77,3 +79,52 @@ It would be great if it were possible to support multi-row table headers in the 
 > > addressed my immediate need so it's the one I'm deploying at $ork for the
 > > time being. I'm unlikely to have time to implement this solution in the
 > > near future. -- [[Jon]]
+
+----
+
+I'd quite like to revisit this if that's ok. I'm still carrying a fork of
+table.pm locally to add this feature as I find it so useful. The main objection
+you made back in 2014 seems to be overloading the header= parameter, and I agree
+that this is not ideal. So I'm happy to resubmit this with an alternative parameter
+name for the new purpose. But I balked at the idea of implementing something like 
+an NLP processor to define the header range. And I must stress how useful it is in
+practise to separate out the header definition from the data: quite often I don't
+want headers in my CSV files at all, for example, so I can perform rudimentary analysis
+on them with command line tools without having to factor in a header line (how many
+records?  = `wc -l`; sorting on fields simply with `sort -k` etc.). Having them
+separate means I can have machine-generated or manipulated CSV files of data and then
+use ikiwiki to mark them up for human reading, but change or regenerate the data quickly
+and easily underneath.
+
+I'd appreciate your take on the above suggestions [[smcv]] before I roll my sleeves up.
+Thanks! — [[Jon]] (2018-09-24)
+
+> I continue to think that the `header` parameter shouldn't be sometimes a
+> description of which parts of the table are header, and sometimes the header
+> data itself; so if you want an inline header, it should indeed have a
+> distinct name.
+>
+> If you can think of a good name for the new parameter, and can document it
+> reasonably clearly, then I would be OK with having a separate parameter that
+> is the externally-provided header. I don't know what the right name for that
+> parameter would be: `headercontent` or `headerblock` is unwieldy but I can't
+> think of anything better.
+>
+> It would maybe simplify things to make it mutually exclusive with `header`,
+> but then you wouldn't be able to express things like "the first column of my
+> CSV is a header, the first row is just an ordinary row, and please add
+> this literal header row to the top".
+>
+> It might help to write the documentation and/or tests first, and then
+> implement it afterwards, when you have an "API" you're happy with.
+>
+> Corner cases:
+>
+> How would it work if you want to add a literal header column on the left
+> rather than adding a literal header row on the top? If you add both, what
+> happens at the top left corner?
+>
+> Is it necessary to be able to add header columns on the right (for RTL
+> languages?), or header rows (footer rows, I suppose) on the bottom?
+>
+> --[[smcv]]

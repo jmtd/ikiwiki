@@ -160,7 +160,7 @@ sub preprocess_trailitems (@) {
 
 	if (exists $params{pagenames}) {
 		push @{$pagestate{$params{page}}{trail}{contents}},
-			[pagenames => (split ' ', $params{pagenames})];
+			[pagenames => (map { linkpage $_ } split ' ', $params{pagenames})];
 	}
 
 	return "";

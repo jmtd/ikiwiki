@@ -1,0 +1,179 @@
+There is an issue where an initial "inline" directive would be
+translated correctly but subsequent inlines of the same page would
+result in the raw contents of the ".po" file (ie. starting with the raw
+copyright headers!) being inserted into the page instead.
+
+For example, given a "index.mdwn" containing:
+
+    \[[!inline pages="inline" raw="yes"]]
+    \[[!inline pages="inline" raw="yes"]]
+
+… and an "index.de.po" of:
+
+    msgid "\[[!inline pages=\"inline\" raw=\"yes\"]]\n"
+    msgstr "\[[!inline pages=\"inline.de\" raw=\"yes\"]]\n"
+
+… together with an "inline.mdwn" of:
+
+   This is inlined content.
+
+… and an "inline.de.po" of:
+
+    msgid "This is inlined content."
+    msgstr "This is German inlined content."
+
+§
+
+This would result in the following translation:
+
+    This is the inlined content.
+    # SOME DESCRIPTIVE TITLE
+    # Copyright (C) YEAR Free Software Foundation, Inc.
+    # This file is distributed under the same license as the PACKAGE package.
+    # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+
+… instead of (of course)
+
+    This is the inlined content.
+    This is the inlined content.
+
+[[Initially proposed patch from Chris Lamb|bugs/po:_second_or_subsequent_inline_of_translated_page_inlines_.po_file,_not_translated_content/20180628-patch.txt]]
+
+[[!tag patch]]
+
+> Thank you Chris! I've reviewed the patch (with my "original author of the po plugin" hat on) and it looks good to me. I'm not 100% sure about `alreadyfiltered` being the best name for something that's not a predicated anymore but it's good enough. Then I wore my end-user hat and confirmed that with Chris' patch applied, the reproducer we had for this bug at Tails works fine. So IMO we're good to go and I recommend to apply this patch. Thanks in advance! -- [[intrigeri]]
+
+> Any update on getting this merged? — [[lamby]], Fri, 24 Aug 2018 12:36:37 +0200
+
+> Indeed, would love to see this merged! What might be the next steps here? — [[lamby]],  Thu, 18 Oct 2018 17:57:37 -0400
+
+> I've filed this in Debian GNU/Linux at <https://bugs.debian.org/911356> — [[lamby]], Thu, 18 Oct 2018 20:18:58 -0400
+
+>> As I said on the Debian bug, I think we badly need test coverage for
+>> this sort of thing, otherwise it *will* regress. The po plugin is
+>> relatively complicated and hooks into lots of places in ikiwiki,
+>> and I don't think any of the active ikiwiki maintainers use it
+>> themselves, which means it can easily break (or have pre-existing
+>> bugs) without anyone realising.
+>>
+>> For now I've added a failing test-case for this particular bug.
+>> --[[smcv]]
+
+---
+
+Review from [[smcv]]:
+
+The patch attached to the Debian bug and the patch pasted here (which
+I've moved to an attachment) appear to be different, but I'm not going to
+do a line-by-line review of the patches and their differences for now
+because I'm not sure their approach is fully correct.
+
+As we know, the two hardest things in computer science are naming, cache
+invalidation and off-by-one errors. Unfortunately this patch has issues
+with naming and cache invalidation. It's effectively turning the
+`alreadyfiltered` mechanism into a cache of memoized results of calling
+`po_to_markup()` on pages' content, keyed by the page name and the
+`destpage`, which is either the page name again or the name of a page
+into which the `page` is to be inlined (even though the result of
+`po_to_markup()` doesn't actually vary with the `destpage`).
+
+This naturally raises the usual concerns about having a cache:
+
+* How large does it grow?
+* Do we invalidate it every time we need to?
+* Do we even need it?
+
+The cache size is mainly a concern for large wikis being rebuilt. If you
+have a wiki with 1000 translated pages in 3 languages each, each of which
+is inlined into an average of one other page, then by the time you finish
+a rebuild you'll be holding 6000 translated pages in memory. If we change
+the `alreadyfiltered` mechanism to be keyed by the page name and not the
+(page, destpage) pair, that drops to 3000, but that's still
+O(pages \* languages) which seems like a lot. As a general design
+principle, ikiwiki tries not to hold full content in RAM for more than
+the currently-processed page.
+
+We invalidate the `alreadyfiltered` for a (page, page) pair in an
+editcontent hook, and we never invalidate (page, destpage) pairs for
+page != destpage at all. Are we sure there is no other circumstance in
+which the content of a page can change?
+
+One of the things I tried doing for a simple solution was to remove the
+cache altogether, because I wasn't sure why we had this `alreadyfiltered`
+mechanism in the first place. This passes tests, which suggests that
+either the `alreadyfiltered` mechanism is unnecessary, or our regression
+test coverage for `po` is insufficient.
+
+Looking back at the history of the `po` plugin, it seems that the
+`alreadyfiltered` mechanism was introduced (under a different name,
+with less abstraction) by [[intrigeri]] in commit 1e874b3f:
+
+    po plugin[filter]: avoid converting more than once per destfile
+
+    Only the first filter function call on a given {page,destpage} must convert it
+    from the PO file, subsequent calls must leave the passed $content unmodified.
+
+    Else, preprocessing loops are the rule.
+
+I don't understand this. Under what circumstances would we pass content
+through the filter hooks, and then pass it back through the same filter
+hooks? Can we not do that, instead? If at all possible we should at
+least have test coverage for the situation where this happened (but I
+can't add this without knowing what it was).
+
+I feel as though it should be an invariant that the output of a filter
+hook is never passed back through filter hooks: otherwise every filter
+hook would have to be able to be able to detect and skip processing
+its own output, which is not necessarily even possible. For instance,
+suppose you had a plugin with a filter that turned tab-separated text
+files into `<table>` markup: every HTML file that doesn't contain tabs
+is trivially a TSV file with one column, so you can't know whether a
+blob of text is TSV or HTML.
+
+I wondered whether the loops referenced in 1e874b3f might have been
+fixed in 192ce7a2:
+
+    remove unnecessary and troublesome filter calls
+
+    This better defines what the filter hook is passed, to only be the raw,
+    complete text of a page. Not some snippet, or data read in from an
+    unrelated template.
+
+    Several plugins that filtered text that originates from an (already
+    filtered) page were modified not to do that. Note that this was not
+    done very consistently before; other plugins that receive text from a
+    page called preprocess on it w/o first calling filter.
+
+    The template plugin gets text from elsewhere, and was also changed not to
+    filter it. That leads to one known regression -- the embed plugin cannot
+    be used to embed stuff in templates now. But that plugin is deprecated
+    anyway.
+
+    Later we may want to increase the coverage of what is filtered. Perhaps
+    a good goal would be to allow writing a filter plugin that filters
+    out unwanted words, from any input. We're not there yet; not only
+    does the template plugin load unfiltered text from its templates now,
+    but so can the table plugin, and other plugins that use templates (like
+    inline!). I think we can cross that bridge when we come to it. If I wanted
+    such a censoring plugin, I'd probably make it use a sanitize hook instead,
+    for the better coverage.
+
+    For now I am concentrating on the needs of the two non-deprecated users
+    of filter. This should fix bugs/po_vs_templates, and it probably fixes
+    an obscure bug around txt's use of filter for robots.txt.
+
+but I'm not sure that any of the redundant filtering removed in that
+commit was actually relevant to `po` users?
+
+[[intrigeri]], can you shed any light on this?
+
+Naming is the easy part of this review: the `alreadyfiltered` family of
+functions are not named like cache getter/setter functions. This could
+be resolved by renaming.
+
+---
+
+[[!template id=gitbranch branch=smcv/wip/po-filter-every-time browse="https://git.pseudorandom.co.uk/smcv/ikiwiki.git/log/refs/heads/wip/po-filter-every-time" author="[[Simon_McVittie|smcv]]"]]
+
+If it's valid to remove the `alreadyfiltered` mechanism, my
+`wip/po-filter-every-time` branch does that. Please test?

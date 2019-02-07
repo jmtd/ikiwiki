@@ -125,7 +125,7 @@ sub sessioncgi ($$) {
 			error(gettext("please enter a page title"));
 		}
 		# if the page already exists, munge it to be unique
-		my $from=$q->param('from');
+		my $from=decode_utf8($q->param('from'));
 		my $add="";
 		while (exists $IkiWiki::pagecase{lc($from."/".$page.$add)}) {
 			$add=1 unless length $add;
