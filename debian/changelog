@@ -1,4 +1,4 @@
-ikiwiki (3.20190207-1) UNRELEASED; urgency=medium
+ikiwiki (3.20190207-1) unstable; urgency=medium
 
   [ Simon McVittie ]
   * New upstream release
@@ -10,7 +10,7 @@ ikiwiki (3.20190207-1) UNRELEASED; urgency=medium
   [ Jelmer Vernooĳ ]
   * Allow Breezy as alternative to Bazaar.
 
- -- Ondřej Nový <onovy@debian.org>  Mon, 01 Oct 2018 10:37:53 +0200
+ -- Simon McVittie <smcv@debian.org>  Thu, 07 Feb 2019 11:13:08 +0000
 
 ikiwiki (3.20180311-1) unstable; urgency=medium
 
