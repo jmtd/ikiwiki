@@ -2469,12 +2469,131 @@ sub add_autofile ($$$) {
 	$autofiles{$file}{generator}=$generator;
 }
 
-sub useragent () {
-	return LWP::UserAgent->new(
-		cookie_jar => $config{cookiejar},
-		env_proxy => 1,		# respect proxy env vars
+sub useragent (@) {
+	my %params = @_;
+	my $for_url = delete $params{for_url};
+	# Fail safe, in case a plugin calling this function is relying on
+	# a future parameter to make the UA more strict
+	foreach my $key (keys %params) {
+		error "Internal error: useragent(\"$key\" => ...) not understood";
+	}
+
+	eval q{use LWP};
+	error($@) if $@;
+
+	my %args = (
 		agent => $config{useragent},
+		cookie_jar => $config{cookiejar},
+		env_proxy => 0,
+		protocols_allowed => [qw(http https)],
 	);
+	my %proxies;
+
+	if (defined $for_url) {
+		# We know which URL we're going to fetch, so we can choose
+		# whether it's going to go through a proxy or not.
+		#
+		# We reimplement http_proxy, https_proxy and no_proxy here, so
+		# that we are not relying on LWP implementing them exactly the
+		# same way we do.
+
+		eval q{use URI};
+		error($@) if $@;
+
+		my $proxy;
+		my $uri = URI->new($for_url);
+
+		if ($uri->scheme eq 'http') {
+			$proxy = $ENV{http_proxy};
+			# HTTP_PROXY is deliberately not implemented
+			# because the HTTP_* namespace is also used by CGI
+		}
+		elsif ($uri->scheme eq 'https') {
+			$proxy = $ENV{https_proxy};
+			$proxy = $ENV{HTTPS_PROXY} unless defined $proxy;
+		}
+		else {
+			$proxy = undef;
+		}
+
+		foreach my $var (qw(no_proxy NO_PROXY)) {
+			my $no_proxy = $ENV{$var};
+			if (defined $no_proxy) {
+				foreach my $domain (split /\s*,\s*/, $no_proxy) {
+					if ($domain =~ s/^\*?\.//) {
+						# no_proxy="*.example.com" or
+						# ".example.com": match suffix
+						# against .example.com
+						if ($uri->host =~ m/(^|\.)\Q$domain\E$/i) {
+							$proxy = undef;
+						}
+					}
+					else {
+						# no_proxy="example.com":
+						# match exactly example.com
+						if (lc $uri->host eq lc $domain) {
+							$proxy = undef;
+						}
+					}
+				}
+			}
+		}
+
+		if (defined $proxy) {
+			$proxies{$uri->scheme} = $proxy;
+			# Paranoia: make sure we can't bypass the proxy
+			$args{protocols_allowed} = [$uri->scheme];
+		}
+	}
+	else {
+		# The plugin doesn't know yet which URL(s) it's going to
+		# fetch, so we have to make some conservative assumptions.
+		my $http_proxy = $ENV{http_proxy};
+		my $https_proxy = $ENV{https_proxy};
+		$https_proxy = $ENV{HTTPS_PROXY} unless defined $https_proxy;
+
+		# We don't respect no_proxy here: if we are not using the
+		# paranoid user-agent, then we need to give the proxy the
+		# opportunity to reject undesirable requests.
+
+		# If we have one, we need the other: otherwise, neither
+		# LWPx::ParanoidAgent nor the proxy would have the
+		# opportunity to filter requests for the other protocol.
+		if (defined $https_proxy && defined $http_proxy) {
+			%proxies = (http => $http_proxy, https => $https_proxy);
+		}
+		elsif (defined $https_proxy) {
+			%proxies = (http => $https_proxy, https => $https_proxy);
+		}
+		elsif (defined $http_proxy) {
+			%proxies = (http => $http_proxy, https => $http_proxy);
+		}
+
+	}
+
+	if (scalar keys %proxies) {
+		# The configured proxy is responsible for deciding which
+		# URLs are acceptable to fetch and which URLs are not.
+		my $ua = LWP::UserAgent->new(%args);
+		foreach my $scheme (@{$ua->protocols_allowed}) {
+			unless ($proxies{$scheme}) {
+				error "internal error: $scheme is allowed but has no proxy";
+			}
+		}
+		# We can't pass the proxies in %args because that only
+		# works since LWP 6.24.
+		foreach my $scheme (keys %proxies) {
+			$ua->proxy($scheme, $proxies{$scheme});
+		}
+		return $ua;
+	}
+
+	eval q{use LWPx::ParanoidAgent};
+	if ($@) {
+		print STDERR "warning: installing LWPx::ParanoidAgent is recommended\n";
+		return LWP::UserAgent->new(%args);
+	}
+	return LWPx::ParanoidAgent->new(%args);
 }
 
 sub sortspec_translate ($$) {

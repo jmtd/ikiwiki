@@ -219,14 +219,10 @@ sub getobj ($$) {
 	eval q{use Net::OpenID::Consumer};
 	error($@) if $@;
 
-	my $ua;
-	eval q{use LWPx::ParanoidAgent};
-	if (! $@) {
-		$ua=LWPx::ParanoidAgent->new(agent => $config{useragent});
-	}
-	else {
-		$ua=useragent();
-	}
+	# We pass the for_url parameter, even though it's undef, because
+	# that will make sure we crash if used with an older IkiWiki.pm
+	# that didn't automatically try to use LWPx::ParanoidAgent.
+	my $ua=useragent(for_url => undef);
 
 	# Store the secret in the session.
 	my $secret=$session->param("openid_secret");

@@ -51,7 +51,6 @@ sub import {
 	hook(type => "checkcontent", id => "po", call => \&checkcontent);
 	hook(type => "canremove", id => "po", call => \&canremove);
 	hook(type => "canrename", id => "po", call => \&canrename);
-	hook(type => "editcontent", id => "po", call => \&editcontent);
 	hook(type => "formbuilder_setup", id => "po", call => \&formbuilder_setup, last => 1);
 	hook(type => "formbuilder", id => "po", call => \&formbuilder);
 
@@ -303,9 +302,8 @@ sub filter (@) {
 	my $page = $params{page};
 	my $destpage = $params{destpage};
 	my $content = $params{content};
-	if (istranslation($page) && ! alreadyfiltered($page, $destpage)) {
+	if (istranslation($page)) {
 		$content = po_to_markup($page, $content);
-		setalreadyfiltered($page, $destpage);
 	}
 	return $content;
 }
@@ -520,15 +518,6 @@ sub canrename (@) {
 	return undef;
 }
 
-# As we're previewing or saving a page, the content may have
-# changed, so tell the next filter() invocation it must not be lazy.
-sub editcontent () {
-	my %params=@_;
-
-	unsetalreadyfiltered($params{page}, $params{page});
-	return $params{content};
-}
-
 sub formbuilder_setup (@) {
 	my %params=@_;
 	my $form=$params{form};
@@ -734,42 +723,6 @@ sub myisselflink ($$) {
 		return $origsubs{'isselflink'}->(masterpage($page), $link);
 	}
 	return;
-}
-
-# ,----
-# | Blackboxes for private data
-# `----
-
-{
-	my %filtered;
-
-	sub alreadyfiltered($$) {
-		my $page=shift;
-		my $destpage=shift;
-
-		return exists $filtered{$page}{$destpage}
-			 && $filtered{$page}{$destpage} eq 1;
-	}
-
-	sub setalreadyfiltered($$) {
-		my $page=shift;
-		my $destpage=shift;
-
-		$filtered{$page}{$destpage}=1;
-	}
-
-	sub unsetalreadyfiltered($$) {
-		my $page=shift;
-		my $destpage=shift;
-
-		if (exists $filtered{$page}{$destpage}) {
-			delete $filtered{$page}{$destpage};
-		}
-	}
-
-	sub resetalreadyfiltered() {
-		undef %filtered;
-	}
 }
 
 # ,----
@@ -1146,7 +1099,6 @@ sub commit_and_refresh ($) {
 		IkiWiki::rcs_update();
 	}
 	# Reinitialize module's private variables.
-	resetalreadyfiltered();
 	resettranslationscache();
 	flushmemoizecache();
 	# Trigger a wiki refresh.

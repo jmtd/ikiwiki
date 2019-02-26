@@ -57,18 +57,10 @@ sub checkconfig () {
 	};
 	error $@ if $@;
 
-	eval q{use LWPx::ParanoidAgent};
-	if (!$@) {
-		$client=LWPx::ParanoidAgent->new(agent => $config{useragent});
-	}
-	else {
-		eval q{use LWP};
-		if ($@) {
-			error $@;
-			return;
-		}
-		$client=useragent();
-	}
+	# Using the for_url parameter makes sure we crash if used
+	# with an older IkiWiki.pm that didn't automatically try
+	# to use LWPx::ParanoidAgent.
+	$client=useragent(for_url => $config{blogspam_server});
 }
 
 sub checkcontent (@) {

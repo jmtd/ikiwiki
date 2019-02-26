@@ -5,7 +5,8 @@ Versions System]] with ikiwiki.
 
 ### Usage
 7. Install [[!cpan File::chdir]], [[!cpan File::ReadBackwards]],
-   [cvsps](http://www.cobite.com/cvsps/), and
+   [cvsps](http://www.cobite.com/cvsps/)
+   (note: probably not [cvsps3](http://www.catb.org/~esr/cvsps/)), and
    [cvsweb](http://www.freebsd.org/projects/cvsweb.html) or the like.
 7. Adjust CVS-related parameters in your setup file.
 

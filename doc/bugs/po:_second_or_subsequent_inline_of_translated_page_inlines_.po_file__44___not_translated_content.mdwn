@@ -177,3 +177,6 @@ be resolved by renaming.
 
 If it's valid to remove the `alreadyfiltered` mechanism, my
 `wip/po-filter-every-time` branch does that. Please test?
+
+> intrigeri says [this change works as intended on tails.org](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=911356#41),
+> so I've applied it. [[done]] --[[smcv]]

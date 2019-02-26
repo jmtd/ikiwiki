@@ -447,25 +447,10 @@ like($output{'debian911356.fr'}, qr{
 	\s*
 	<p>Entre\sles\sinlines</p>
 	\s*
-	.*	# TODO: This paragraph gets mangled (Debian #911356)
-	\s*
-	<p>Après\sles\sinlines</p>
-}sx);
-
-TODO: {
-local $TODO = "Debian bug #911356";
-like($output{'debian911356.fr'}, qr{
-	<p>Avant\sla\spremière\sinline</p>
-	\s*
-	<p>Contenu\sfrançais</p>
-	\s*
-	<p>Entre\sles\sinlines</p>
-	\s*
 	<p>Contenu\sfrançais</p>
 	\s*
 	<p>Après\sles\sinlines</p>
 }sx);
-};
 
 # Variation of Debian #911356 without using raw inlines.
 like($output{debian911356ish}, qr{
@@ -511,28 +496,6 @@ like($output{'debian911356ish.fr'}, qr{
 	\s*
 	<p>Entre\sles\sinlines</p>
 	\s*
-	.*	# TODO: This paragraph gets mangled (Debian #911356)
-	\s*
-	<p>Après\sles\sinlines</p>
-}sx);
-
-TODO: {
-local $TODO = "Debian bug #911356";
-like($output{'debian911356ish.fr'}, qr{
-	<p>Avant\sla\spremière\sinline</p>
-	\s*
-	<!--feedlinks-->
-	\s*
-	<div\sclass="inlinecontent">
-	\s*
-	<h6>debian911356-inlined\.fr</h6>
-	\s*
-	<p>Contenu\sfrançais</p>
-	\s*
-	</div><!--inlinecontent-->
-	\s*
-	<p>Entre\sles\sinlines</p>
-	\s*
 	<!--feedlinks-->
 	\s*
 	<div\sclass="inlinecontent">
@@ -545,6 +508,5 @@ like($output{'debian911356ish.fr'}, qr{
 	\s*
 	<p>Après\sles\sinlines</p>
 }sx);
-};
 
 done_testing;

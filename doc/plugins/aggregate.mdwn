@@ -11,6 +11,10 @@ The [[meta]] and [[tag]] plugins are also recommended to be used with this
 one. Either the [[htmltidy]] or [[htmlbalance]] plugin is suggested, since
 feeds can easily contain html problems, some of which these plugins can fix.
 
+Installing the [[!cpan LWPx::ParanoidAgent]] Perl module is strongly
+recommended. The [[!cpan LWP]] module can also be used, but is susceptible
+to server-side request forgery.
+
 ## triggering aggregation
 
 You will need to run ikiwiki periodically from a cron job, passing it the
