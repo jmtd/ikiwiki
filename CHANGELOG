@@ -1,3 +1,46 @@
+ikiwiki (3.20190228) upstream; urgency=medium
+
+  * aggregate: Use LWPx::ParanoidAgent if available.
+    Previously blogspam, openid and pinger used this module if available,
+    but aggregate did not. This prevents server-side request forgery or
+    local file disclosure, and mitigates denial of service when slow
+    "tarpit" URLs are accessed.
+    (CVE-2019-9187)
+  * blogspam, openid, pinger: Use a HTTP proxy if configured, even if
+    LWPx::ParanoidAgent is installed.
+    Previously, only aggregate would obey proxy configuration. If a proxy
+    is used, the proxy (not ikiwiki) is responsible for preventing attacks
+    like CVE-2019-9187.
+  * aggregate, blogspam, openid, pinger: Do not access non-http, non-https
+    URLs.
+    Previously, these plugins would have allowed non-HTTP-based requests if
+    LWPx::ParanoidAgent was not installed. Preventing file URIs avoids local
+    file disclosure, and preventing other rarely-used URI schemes like
+    gopher mitigates request forgery attacks.
+  * aggregate, openid, pinger: Document LWPx::ParanoidAgent as strongly
+    recommended.
+    These plugins can request attacker-controlled URLs in some site
+    configurations.
+  * blogspam: Document LWPx::ParanoidAgent as desirable.
+    This plugin doesn't request attacker-controlled URLs, so it's
+    non-critical here.
+  * blogspam, openid, pinger: Consistently use cookiejar if configured.
+    Previously, these plugins would only obey this configuration if
+    LWPx::ParanoidAgent was not installed, but this appears to have been
+    unintended.
+  * po: Always filter .po files.
+    The po plugin in previous ikiwiki releases made the second and
+    subsequent filter call per (page, destpage) pair into a no-op,
+    apparently in an attempt to prevent *recursive* filtering (which as
+    far as we can tell can't happen anyway), with the undesired effect
+    of interpreting the raw .po file as page content (e.g. Markdown)
+    if it was inlined into the same page twice, which is apparently
+    something that tails.org does. Simplify this by deleting the code
+    that prevented repeated filtering. Thanks, intrigeri
+    (Closes: #911356)
+
+ -- Simon McVittie <smcv@debian.org>  Tue, 26 Feb 2019 21:05:49 +0000
+
 ikiwiki (3.20190207) upstream; urgency=medium
 
   [ Amitai Schleier ]

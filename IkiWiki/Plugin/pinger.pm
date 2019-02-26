@@ -70,17 +70,16 @@ sub ping {
 		eval q{use Net::INET6Glue::INET_is_INET6}; # may not be available
 		
 		my $ua;
-		eval q{use LWPx::ParanoidAgent};
-		if (!$@) {
-			$ua=LWPx::ParanoidAgent->new(agent => $config{useragent});
-		}
-		else {
-			eval q{use LWP};
-			if ($@) {
-				debug(gettext("LWP not found, not pinging"));
-				return;
-			}
-			$ua=useragent();
+		eval {
+			# We pass the for_url parameter, even though it's
+			# undef, because that will make sure we crash if used
+			# with an older IkiWiki.pm that didn't automatically
+			# try to use LWPx::ParanoidAgent.
+			$ua=useragent(for_url => undef);
+		};
+		if ($@) {
+			debug(gettext("LWP not found, not pinging").": $@");
+			return;
 		}
 		$ua->timeout($config{pinger_timeout} || 15);
 		

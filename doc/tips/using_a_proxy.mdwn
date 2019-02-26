@@ -1,0 +1,22 @@
+Some ikiwiki plugins make outgoing HTTP requests from the web server:
+
+* [[plugins/aggregate]] (to download Atom and RSS feeds)
+* [[plugins/blogspam]] (to check whether a comment or edit is spam)
+* [[plugins/openid]] (to authenticate users)
+* [[plugins/pinger]] (to ping other ikiwiki installations)
+
+If your ikiwiki installation cannot contact the Internet without going
+through a proxy, you can configure this in the [[setup file|setup]] by
+setting environment variables:
+
+    ENV:
+        http_proxy: "http://proxy.example.com:8080"
+        https_proxy: "http://proxy.example.com:8080"
+        # optional
+        no_proxy: ".example.com,www.example.org"
+
+Note that some plugins will use the configured proxy for all destinations,
+even if they are listed in `no_proxy`.
+
+To avoid server-side request forgery attacks, ensure that your proxy does
+not allow requests to addresses that are considered to be internal.

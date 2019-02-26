@@ -611,3 +611,52 @@ This was fixed in ikiwiki 3.20170111, with fixes backported to Debian 8
 in version 3.20141016.4.
 
 ([[!debcve CVE-2017-0356]]/OVE-20170111-0001)
+
+## Server-side request forgery via aggregate plugin
+
+The ikiwiki maintainers discovered that the [[plugins/aggregate]] plugin
+did not use [[!cpan LWPx::ParanoidAgent]]. On sites where the
+aggregate plugin is enabled, authorized wiki editors could tell ikiwiki
+to fetch potentially undesired URIs even if LWPx::ParanoidAgent was
+installed:
+
+* local files via `file:` URIs
+* other URI schemes that might be misused by attackers, such as `gopher:`
+* hosts that resolve to loopback IP addresses (127.x.x.x)
+* hosts that resolve to RFC 1918 IP addresses (192.168.x.x etc.)
+
+This could be used by an attacker to publish information that should not have
+been accessible, cause denial of service by requesting "tarpit" URIs that are
+slow to respond, or cause undesired side-effects if local web servers implement
+["unsafe"](https://tools.ietf.org/html/rfc7231#section-4.2.1) GET requests.
+([[!debcve CVE-2019-9187]])
+
+Additionally, if the LWPx::ParanoidAgent module was not installed, the
+[[plugins/blogspam]], [[plugins/openid]] and [[plugins/pinger]] plugins
+would fall back to [[!cpan LWP]], which is susceptible to similar attacks.
+This is unlikely to be a practical problem for the blogspam plugin because
+the URL it requests is under the control of the wiki administrator, but
+the openid plugin can request URLs controlled by unauthenticated remote
+users, and the pinger plugin can request URLs controlled by authorized
+wiki editors.
+
+This is addressed in ikiwiki 3.20190228 as follows, with the same fixes
+backported to Debian 9 in version 3.20170111.1:
+
+* URI schemes other than `http:` and `https:` are not accepted, preventing
+  access to `file:`, `gopher:`, etc.
+
+* If a proxy is [[configured in the ikiwiki setup file|tips/using_a_proxy]],
+  it is used for all outgoing `http:` and `https:` requests. In this case
+  the proxy is responsible for blocking any requests that are undesired,
+  including loopback or RFC 1918 addresses.
+
+* If a proxy is not configured, and LWPx::ParanoidAgent is installed,
+  it will be used. This prevents loopback and RFC 1918 IP addresses, and
+  sets a timeout to avoid denial of service via "tarpit" URIs.
+
+* Otherwise, the ordinary LWP user-agent will be used. This allows requests
+  to loopback and RFC 1918 IP addresses, and has less robust timeout
+  behaviour. We are not treating this as a vulnerability: if this
+  behaviour is not acceptable for your site, please make sure to install
+  LWPx::ParanoidAgent or disable the affected plugins.

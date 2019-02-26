@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-07 11:08+0000\n"
+"POT-Creation-Date: 2019-02-26 23:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -109,30 +109,30 @@ msgstr ""
 msgid "could not find feed at %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:529
+#: ../IkiWiki/Plugin/aggregate.pm:532
 msgid "feed not found"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:540
+#: ../IkiWiki/Plugin/aggregate.pm:543
 #, perl-format
 msgid "(invalid UTF-8 stripped from feed)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:548
+#: ../IkiWiki/Plugin/aggregate.pm:551
 #, perl-format
 msgid "(feed entities escaped)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:558
+#: ../IkiWiki/Plugin/aggregate.pm:561
 msgid "feed crashed XML::Feed!"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:654
+#: ../IkiWiki/Plugin/aggregate.pm:657
 #, perl-format
 msgid "creating new page %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/aggregate.pm:684 ../IkiWiki/Plugin/edittemplate.pm:137
+#: ../IkiWiki/Plugin/aggregate.pm:687 ../IkiWiki/Plugin/edittemplate.pm:137
 msgid "failed to process template:"
 msgstr ""
 
@@ -191,7 +191,7 @@ msgstr ""
 msgid "creating index page %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/blogspam.pm:139
+#: ../IkiWiki/Plugin/blogspam.pm:131
 msgid ""
 "Sorry, but that looks like spam to <a href=\"http://blogspam.net/"
 "\">blogspam</a>: "
@@ -732,7 +732,7 @@ msgstr ""
 msgid "Ignoring ping directive for wiki %s (this wiki is %s)"
 msgstr ""
 
-#: ../IkiWiki/Plugin/pinger.pm:80
+#: ../IkiWiki/Plugin/pinger.pm:81
 msgid "LWP not found, not pinging"
 msgstr ""
 
@@ -740,87 +740,87 @@ msgstr ""
 msgid "warning: Old po4a detected! Recommend upgrade to 0.35."
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:179
+#: ../IkiWiki/Plugin/po.pm:178
 #, perl-format
 msgid "%s is not a valid language code"
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:191
+#: ../IkiWiki/Plugin/po.pm:190
 #, perl-format
 msgid ""
 "%s is not a valid value for po_link_to, falling back to po_link_to=default"
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:196
+#: ../IkiWiki/Plugin/po.pm:195
 msgid ""
 "po_link_to=negotiated requires usedirs to be enabled, falling back to "
 "po_link_to=default"
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:473
+#: ../IkiWiki/Plugin/po.pm:471
 msgid "updated PO files"
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:496
+#: ../IkiWiki/Plugin/po.pm:494
 msgid ""
 "Can not remove a translation. If the master page is removed, however, its "
 "translations will be removed as well."
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:516
+#: ../IkiWiki/Plugin/po.pm:514
 msgid ""
 "Can not rename a translation. If the master page is renamed, however, its "
 "translations will be renamed as well."
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:975
+#: ../IkiWiki/Plugin/po.pm:928
 #, perl-format
 msgid "POT file (%s) does not exist"
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:989
+#: ../IkiWiki/Plugin/po.pm:942
 #, perl-format
 msgid "failed to copy underlay PO file to %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:997
+#: ../IkiWiki/Plugin/po.pm:950
 #, perl-format
 msgid "failed to update %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:1003
+#: ../IkiWiki/Plugin/po.pm:956
 #, perl-format
 msgid "failed to copy the POT file to %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:1039
+#: ../IkiWiki/Plugin/po.pm:992
 msgid "N/A"
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:1050
+#: ../IkiWiki/Plugin/po.pm:1003
 #, perl-format
 msgid "failed to translate %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:1133
+#: ../IkiWiki/Plugin/po.pm:1086
 msgid "removed obsolete PO files"
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:1190 ../IkiWiki/Plugin/po.pm:1202
-#: ../IkiWiki/Plugin/po.pm:1241
+#: ../IkiWiki/Plugin/po.pm:1142 ../IkiWiki/Plugin/po.pm:1154
+#: ../IkiWiki/Plugin/po.pm:1193
 #, perl-format
 msgid "failed to write %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:1200
+#: ../IkiWiki/Plugin/po.pm:1152
 msgid "failed to translate"
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:1253
+#: ../IkiWiki/Plugin/po.pm:1205
 msgid "invalid gettext data, go back to previous page to continue edit"
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:1296
+#: ../IkiWiki/Plugin/po.pm:1248
 #, perl-format
 msgid "%s has invalid syntax: must use CODE|NAME"
 msgstr ""
@@ -1395,17 +1395,17 @@ msgstr ""
 msgid "yes"
 msgstr ""
 
-#: ../IkiWiki.pm:2507
+#: ../IkiWiki.pm:2626
 #, perl-format
 msgid "invalid sort type %s"
 msgstr ""
 
-#: ../IkiWiki.pm:2528
+#: ../IkiWiki.pm:2647
 #, perl-format
 msgid "unknown sort type %s"
 msgstr ""
 
-#: ../IkiWiki.pm:2677
+#: ../IkiWiki.pm:2796
 #, perl-format
 msgid "cannot match pages: %s"
 msgstr ""

@@ -513,7 +513,10 @@ sub aggregate (@) {
 			}
 			$feed->{feedurl}=pop @urls;
 		}
-		my $ua=useragent();
+		# Using the for_url parameter makes sure we crash if used
+		# with an older IkiWiki.pm that didn't automatically try
+		# to use LWPx::ParanoidAgent.
+		my $ua=useragent(for_url => $feed->{feedurl});
 		my $res=URI::Fetch->fetch($feed->{feedurl}, UserAgent=>$ua);
 		if (! $res) {
 			$feed->{message}=URI::Fetch->errstr;

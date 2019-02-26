@@ -10,9 +10,11 @@ can be kept up-to-date.
 To configure what URLs to ping, use the [[ikiwiki/directive/ping]]
 [[ikiwiki/directive]].
 
-The [[!cpan LWP]] perl module is used for pinging. Or the [[!cpan
-LWPx::ParanoidAgent]] perl module is used if available, for added security.
-Finally, the [[!cpan Crypt::SSLeay]] perl module is needed to support pinging
+The [[!cpan LWPx::ParanoidAgent]] Perl module is strongly recommended.
+The [[!cpan LWP]] module can also be used, but is susceptible
+to server-side request forgery.
+
+The [[!cpan Crypt::SSLeay]] perl module is needed to support pinging
 "https" urls.
 
 By default the pinger will try to ping a site for 15 seconds before timing
