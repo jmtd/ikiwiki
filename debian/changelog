@@ -1,4 +1,4 @@
-ikiwiki (3.20190228-1) UNRELEASED; urgency=high
+ikiwiki (3.20190228-1) unstable; urgency=high
 
   * New upstream release
     - aggregate: Use LWPx::ParanoidAgent if available.
@@ -40,7 +40,7 @@ ikiwiki (3.20190228-1) UNRELEASED; urgency=high
       that prevented repeated filtering. Thanks, intrigeri
       (Closes: #911356)
 
- -- Simon McVittie <smcv@debian.org>  Tue, 26 Feb 2019 21:09:53 +0000
+ -- Simon McVittie <smcv@debian.org>  Tue, 26 Feb 2019 23:04:42 +0000
 
 ikiwiki (3.20190207-1) unstable; urgency=medium
 
