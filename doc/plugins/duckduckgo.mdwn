@@ -1,0 +1,14 @@
+[[!template id=plugin name=duckduckgo author="[Jonathan Dowland](https://jmtd.net/)"]]
+[[!tag type/web]]
+
+This plugin adds a search form to the wiki, using DuckDuckGo's site search.
+
+DuckDuckGo is asked to search for pages in the domain specified in the wiki's
+`url` configuration parameter. Results will depend on whether DuckDuckGo has
+indexed the site, and how recently.
+
+The search form requires JavaScript to be enabled in the client's browser to
+function correctly.
+
+By comparison the [[search]] plugin offers full text search of only the wiki,
+but requires that a search engine be installed on your site.
