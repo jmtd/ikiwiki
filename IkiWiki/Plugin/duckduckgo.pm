@@ -1,4 +1,9 @@
 #!/usr/bin/perl
+# duckduckgo search form plugin
+# Copyright © 2019 Jonathan Dowland <jon@dow.land>
+# based on the google search form plugin by Peter Simons <simons@cryp.to>
+# Licensed under the GNU GPL, version 2, or any later version published by the
+# Free Software Foundation
 package IkiWiki::Plugin::duckduckgo;
 
 use warnings;
