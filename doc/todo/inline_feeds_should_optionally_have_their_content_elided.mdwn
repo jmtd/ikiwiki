@@ -1,0 +1,16 @@
+[[!tag wishlist]]
+[[plugins/inline]] has a parameter `archive` which enables displaying
+metadata about matching pages (title, date) rather than their full
+contents. This does not influence the content of any generated feeds:
+they always include the full content.
+
+There should be a way to elide the content of inlined pages in generated
+feeds, either by doing so when `archive=yes` is set (potentially changing
+the behaviour of existing deployments, but less configuration cruft) or
+adding yet further configuration options to `inline`.
+
+use-case: I want to generate a (semi-private) feed of every blog post I
+have ever written, both on my live site and on my test one, so I can
+compare the publication dates. (some blog posts have dates fixed by
+meta directives; other rely on the file ctime, which is not preserved
+in the parent git repositories.) *— [[Jon]], 2020-04-27*
