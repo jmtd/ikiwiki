@@ -22,6 +22,9 @@ The pubdate REQUIRES a date, so e.g. `pubdate="2009-03-24T18:02:14Z"`
 >>>>> `Error: Attribute pubdate not allowed on element time at this point.`
 >>>> *— [[Jon]], 2020-10-05*
 
+>>>>> I've filed a separate bug page for this, since this one is already
+>>>>> marked *done*: [[bugs/pubdate_not_valid_for_html5]]. I've filed a
+>>>>> patch.  *—[[Jon]], 2020-10-06*
 
 
 Otherwise the XML parser chokes.
