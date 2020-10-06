@@ -1285,11 +1285,13 @@ sub displaytime ($;$$) {
 	my $time=formattime($_[0], $_[1]);
 	if ($config{html5}) {
 		return '<time datetime="'.date_3339($_[0]).'"'.
-			($_[2] ? ' pubdate="pubdate"' : '').
+			($_[2] ? ' class="dt-published"' : '').
 			'>'.$time.'</time>';
 	}
 	else {
-		return '<span class="date">'.$time.'</span>';
+		return '<span class="date'.
+			($_[2] ? ' dt-published' : '').
+			'"">'.$time.'</span>';
 	}
 }
 
