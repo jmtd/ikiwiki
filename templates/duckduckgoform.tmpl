@@ -1,6 +1,6 @@
-<form action="https://duckduckgo.com/" id=searchform
-      onsubmit="document.getElementById('searchbox').value += ' site:<TMPL_VAR URL>';">
+<form action="https://duckduckgo.com/" id=searchform>
   <div>
     <input type="text" autocomplete="off" name="q" id="searchbox" value="" size=16 placeholder="Search with DuckDuckGo" />
+    <input type="hidden" name="sites" value="<TMPL_VAR URL>" />
   </div>
 </form>
