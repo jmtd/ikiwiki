@@ -758,9 +758,11 @@ sub commentmoderation ($$) {
 		my $content=readfile("$dir/$id");
 		my $preview=previewcomment($content, $id,
 			$id, $ctime);
+                my $parent=$id; # XXX adjust comments_pending to output a better field
 		{
 			id => $id,
 			view => $preview,
+                        parent => $parent,
 		}
 	} sort { $b->[2] <=> $a->[2] } comments_pending();
 
