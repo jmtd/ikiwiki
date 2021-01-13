@@ -35,29 +35,40 @@ sub safe_key {
   0;
 }
 
+my $checkconfig_singleton;
+
 sub checkconfig () {
+    # IkIWiki can run checkconfig more than once in some situations.
+    # We need to ensure the aliases are only defined once.
+    return if $checkconfig_singleton;
+
+    if ($config{pagespec_aliases}) {
+        define_aliases();
+        $checkconfig_singleton = 1;
+    }
+}
+
+sub define_aliases () {
     no strict 'refs';
     no warnings 'redefine';
 
-    if ($config{pagespec_aliases}) {
-        foreach my $key (keys %{$config{pagespec_aliases}}) {
-            error(gettext("Only word-characters are permitted in PageSpec aliases"))
-                unless safe_key($key);
-            my $value = ${$config{pagespec_aliases}}{$key};
-            my $subname = "IkiWiki::PageSpec::match_$key";
+    foreach my $key (keys %{$config{pagespec_aliases}}) {
+        error(gettext("Only word-characters are permitted in PageSpec aliases"))
+            unless safe_key($key);
+        my $value = ${$config{pagespec_aliases}}{$key};
+        my $subname = "IkiWiki::PageSpec::match_$key";
 
-            error(gettext("PageSpec already defined for alias ")."'$key'")
-                if ref *$subname{CODE};
+        error(gettext("PageSpec already defined for alias ")."'$key'")
+            if ref *$subname{CODE};
 
-            my $entered;
-            *{ $subname } = sub {
-              my $path = shift;
-              error(gettext("PageSpec alias defined recursively: ")."'$key'") if $entered;
-              $entered = 1;
-              my $result = IkiWiki::pagespec_match($path, $value);
-              $entered = 0;
-              return $result;
-            }
+        my $entered;
+        *{ $subname } = sub {
+          my $path = shift;
+          error(gettext("PageSpec alias defined recursively: ")."'$key'") if $entered;
+          $entered = 1;
+          my $result = IkiWiki::pagespec_match($path, $value);
+          $entered = 0;
+          return $result;
         }
     }
 }
