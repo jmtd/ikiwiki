@@ -9,6 +9,9 @@ IkiWiki.
 At the time of writing, the opinionated branch is IkiWiki tag
 3.20200202.3 + the following patches:
 
+    c7be6d799 DuckDuckGo: use 'sites' parameter and avoid JavaScript
+    6d589d296 Add copyright preamble comment
+    a15c26578 document duckduckgo plugin
     641ad4757 alias: ensure PageSpec alias definitions happen only once
     2115aae24 new plugin: alias.pm - pagespec aliases
     8874c7306 Initial stab at a DuckDuckGo plugin
