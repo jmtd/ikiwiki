@@ -8,7 +8,7 @@ IkiWiki.
 
 At the time of writing, the opinionated branch is IkiWiki tag
 3.20200202.3 + the following patches
-(`git log --oneline 3.20200202.3..opinionated`):
+([`git log --oneline 3.20200202.3..opinionated`](https://github.com/jmtd/ikiwiki/compare/3.20200202.3...jmtd:opinionated?expand=1)):
 
 ```
 6ee18bb69 DuckDuckGo: use 'sites' parameter and avoid JavaScript
