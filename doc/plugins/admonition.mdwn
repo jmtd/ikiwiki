@@ -1,0 +1,82 @@
+[[!meta author="anarcat"]]
+[[!template id=plugin name=admonition author="[[anarcat]]"]]
+[[!tag type/chrome patch]]
+
+# Admonitions
+
+This plugin adds directives that allow users to outline certain
+sections of text using a custom style sheet and bright icons.
+
+5 directives are available:
+
+* [[ikiwiki/directive/tip]]
+* [[ikiwiki/directive/note]]
+* [[ikiwiki/directive/important]]
+* [[ikiwiki/directive/caution]]
+* [[ikiwiki/directive/warning]]
+
+For example:
+
+    \[[!tip "Admonitions should be used with care. A page riddled with admonitions will look restless and will be harder to follow than a page where admonitions are used sparingly."]]
+
+This will render as:
+
+<div class="tip">Admonitions should be used with care. A page riddled
+with admonitions will look restless and will be harder to follow than
+a page where admonitions are used sparingly.</div>
+
+Here's other examples:
+
+<div class="note">
+The directive only creates a `<div>` with the appropriate style. You
+can of course create a `<div>` yourself. For example, the following
+will create an important section:
+
+    <div class="important">You can't put admonitions inside
+    admonitions. First, the CSS does not support that, and second,
+    that would be silly.!</div>
+
+... like this:
+</div>
+
+... well, like this really:
+
+<div class="important">You can't put admonitions inside
+admonitions. First, the CSS does not support that, and second, that
+would be silly.</div>
+
+Also:
+
+<span/><div class="caution">You can use the `<div>` tag directly
+instead, but keep in mind that Markdown has some quirks regarding how
+it parses markup inside HTML: it needs to think that it is a "span"
+element for markup to be parsed. You can trick the parser by prefixing
+your `<div>` with a `<span/>` or `&nbsp;` element to force it to be
+parsed. You can also use the [[ikiwiki/directive/format]] directive
+directly inside the div to format the text as Markdown (or whatever
+you wish) directly. So this should also work:
+
+    <div class="tip">\[[!format "this is *great*!"]]</div>
+
+Markup inside the directives is of course parsed normally, so this
+also works as expected:
+
+    \[[!tip "this is *great*!"]]
+</div>
+
+And a final example:
+
+<div class="warning">Use warnings where there is a risk of bodily harm
+or data loss.</div>
+
+The admonition plugin does not need to be enabled for the `<div>` to
+render properly. The plugin only enables the directive shortcuts, the
+CSS and icons are always available.
+
+# Rationale
+
+The idea behind the directives is to make the the CSS elements easier
+to discover through the builtin documentation. Obviously, more
+admonitions can be created simply by adding similar icons and CSS
+elements. Of course, you will not get the above directives expanded
+automatically unless you patch the admonition plugin, unfortunately.
