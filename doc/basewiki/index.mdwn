@@ -4,4 +4,21 @@ All wikis are supposed to have a [[SandBox]], so this one does too.
 
 ----
 
+[[!tip "admonitions are enabled, but,"]]
+[[!warning "the CSS needs some work."]]
+
+Footnotes[^1] are available.
+
+Graphs: [[!graph prog=neato src="a -> b -> c"]]
+
+table style "fullwidth_table"; separate table data and data definitions:
+
+[[!table class="fullwidth_table" header="foo,bar,baz" data="""
+1,2,3
+a,b,c"""]]
+
+----
+
 This wiki is powered by [[ikiwiki]].
+
+[^1]: this is a footnote.
