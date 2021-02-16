@@ -1,7 +1,23 @@
-Welcome to your new wiki.
+Welcome to your new wiki! This is an [opinionated IkiWiki](https://github.com/jmtd/opinionated-ikiwiki),
+which is a containerized version of [[ikiwiki]].
 
-All wikis are supposed to have a [[SandBox]], so this one does too.
+Some features that are enabled on this *opinionated IkiWiki*:
+----
+
+[[!tip "[admonitions](https://ikiwiki.info/plugins/contrib/admonition/) are enabled"]]
+
+Footnotes[^1] are available.
+
+Images: [[!img smileys/devil.png alt="smiley"]]
+
+Graphs: [[!graph prog=dot src="rankdir=LR; a -> b -> c"]]
+
+"table" tweaks: the style "fullwidth_table"; separate table header and data definitions:
+
+[[!table class="fullwidth_table" header="foo,bar,baz" data="""
+1,2,3
+a,b,c"""]]
 
 ----
 
-This wiki is powered by [[ikiwiki]].
+[^1]: this is a footnote.
