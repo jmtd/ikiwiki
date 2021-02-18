@@ -606,7 +606,7 @@ a.login_large_btn:focus {
     background-repeat: no-repeat;
     background-position: 8px 8px; /* small gap around icon */
     /* 32 is the expected size of the icons */
-    min-height: 32px
+    min-height: 32px;
     padding: 8px 1em 8px 48px; /* 48 = 32 + 8 + 8 px */
 }
 #content div.tip { background-image: url("smileys/admon-tip.png"); }
