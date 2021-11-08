@@ -11,6 +11,8 @@ At the time of writing, the opinionated branch is IkiWiki tag
 ([`git log --oneline 3.20200202.3..opinionated`](https://github.com/jmtd/ikiwiki/compare/3.20200202.3...jmtd:opinionated?expand=1)):
 
 ```
+5b1f0261d mdwn: debug() which implementation is chosen
+0c40bad75 mdwn support CommonMark if available
 841b4c2c2 admonitions: fix missing semi-colon in CSS
 befc63158 Adjust basewiki front-page to demo opinionated features
 f108495a1 table.pm: permit data in the "header" parameter
@@ -41,4 +43,4 @@ f4755f865 new permalink plugin: defines TMPL_VAR PERMALINK
 daa44271b Switch from pubdate=pubdate to class=dt-published
 ```
 
- *— [Jonathan Dowland](https://jmtd.net), 2021-02-19*
+ *— [Jonathan Dowland](https://jmtd.net), 2021-11-08*
