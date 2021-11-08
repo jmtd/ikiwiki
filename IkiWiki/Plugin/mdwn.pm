@@ -160,6 +160,15 @@ sub htmlize (@) {
 			}
 		}
 		if (! defined $markdown_sub) {
+			eval q{use CommonMark};
+			if (! $@) {
+				debug("mdwn: using CommonMark");
+				$markdown_sub=sub {
+					return CommonMark->markdown_to_html(shift);
+				}
+			}
+		}
+		if (! defined $markdown_sub) {
 			eval q{use Text::Markdown};
 			if (! $@) {
 				if (Text::Markdown->can('markdown')) {
