@@ -594,3 +594,8 @@ a.login_large_btn:focus {
 		padding: 4px 4px;
 	}
 }
+
+/* enable dark mode */
+html {
+	color-scheme: light dark;
+}
