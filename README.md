@@ -11,6 +11,7 @@ At the time of writing, the opinionated branch is IkiWiki tag
 ([`git log --oneline 3.20200202.3..opinionated`](https://github.com/jmtd/ikiwiki/compare/3.20200202.3...jmtd:opinionated?expand=1)):
 
 ```
+99ca3d4b5 Enable dark mode for the anti-theme
 5b1f0261d mdwn: debug() which implementation is chosen
 0c40bad75 mdwn support CommonMark if available
 841b4c2c2 admonitions: fix missing semi-colon in CSS
