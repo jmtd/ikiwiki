@@ -74,6 +74,7 @@ sub htmlize (@) {
 				debug(gettext("multimarkdown is enabled, but Text::MultiMarkdown is not installed"));
 			}
 			else {
+				debug("mdwn: using multimarkdown");
 				$markdown_sub=sub {
 					my %flags=( use_metadata => 0 );
 
@@ -136,6 +137,7 @@ sub htmlize (@) {
 					$always_flags |= 0x08000000;
 				}
 
+				debug("mdwn: using discount");
 				$markdown_sub=sub {
 					my $t=shift;
 
@@ -161,15 +163,18 @@ sub htmlize (@) {
 			eval q{use Text::Markdown};
 			if (! $@) {
 				if (Text::Markdown->can('markdown')) {
+					debug("mdwn: using Text::Markdown::markdown");
 					$markdown_sub=\&Text::Markdown::markdown;
 				}
 				else {
+					debug("mdwn: using Text::Markdown::Markdown");
 					$markdown_sub=\&Text::Markdown::Markdown;
 				}
 			}
 			else {
 				eval q{use Markdown};
 				if (! $@) {
+					debug("mdwn: using Markdown::Markdown");
 					$markdown_sub=\&Markdown::Markdown;
 				}
 				else {
