@@ -145,8 +145,7 @@ div.recentchanges {
 	clear: both;
 	display: block;
 	padding: 1px 2px;
-	background: white !important;
-	color: black !important;
+	color-scheme: light dark;
 }
 .recentchanges .desc {
 	display: none;
@@ -219,9 +218,8 @@ div.recentchanges {
 	margin-bottom: 4px;
 	margin-top: -1px;
 	padding: 0ex 2ex;
-	background: white;
 	border: 1px solid;
-	color: black !important;
+	color-scheme: light dark;
 }
 
 hr.poll {
@@ -297,8 +295,7 @@ div.progress-done {
 	margin-bottom: 1ex;
 	padding: 1ex 1ex;
 	border: 1px solid #aaa;
-	background: white;
-	color: black !important;
+	color-scheme: light dark;
 }
 
 /* notebox template */
@@ -310,8 +307,7 @@ div.progress-done {
 	padding: 1ex 1ex;
 	border: 1px solid #aaa;
 	width: 25%;
-	background: white;
-	color: black !important;
+	color-scheme: light dark;
 }
 
 /* popup template and backlinks hiding */
