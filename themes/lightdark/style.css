@@ -1,0 +1,8 @@
+/*
+ * lightdark theme
+ * Follow browser's preference for light or dark mode
+ */
+
+html {
+	color-scheme: light dark;
+}

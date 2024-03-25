@@ -28,6 +28,11 @@ based on [[Jon]]'s homepage design.
 
 <br clear="both" />
 
+[[!img lightdark_small.png align=left]] The *lightdark* theme, which honours
+your browser's preference for light or dark mode.
+
+<br clear="both" />
+
 [[!img none_small.png align=left]] For completeness, ikiwiki's default
 anti-theme.
 
