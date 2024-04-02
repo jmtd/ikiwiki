@@ -732,6 +732,12 @@ sub checkconfig () {
 		}
 	}
 
+	if (defined $config{html5} and ! $config{html5}) {
+		warn sprintf(gettext(
+			"html5 config option will be removed in a future release: %s\n"),
+			"https://ikiwiki.info/todo/finish_html5_migration/");
+	}
+
 	run_hooks(checkconfig => sub { shift->() });
 
 	return 1;
