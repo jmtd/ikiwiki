@@ -10,19 +10,19 @@ added).
   [[ikiwiki_logo_large|ikiwiki_large.png]]  
   [[ikiwiki_button|ikiwiki_button.png]]
 
-  [[SVG_source|ikiwiki.svgz]], can be used to generate a logo at any size
+  [[SVG_source|ikiwiki.svg]], can be used to generate a logo at any size
   with a command like:  
 
-        inkscape -w 90 -i logo -e ikiwiki.png ikiwiki.svgz  
-        inkscape -w 150 -i logo -e ikiwiki_large.png ikiwiki.svgz
+        inkscape -w 90 -i logo -e ikiwiki.png ikiwiki.svg  
+        inkscape -w 150 -i logo -e ikiwiki_large.png ikiwiki.svg
 
   The [[favicon.ico]] can also be generated from this file, as follows:
 
-        inkscape -w 16 -i favicon -e favicon.ico ikiwiki.svgz
+        inkscape -w 16 -i favicon -e favicon.ico ikiwiki.svg
 
   The button can also be generated as follows:
 
-        inkscape -w 80 -i button -e ikiwiki_button.png ikiwiki.svgz
+        inkscape -w 80 -i button -e ikiwiki_button.png ikiwiki.svg
 
   Some other alternate icons and buttons are also included in the svg file
   and can be extracted by specifying their names.
