@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://web.resource.org/cc/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="882.78107"
    height="855.25427"
    id="svg6600"
    sodipodi:version="0.32"
-   inkscape:version="0.44.1"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    version="1.0"
-   sodipodi:docbase="/home/roktas/Contrib/ikiwiki/upstream/doc/logo"
-   sodipodi:docname="ikiwiki.svg">
+   sodipodi:docname="ikiwiki.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs6602" />
   <sodipodi:namedview
@@ -28,19 +28,23 @@
      objecttolerance="10"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.65312309"
-     inkscape:cx="351.70406"
-     inkscape:cy="711.38497"
+     inkscape:zoom="0.82579931"
+     inkscape:cx="441.39053"
+     inkscape:cy="427.46463"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="logo"
      width="1000px"
-     inkscape:window-width="1012"
-     inkscape:window-height="691"
+     inkscape:window-width="1278"
+     inkscape:window-height="1412"
      inkscape:window-x="0"
-     inkscape:window-y="25"
+     inkscape:window-y="0"
      showgrid="true"
      showguides="false"
-     height="1000px" />
+     height="1000px"
+     inkscape:showpageshadow="2"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:window-maximized="1" />
   <metadata
      id="metadata6605">
     <rdf:RDF>
