@@ -1,0 +1,20 @@
+[[!comment format=mdwn
+ username="anarcat"
+ avatar="http://cdn.libravatar.org/avatar/825d3c30cb96a053b5335e51b8d0bd49"
+ subject="useful for other stuff"
+ date="2025-04-09T20:57:54Z"
+ content="""
+that, in particular, will be useful to implement stuff like opengraph, where i need to do this right now:
+
+```
+    <meta property=\"og:logo\" content=\"https://anarc.at/apple-touch-icon.png\" />
+```
+
+that would be better as:
+
+```
+    <meta property=\"og:logo\" content=\"<TMPL_VAR URL>/apple-touch-icon.png\" />
+```
+
+we could also call it CONFIG_URL to disambiguate...
+"""]]
