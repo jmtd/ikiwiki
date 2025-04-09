@@ -162,3 +162,10 @@ is probably the best way to implement this.
 >>>>>> adding just a small white border would suffice), and smcv and schmonz
 >>>>>> both have the admin bit to do it. Or feel free to reach out to me by email.
 >>>>>> --[[Joey]]
+
+>>>>>>> [[anarcat]] [modified the logo to use a mid-grey](https://gitlab.com/anarcat/ikiwiki/-/blob/ec6182dfeea08dda2e8c341fe091d0ee6e22b59a/doc/logo/ikiwiki.svg) which contrasts nicely
+>>>>>>> with black and white backgrounds: [[!img 2logos.png]]. If you are happy
+>>>>>>> with that (I think it looks good) I can merge that to master and if its
+>>>>>>> easiest to update ikiwiki.info from Debian packages, I'll aim to cut a
+>>>>>>> new release in the near future.
+>>>>>>> *— [[Jon]], 2025-04-09*
