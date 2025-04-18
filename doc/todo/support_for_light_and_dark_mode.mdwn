@@ -169,3 +169,6 @@ is probably the best way to implement this.
 >>>>>>> easiest to update ikiwiki.info from Debian packages, I'll aim to cut a
 >>>>>>> new release in the near future.
 >>>>>>> *— [[Jon]], 2025-04-09*
+
+>>>>>>>> I've updated the logo in `master`. I'll try to resolve the PO test
+>>>>>>>> issue before cutting another release. *— [[Jon]], 2025-04-18*
