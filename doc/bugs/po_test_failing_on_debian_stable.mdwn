@@ -15,3 +15,6 @@ Building current master on debian stable:
 The failing code comes from "t/po.t: add test for UTF-8 vs. po4a 0.58+"
 
 It builds ok on debian unstable. --[[Joey]]
+
+> confirmed, specifically broken with po4a=0.69-1, works with po4a=0.73-2.
+> I'll see if I can adjust the test so it works in both cases. *— [[Jon]], 2025-04-18*
