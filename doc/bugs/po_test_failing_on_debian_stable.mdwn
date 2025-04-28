@@ -21,3 +21,11 @@ It builds ok on debian unstable. --[[Joey]]
 
 > [I've written a patch to resolve this](https://salsa.debian.org/jmtd/ikiwiki/-/commit/0b933ced31ca07ddf9dfc56b3f41dd473255f869).
 > I've asked [[users/intrigeri]] if they can review it. *— [[Jon]], 2025-04-20*
+
+>> [[done]]. Thanks [[users/intrigeri]] for the review. I experimented
+>> with Debian's Salsa CI a little, and `make test` passes for current
+>> git master on both [bookworm](https://salsa.debian.org/ikiwiki-team/ikiwiki/-/jobs/7502981)
+>> and
+>> [sid](https://salsa.debian.org/ikiwiki-team/ikiwiki/-/jobs/7502850)
+>> runners. I plan to cut a new release before the Debian hard freeze.
+>> *— [[Jon]], 2025-04-28*
