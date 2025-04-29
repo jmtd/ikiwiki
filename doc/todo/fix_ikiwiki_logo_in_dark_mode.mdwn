@@ -4,3 +4,5 @@ fixing for dark mode:
 [[!img logo/ikiwiki.png]]
 
 *— [[Jon]], 2025-02-22*
+
+[[done]].
