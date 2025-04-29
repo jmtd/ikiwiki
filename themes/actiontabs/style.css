@@ -157,3 +157,36 @@ div.recentchanges {
 		font-size: 0.8em;
 	}
 }
+
+@media (prefers-color-scheme: dark) {
+	a {
+		color: #0077CC;
+	}
+	hr {
+		background-color: #75747A;
+	}
+	code, pre {
+		background: #2B2A33;
+	}
+	body {
+		color: white;
+		background: black;
+	}
+	.pageheader {
+		background: #1C1B22;
+		border-color: #777;
+	}
+	#pageinfo {
+		border-color: #777;
+	}
+	.inlinepage {
+		border-top: 1px solid #555;
+	}
+	.pageheader .actions ul li {
+		background: black;
+		border-color: #777;
+	}
+	.sidebar {
+		border-color: #777;
+	}
+}
