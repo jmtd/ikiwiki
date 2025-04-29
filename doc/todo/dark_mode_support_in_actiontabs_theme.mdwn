@@ -1,0 +1,9 @@
+[[!template id=gitbranch branch=jon/actiontabs-dark author="[[Jon]]"]]
+
+Related to [[support for light and dark mode]], it would be good for the actiontabs [[theme|themes]]
+to support dark mode, as it seems [[quite popular|forum/theme_poll]].
+
+[demo](https://jmtd.net/tmp/lightdark-test-dst/index.en.html).
+I've taken a slightly different approach to the anti-theme: I've gone with specific colours rather
+than rely on the CSS system colours.
+ *— [[Jon]], 2025-04-29*
