@@ -1,3 +1,17 @@
+ikiwiki (3.20250501) upstream; urgency=medium
+
+  [ Antoine Beaupré ]
+  * adjust logo from black to mid-point grey so it contrasts
+    equally well on a black background to a white one.
+
+  [ Jonathan Dowland ]
+  * po4a: attempt to detect versions ≥ 0.70 and continue to
+    support earlier versions (for now), such that modern ikiwiki
+    can be built and operate on Debian stable (bookworm).
+  * actiontabs: add support for dark mode
+
+ -- Jonathan Dowland <jmtd@debian.org>  Thu, 01 May 2025 21:39:25 +0100
+
 ikiwiki (3.20250221) upstream; urgency=medium
 
   [ Jonathan Dowland ]

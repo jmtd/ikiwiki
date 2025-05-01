@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-21 14:37+0000\n"
+"POT-Creation-Date: 2025-05-01 21:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -774,54 +774,54 @@ msgid ""
 "translations will be renamed as well."
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:926
+#: ../IkiWiki/Plugin/po.pm:936
 #, perl-format
 msgid "POT file (%s) does not exist"
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:940
+#: ../IkiWiki/Plugin/po.pm:950
 #, perl-format
 msgid "failed to copy underlay PO file to %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:948
+#: ../IkiWiki/Plugin/po.pm:958
 #, perl-format
 msgid "failed to update %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:954
+#: ../IkiWiki/Plugin/po.pm:964
 #, perl-format
 msgid "failed to copy the POT file to %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:990
+#: ../IkiWiki/Plugin/po.pm:1000
 msgid "N/A"
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:1001
+#: ../IkiWiki/Plugin/po.pm:1011
 #, perl-format
 msgid "failed to translate %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:1084
+#: ../IkiWiki/Plugin/po.pm:1094
 msgid "removed obsolete PO files"
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:1140 ../IkiWiki/Plugin/po.pm:1152
-#: ../IkiWiki/Plugin/po.pm:1191
+#: ../IkiWiki/Plugin/po.pm:1150 ../IkiWiki/Plugin/po.pm:1162
+#: ../IkiWiki/Plugin/po.pm:1201
 #, perl-format
 msgid "failed to write %s"
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:1150
+#: ../IkiWiki/Plugin/po.pm:1160
 msgid "failed to translate"
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:1203
+#: ../IkiWiki/Plugin/po.pm:1213
 msgid "invalid gettext data, go back to previous page to continue edit"
 msgstr ""
 
-#: ../IkiWiki/Plugin/po.pm:1246
+#: ../IkiWiki/Plugin/po.pm:1256
 #, perl-format
 msgid "%s has invalid syntax: must use CODE|NAME"
 msgstr ""
