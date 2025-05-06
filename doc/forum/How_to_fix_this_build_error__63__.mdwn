@@ -1,8 +1,7 @@
 When building my site, there is an error:
 
 ```
-[INFO]ikiwiki rebuild: using Ikiwiki setup file /Users/computist/my.setup ...
-[INFO]rebuilding Ikiwiki instance...
+$ rebuilding Ikiwiki instance...
 generating wrappers..
 /Users/computist/mysite/.git/hooks/post-commit.c:116:7: warning: 'daemon' is deprecated: first deprecated in macOS 10.5 - Use posix_spawn APIs instead. [-Wdeprecated-declarations]
   116 |                 if (daemon(1, 0) == 0) {
