@@ -25,3 +25,9 @@ move it out of the wrapper and into the IkiWiki instance invoked by the
 wrapper.
 
 *— [[Jon]], 2025-05-09*
+
+> Point of support: a non-container deployment pattern that also has no
+> need for suid wrappers is to store the files (and run the webserver)
+> under a site-specific user account. Many of my sites do this.
+>
+> - [[schmonz]]
