@@ -30,4 +30,4 @@ wrapper.
 > need for suid wrappers is to store the files (and run the webserver)
 > under a site-specific user account. Many of my sites do this.
 >
-> - [[schmonz]]
+> -- [[schmonz]]
