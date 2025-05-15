@@ -1,0 +1,1 @@
+What’s people’s feelings about code contributions from large language models? Personally, I wouldn’t want to accept such patches. Practically that would mean asking contributors to disclose that they’ve used one. Do we need a project statement to that effect?
