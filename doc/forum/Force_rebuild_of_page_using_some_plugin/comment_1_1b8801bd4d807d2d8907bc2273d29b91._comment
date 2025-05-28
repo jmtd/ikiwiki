@@ -1,0 +1,22 @@
+[[!comment format=mdwn
+ username="spalax"
+ ip="82.216.247.172"
+ subject="Proposal"
+ date="2014-06-27T16:05:11Z"
+ content="""
+Something you can do is  storing the list of pages containing your directive *somewhere* (I'll get back at it later). Then, at the next refresh of your wiki, the `needsbuild` hook will mark those pages as to be rebuilt, and reset the variable storing the page to be rebuild.
+
+I see two ways so store this information:
+
+* the `%wikistate` variable: you would have a `$wikistate{yourPlugin}{rebuild}` containing the list of pages to rebuild;
+* the `%pagestate` variable: if a page contains your directive, set `$pagestate{$page}{yourPlugin}{rebuild}` to 1.
+
+I think the second solution would be easier to implement. In either case, do not forget to reset them in the `needsbuild` hook. Otherwise, a page containing your directive would be rebuilt at each refresh, forever, even if it no longer contain this directive.
+
+
+To answer your other questions about `needsbuild()`: it is called only once (not once per page: once per ikiwiki call). It get as argument the list of pages to be rebuild. You append to it the pages you want to rebuild (according to the `%wikistate` or `%pagestate` value I described), and you return it.
+
+Five months old… I do not know if this answer will be useful…
+
+-- [[Louis|spalax]]
+"""]]
