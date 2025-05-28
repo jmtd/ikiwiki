@@ -4,7 +4,6 @@ choose. If you'd like to fund development of a specific feature, see the
 [[consultants]] page.
 
 * [Donate with PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=joey%40kitenet%2enet&item_name=ikiwiki&no_shipping=1&cn=Comments%3f&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8)
-* [Donate with Flattr](http://flattr.com/thing/39811/ikiwiki)
 
 Thanks to the following people for their kind contributions:
 

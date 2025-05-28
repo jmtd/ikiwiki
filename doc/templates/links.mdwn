@@ -10,7 +10,6 @@
 <li>[[SiteMap]]</li>
 <li>[[Contact]]</li>
 <li>[[TipJar]]</li>
-<li><a href="http://flattr.com/thing/39811/ikiwiki">Flattr ikiwiki</a></li>
 </ul>
 </div>
 ENDBODY]]
