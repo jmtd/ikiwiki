@@ -47,3 +47,10 @@ Steps 3 and 4 should happen in the same release.
 >> minor release before committing that, and see what response we get first
 >> (if any).[[!tag patch]]
 >> *&mdash; [[Jon]], 2024-04-02*
+
+----
+
+(1) and (2) are now done. (1) made it into Debian Trixie; I'd forgotten about
+(2) and only pushed it just now. Rats! It would have been good to get that into
+a stable Debian release. We will have to have at least one IkiWiki release
+before we consider (3) and (4). *— [[Jon]], 2025-05-14*

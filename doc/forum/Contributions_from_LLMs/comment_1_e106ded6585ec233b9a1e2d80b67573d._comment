@@ -1,0 +1,21 @@
+[[!comment format=mdwn
+ username="anarcat"
+ avatar="http://cdn.libravatar.org/avatar/825d3c30cb96a053b5335e51b8d0bd49"
+ subject="tough nut"
+ date="2025-05-21T00:51:39Z"
+ content="""
+this is a tricky one. at first glance, it can be pretty straightforward: LLMs are power-hungry, biased, flawed, monopolistic power machines that threaten to destroy civilization and it's clear to me they should be avoided as much as possible.
+
+but the reality is that, out there, more and more people use LLMs for more and more routine and mundane tasks. i have heard of at least one teacher that told an anecdote of having to allow LLMs for students in an exam because otherwise they would just fail: they can't actually type out the syntax of whatever programming language they're using. the IDE autocompletion (say, copilot) does that for them, and that, naturally, is LLM-backed now.
+
+as alarming as this sounds, it is a reality out there, and i would worry that a blanket ban on LLMs would simply lead people to *hide* the fact that they're using it. i suspect some LLM users are not even *aware* that they are using LLMs in the first place.
+
+i think there's an argument to be made that we should educate people, rather than ban them. the same way that we don't forbid people to use a proprietary operating system or text editor, i don't think we should ban LLMs entirely, but asking people to be transparent about the authorship of their code would seem, to me, to be a more direct way to get what we want, which is that we don't want to waste time to review code not already reviewed for sanity by another human being.
+
+in a sense, this is a DC0 CLA kind of thing: like \"i wrote this\" or \"i can legally claim i wrote this and know how it works\" kind of thing.
+
+for what it's worth, i dabbled with LLMs myself. i packaged the `llm` binary in Debian, and use it to issue API requests to OpenAI, generally GPT-4o at this point. it's a relatively cheap but kind of worthless search engine, at this point. it frequently fails to fail to answer properly (like it doesn't have the wisdom to say \"this is impossible\" or \"i don't know\") and frequently underestimates the complexity of a problem (like \"sure, postfix supports AUTH EXTERNAL, just configure dovecot this way\"), so i take its answers with a grain of salt. i often use it for translations, and i treat it as a somewhat resourceful, mansplaining intern that i can throw random things at.
+
+when i ask LLMs to produce code, i typically commit the draft to git, then rewrite it from scratch. that way there's a trace of what came from the LLM and what i produced myself, and i find that audit trail quite useful for transparency's purposes.
+
+"""]]

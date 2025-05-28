@@ -1,0 +1,33 @@
+I'd like to make the SUID wrapper optional.
+
+A wrapper is a binary that can be marked setuid (+s): this is not (easily)
+possible with scripts (such as Perl scripts or bash scripts), so IkiWiki
+generates a small C program that is compiled into a native binary and set +s.
+The reason to do that is so that the IkiWiki instance that is invoked by the
+wrapper runs as the user who owns the wiki's files, rather than the user
+running the HTTPD.
+
+At the moment, it's pretty much mandatory for IkiWiki to generate wrappers.
+(It might be possible to prevent it by tinkering with the internal config
+value `wrappers`.) I'd like to make it optional.
+
+There are some deployment scenarios (including [[containers]]) where it isn't
+necessary, and removing the requirement for a C compiler would be advantageous.
+
+The content of the wrapper's source code is embedded across
+`IkiWiki/Wrapper.pm`, which makes it hard to reason about.
+
+One step would be to add a configuration variable to selectively disable
+generating the wrappers. However, the wrappers don't just invoke IkiWiki,
+they do some work (exactly what depends on several other configuration
+variables). So another step will be to identify that work and, if possible,
+move it out of the wrapper and into the IkiWiki instance invoked by the
+wrapper.
+
+*— [[Jon]], 2025-05-09*
+
+> Point of support: a non-container deployment pattern that also has no
+> need for suid wrappers is to store the files (and run the webserver)
+> under a site-specific user account. Many of my sites do this.
+>
+> -- [[schmonz]]

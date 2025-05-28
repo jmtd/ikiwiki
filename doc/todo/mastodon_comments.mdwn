@@ -45,3 +45,9 @@ The trick is "when do you post updates": short of having a daemon (or CGI?) that
 Still, moving that code from feed2exec/python to ikiwiki/perl (or ikiwiki/python, there's precedents here), would be an important step, IMHO.
 
 Thoughts? -- [[anarcat]] 2025-03-03
+
+> I agree that, for this workflow, what you describe is a great improvement: getting the supplementary code into IkiWiki.
+> 
+> I've been wondering about a different approach to Fediverse-enabling an IkiWiki site. Instead of the chicken-and-egg problem of toot-about-post, then update post with toot-id; what if the post itself was a first-class Fediverse object from the start? You could "follow" your blog directly, and re-toot (or toot about) a blog post once that post existed in the Fediverse, which would ideally be as soon as it existed anywhere else. I'm exploring what might be required for this approach, starting with stuff like [Mastodon instance with 6 files](https://justingarrison.com/blog/2022-12-06-mastodon-files-instance/). *— [[Jon]], 2025-05-20*
+
+> > Yeah, that's what I initially thought of doing, but that seemed even harder to implement. That post, for example, mentions "posts don't work", which is the critical part that we actually need here. We'd also need to handle `POST` requests for the /inbox endpoint, which would require CGI (which I'm trying to get rid of in my deployments...). But yeah, this would be pretty awesome! -- [[anarcat]]
