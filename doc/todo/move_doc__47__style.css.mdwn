@@ -1,0 +1,7 @@
+The main antitheme CSS is in `doc/style.css`. This gets copied into the basewiki (along with a subset of `doc/`) when IkiWiki is built.
+
+When building the doc-wiki from `./doc`, the style.css overrides the copy in the basewiki. Normally this doesn't matter as they're one-and-the-same, but if you try to build the doc-wiki with a theme enabled, this will overwrite the theme.
+
+To resolve this I want to move `style.css` out of `./doc` and rejig the necessary machinery so things continue to work as they should.
+
+*­— [[Jon]], 2025-06-02*
