@@ -5,6 +5,7 @@ The search box on ikiwiki uses Google to look for documentation. Unfortunately t
 Would it be possible to change the default behavior to use another search engine more privacy friendly such as https://duckduckgo.com or https://qwant.com.
 
 With both engines adding the "site:ikiwiki.info" string to the search terms limit results to these present on ikiwiki.info.
+*— Unsigned*
 
 > I've had a first stab at implementing this. It's in [my fork on
 > GitHub](https://github.com/jmtd/ikiwiki/tree/duckduckgo), specifically [branch
@@ -26,3 +27,5 @@ With both engines adding the "site:ikiwiki.info" string to the search terms limi
 
 >>>> Untagging 'patch': _this_ TODO is specifically a request to change <https://ikiwiki.info/>,
 >>>> and not the inclusion of the duckduckgo patch. &mdash; *[[Jon]], 2024-02-22*
+
+[[done]], Thanks [[schmonz]]!
