@@ -1,0 +1,8 @@
+Hi there,
+
+I noticed that the blogspam.net service is no longer available. 
+
+* https://blogspam.net/ (index of / page)
+* https://github.com/BlogSpam-Net (all repos are archived)
+
+So, I think the **blogspam** plugin should be disabled by default.
