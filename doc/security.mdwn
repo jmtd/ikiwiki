@@ -524,7 +524,7 @@ in progress.
 An upgrade is recommended for sites using
 the CGI. ([[!debcve CVE-2016-4561]], OVE-20160505-0012)
 
-## ImageMagick CVE-2016–3714 ("ImageTragick")
+## ImageMagick CVE-2016-3714 ("ImageTragick")
 
 ikiwiki 3.20160506 and 3.20141016.3 attempt to mitigate
 [[!debcve CVE-2016-3714]], and any
