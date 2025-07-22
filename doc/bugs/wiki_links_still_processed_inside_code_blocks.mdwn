@@ -72,4 +72,10 @@ and have it render like:
 >>> and footnotes can't be referred to more than once in Markdown.
 >>> --[[awesomeadam]]
 
+> Just note that the bug currently manifests at the main page,
+> [[bugs/garbled non-ascii characters in body in web interface|bugs/garbled non-ascii characters in body in web interface]]
+> bottom link appearing,
+> as that page has backtrace dump containing `\[[\x{fffd} propos|index]]` substring.
+> *— [[mykhal]], 2025-07-22*
+
 [[!debbug 487397]]
