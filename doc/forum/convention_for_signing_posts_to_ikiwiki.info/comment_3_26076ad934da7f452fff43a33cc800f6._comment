@@ -1,0 +1,12 @@
+[[!comment format=mdwn
+ username="mykhal"
+ avatar="http://cdn.libravatar.org/avatar/17c9ee43cd4009108d9b11911ec371f1"
+ subject="comment 3"
+ date="2025-07-22T21:25:56Z"
+ content="""
+I like it. (But it really might not be easy to type manually and keep the precise format. I use dead keys, and also have kbd shortcut that types current ISO date timestamp, so no big deal for me.)
+
+What about optional trailing time format? And should it be in UTC? And explicitly? Like
+> *— User, 2000-01-01 01:00Z*
+
+"""]]
