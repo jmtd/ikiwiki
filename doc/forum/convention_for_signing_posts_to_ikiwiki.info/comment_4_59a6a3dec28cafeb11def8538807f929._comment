@@ -1,0 +1,16 @@
+[[!comment format=mdwn
+ username="jmtd"
+ avatar="http://cdn.libravatar.org/avatar/cae0ebd82377a48ef9f1f14ff23b3e0f"
+ subject="comment 4"
+ date="2025-07-23T11:42:27Z"
+ content="""
+> But it really might not be easy to type manually and keep the precise format
+
+Having a syntax short-cut like ~~~~ would remove the need.
+
+> What about optional trailing time format? And should it be in UTC?
+
+Personally I think that's too much clutter. But if we were to have it, I'd suggest
+the data encoded in UTC, but possibly presented in the browser's local timezone.
+I'm not sure if that's easily achievable.
+"""]]
