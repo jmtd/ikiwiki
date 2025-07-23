@@ -111,6 +111,7 @@ Projects & Organizations
 * [[ChessWOB|https://www.chesswob.org]] Chess Without Boundaries
 * [[Debian Enhancement Proposals|https://dep-team.pages.debian.net/]]
 * [[Crypt Code Club|https://cryptcodeclub.codeberg.page/]]
+* [[Debian System Administrators|https://dsa.debian.org/]]
 
 Personal sites and blogs
 ========================
