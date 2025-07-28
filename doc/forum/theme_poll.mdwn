@@ -1,6 +1,6 @@
 Existing IkiWiki users: which [[themes]] do you use on your site?
 
-[[!poll 1 "antitheme (i.e., none)"
+[[!poll 2 "antitheme (i.e., none)"
 1 "actiontabs"
 0 "blueview"
 0 goldtype
