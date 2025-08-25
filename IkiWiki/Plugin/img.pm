@@ -184,7 +184,10 @@ sub preprocess (@) {
 		if ($config{deterministic}) {
 			$im->Set('date:create' => 0);
 			$im->Set('date:modify' => 0);
+			# Stopped working by ImageMagick 8:7.1.2.1+dfsg1-1
 			$im->Set('option'      => 'png:exclude-chunk=time');
+			# required from 8:7.1.2.1+dfsg1-1 onwards
+			$im->Set('date:timestamp' => 0);
 		}
 
 		if (! defined $im->Get("width") || ! defined $im->Get("height")) {
