@@ -1,0 +1,22 @@
+We bundle jquery, currently version jquery 1.6.2 and jquery-ui
+1.8.14 (both from mid-2011).
+
+These _might_ be vulnerable to several CVEs, see
+[[bugs/outdated_jquery-ui]] for one discussion. A glance at
+[OpenCVE](https://app.opencve.io/cve/?vendor=jquery) shows many more that
+might apply.
+
+Relatedly, [Debian would prefer we don't bundle it in the
+package](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=643338), but
+stripping it out or referencing an external copy is non-trivial (as Joey
+outlines)
+
+The APIs are broken between the versions we've bundled and the current
+versions (as smcv said in the prior linked page) so we can't just update
+the bundled ones.
+
+To try and sort this out I think we should review what we're using from
+Jquery, and determine what the best choice is for that functionality in
+future (which might be to continue with jquery and jquery-ui).
+
+*— [[Jon]], 2025-08-27*
