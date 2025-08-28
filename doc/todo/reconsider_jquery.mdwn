@@ -20,3 +20,25 @@ Jquery, and determine what the best choice is for that functionality in
 future (which might be to continue with jquery and jquery-ui).
 
 *— [[Jon]], 2025-08-27*
+
+----
+
+`loginselector` (no doc page) uses jquery.
+There's a tiny use in `templates/login-selector.tmpl` which could easily
+be substituted for a longer, standard DOM method of finding the `fieldset`.
+The remaining use is in 
+`underlays/login-selector/ikiwiki/login-selector/login-selector.js`, which
+calls `extend` once, and is otherwise just accessors. So for `loginselector`,
+it would be easy to remove the jquery dependency.
+
+[[plugins/attachment]] uses `jquery.fileupload.js`, `jquery.fileupload-ui.js`,
+`jquery.iframe-transport.js`, `jquery.tmpl.js` and `jquery-ui.js`. I think
+it would be much harder to remove or replace. (I'm at the limit of my JS
+knowledge here.)
+
+However, if it was the only user of jquery, we could at least move the jquery
+JS into the attachment underlay, adjacent to the other jquery-related JS, and
+not have a separate jquery underlay. It would be a small step forward, to
+sequester the stuff in one place. Or maybe a waste of time. I don't know!
+
+*— [[Jon]], 2025-08-28*
