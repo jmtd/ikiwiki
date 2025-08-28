@@ -43,4 +43,4 @@ sequester the stuff in one place. Or maybe a waste of time. I don't know!
 
 *— [[Jon]], 2025-08-28*
 
-> Doesn't feel like a waste of time to me at all: reducing the blast radius is a great idea, imho, but it might cause problems for third-party plugins that *assume* jquery is present... maybe that's where it's more of a problem? -- [[anarcat]]
+> Doesn't feel like a waste of time to me at all: reducing the blast radius is a great idea, imho, but it might cause problems for third-party plugins that *assume* jquery is present... maybe that's where it's more of a problem? maybe a progressive deprecation?  -- [[anarcat]]
