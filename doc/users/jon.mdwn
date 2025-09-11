@@ -12,6 +12,19 @@ the [Opinionated Ikiwiki](https://github.com/jmtd/opinionated-ikiwiki/)
 [[container|containers]]. I have recently taken on the Debian packaging.
 My current focus is working upstream.
 
+## priorities
+
+This is an unorganised and unordered stream-of-thought list of the things
+I'm interested in addressing at the moment.
+
+Review all unreviewed [[patches|patch]];
+triage all the Debian bugs and make sure upstream issues are forwarded to issues
+recorded here;
+[[todo/reconsider jquery]];
+[[todo/move_doc__47__style.css]] in order to enable dark mode on
+<ikiwiki.info>;
+an approach for [[mastodon comments]];
+
 ## historic
 
 I gave a talk at the [UK UNIX User's Group](http://www.ukuug.org/) annual
