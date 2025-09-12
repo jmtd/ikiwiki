@@ -164,7 +164,10 @@ sub htmlize (@) {
 			if (! $@) {
 				debug("mdwn: using CommonMark");
 				$markdown_sub=sub {
-					return CommonMark->markdown_to_html(shift);
+					return CommonMark->parse(string => shift)->render(
+						format => 'html',
+						unsafe => 1,
+					);
 				}
 			}
 		}
