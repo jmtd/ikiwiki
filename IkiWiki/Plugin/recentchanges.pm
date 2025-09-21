@@ -40,11 +40,19 @@ sub getsetup () {
 			safe => 1,
 			rebuild => 0,
 		},
+		recentchanges_allow_revert => {
+			type => "boolean",
+			example => 1,
+			description => "Enable web-based commit reverts",
+			safe => 1,
+			rebuild => 0
+		},
 }
 
 sub checkconfig () {
 	$config{recentchangespage}='recentchanges' unless defined $config{recentchangespage};
 	$config{recentchangesnum}=100 unless defined $config{recentchangesnum};
+	$config{recentchanges_allow_revert}=1 unless defined $config{recentchanges_allow_revert};
 }
 
 sub refresh ($) {
@@ -69,6 +77,9 @@ sub sessioncgi ($$) {
 	my $rev = $q->param('rev');
 
 	return unless $do eq 'revert' && $rev;
+
+	error(gettext("unknown do parameter"))
+		unless $config{recentchanges_allow_revert};
 
 	my @changes=$IkiWiki::hooks{rcs}{rcs_preprevert}{call}->($rev);
 	IkiWiki::check_canchange(
@@ -195,6 +206,7 @@ sub store ($$$) {
 	push @{$change->{pages}}, { link => '...' } if $is_excess;
 	
 	if (length $config{cgiurl} &&
+	    $config{recentchanges_allow_revert} &&
 	    exists $IkiWiki::hooks{rcs}{rcs_preprevert} &&
 	    exists $IkiWiki::hooks{rcs}{rcs_revert}) {
 		$change->{reverturl} = IkiWiki::cgiurl(
